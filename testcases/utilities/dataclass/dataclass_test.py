@@ -24,4 +24,9 @@ def test_dataclass():
     }
 
     employee = Employee(data)
-    print(employee)
+    assert employee.age == 233
+    assert employee.name == 'kinopico'
+    assert employee.educations[0].school == 'jialidun'
+    assert employee.educations[0].degree == 'master'
+
+    assert repr(employee) == "Employee(name='kinopico', age=233, educations=[Education(school='jialidun', degree='master')])"

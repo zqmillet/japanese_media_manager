@@ -20,7 +20,5 @@ class DataClass:
             setattr(self, key, value)
 
     def __repr__(self):
-        fields = list()
-        for field in self._fields:
-            fields.append('='.join([field, repr(getattr(self, field))]))
+        fields = ['='.join([field, repr(getattr(self, field))]) for field in self._fields]
         return f'{self.__class__.__name__}({", ".join(fields)})'
