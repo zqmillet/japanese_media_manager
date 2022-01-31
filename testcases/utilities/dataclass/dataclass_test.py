@@ -1,17 +1,16 @@
-import typing
-
 from japanese_media_manager.utilities.dataclass import DataClass
-from japanese_media_manager.utilities.dataclass import field
+from japanese_media_manager.utilities.dataclass import Field
+from japanese_media_manager.utilities.dataclass import List
 
 def test_dataclass():
     class Education(DataClass):
-        school = field(type=str)
-        degree = field(type=str)
+        school = Field(type=str)
+        degree = Field(type=str)
 
     class Employee(DataClass):
-        name = field(type=str)
-        age = field(type=int, assertion=lambda x: x > 18)
-        educations = typing.List[Education]
+        name = Field(type=str)
+        age = Field(type=int, assertion=lambda x: x > 18)
+        educations = List(Education)
 
     data = {
         'name': 'kinopico',
@@ -25,3 +24,4 @@ def test_dataclass():
     }
 
     employee = Employee(data)
+    print(employee)
