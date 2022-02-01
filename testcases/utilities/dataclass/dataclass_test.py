@@ -4,6 +4,8 @@ from japanese_media_manager.utilities.dataclass import DataClass
 from japanese_media_manager.utilities.dataclass import Field
 from japanese_media_manager.utilities.dataclass import List
 from japanese_media_manager.utilities.dataclass import TypeMissMatchException
+from japanese_media_manager.utilities.dataclass import FieldMissException
+from japanese_media_manager.utilities.dataclass import AssertionException
 
 class Education(DataClass):
     school = Field(type=str)
@@ -32,7 +34,7 @@ def test_dataclass():
     assert employee.educations[0].school == 'jialidun'
     assert employee.educations[0].degree == 'master'
 
-    assert repr(employee) == "Employee(name='kinopico', age=233, educations=[Education(school='jialidun', degree='master')])"
+    assert isinstance(repr(employee), str)
 
 @pytest.mark.parametrize(
     'data, exception', [
@@ -107,3 +109,40 @@ def test_nested_classes():
         Stuff(data)
 
     assert str(information.value) == "data['company']['location'] = None, but its type should be str"
+
+@pytest.mark.parametrize(
+    'data, exception', [
+        (dict(), "cannot find field age in data = {}"),
+        ({'age': 233, 'educations': []}, "cannot find field name in data = {'age': 233, 'educations': []}"),
+        ({'age': 233, 'name': 'kinopico', 'educations': [{}]}, "cannot find field degree in data['educations'][0] = {}"),
+        ({'age': 233, 'name': 'kinopico'}, "cannot find field educations in data = {'age': 233, 'name': 'kinopico'}"),
+    ]
+)
+def test_field_miss_exception(data, exception):
+    with pytest.raises(FieldMissException) as information:
+        Employee(data)
+    assert str(information.value) == exception
+
+def test_field_with_default():
+    class Stuff(DataClass):
+        name = Field(type=str)
+        age = Field(type=int, default=233)
+
+    stuff = Stuff({'name': 'kinopico'})
+    assert stuff.age == 233
+
+def test_field_with_alias():
+    class Stuff(DataClass):
+        name = Field(type=str)
+        age = Field(type=int, default=233, alias='year')
+
+    stuff = Stuff({'name': 'kinopico'})
+    assert stuff.year == 233
+
+    stuff = Stuff({'name': 'kinopico', 'year': 18})
+    assert stuff.year == 18
+
+def test_assertion_exception():
+    with pytest.raises(AssertionException) as information:
+        Employee({'name': 'kinopico', 'educations': [], 'age': 8})
+    assert 'cannot pass assertion' in str(information.value)
