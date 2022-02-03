@@ -50,7 +50,7 @@ class MetaData:
     def release_date(self):
         for tag in self.soup.find_all('span', 'header', text=TAG.RELASE_DATE):
             *_, date = tag.parent.contents
-            return datetime.datetime.strptime(date.strip(), '%Y-%m-%d')
+            return datetime.datetime.strptime(date.strip(), '%Y-%m-%d').date()
         raise Exception('cannot find release date')
 
     @property
@@ -94,13 +94,17 @@ class MetaData:
 
     @property
     def stars(self):
-        stars = list()
+        result = list()
         for tag in self.soup.find_all('div', attrs={'id': 'avatar-waterfall'}):
             for img in tag.find_all('img'):
-                stars.append(
+                result.append(
                     {
                         'avatar_url': self.base_url + img.attrs['src'],
                         'name': img.attrs['title']
                     }
                 )
-        return stars
+        return result
+
+    @property
+    def outline(self):
+        return None
