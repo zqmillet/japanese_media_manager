@@ -5,7 +5,10 @@ def get_metadata(number, proxies=None):
     url = f'https://cn.airav.wiki/video/{number}'
     proxies = proxies or {'http': None, 'https': None}
     response = requests.get(url, proxies=proxies, verify=False)
-    return MetaData(response.json())
+
+    with open(f'./testcases/utilities/airav/data/{number.lower()}.html', 'w', encoding='utf8') as file:
+        file.write(response.text)
+    # return MetaData(response.json())
 
 class MetaData:
     def __init__(self, html, base_url='https://cn.airav.wiki'):
