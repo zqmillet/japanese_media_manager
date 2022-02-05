@@ -1,6 +1,7 @@
 # Japanese Media Manager
 
-![test](https://github.com/zqmillet/japanese_media_manager/actions/workflows/test.yml/badge.svg)
+![pytest](https://github.com/zqmillet/japanese_media_manager/actions/workflows/pytest.yml/badge.svg)
+![pylint](https://github.com/zqmillet/japanese_media_manager/actions/workflows/pylint.yml/badge.svg)
 
 
 如果你听过 tMM, 那么一定会知道 jMM 是做什么的. tMM 是一款我非常喜欢的电影管理系统, 但是我只用它来刮削我的影库. 虽然, 我知道它不仅仅是刮削电影, 但是对我来说, 它意味着刮削电影, 它是电影刮削的代名词.
