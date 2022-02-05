@@ -1,4 +1,4 @@
-name: run testcases
+name: pytest
 on: [push]
 jobs:
   test_on_macos:
