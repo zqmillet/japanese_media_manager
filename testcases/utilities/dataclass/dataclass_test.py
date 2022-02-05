@@ -31,8 +31,8 @@ def test_dataclass():
     employee = Employee(data)
     assert employee.age == 233
     assert employee.name == 'kinopico'
-    assert employee.educations[0].school == 'jialidun'
-    assert employee.educations[0].degree == 'master'
+    assert employee.educations[0].school == 'jialidun' # pylint: disable=unsubscriptable-object
+    assert employee.educations[0].degree == 'master' # pylint: disable=unsubscriptable-object
 
     assert isinstance(repr(employee), str)
 
@@ -68,7 +68,7 @@ def test_dataclass():
 )
 def test_dataclass_with_type_error(data, exception):
     with pytest.raises(TypeMissMatchException) as information:
-        employee = Employee(data)
+        Employee(data)
     assert str(information.value) == exception
 
 def test_nested_classes():
@@ -91,8 +91,8 @@ def test_nested_classes():
     }
 
     employee = Stuff(data)
-    assert employee.company.name == 'jialidun'
-    assert employee.company.location == 'anywhere'
+    assert employee.company.name == 'jialidun' # pylint: disable=no-member
+    assert employee.company.location == 'anywhere' # pylint: disable=no-member
     assert employee.age == 233
     assert employee.name == 'kinopico'
 
@@ -112,7 +112,7 @@ def test_nested_classes():
 
 @pytest.mark.parametrize(
     'data, exception', [
-        (dict(), "cannot find field age in data = {}"),
+        ({}, "cannot find field age in data = {}"),
         ({'age': 233, 'educations': []}, "cannot find field name in data = {'age': 233, 'educations': []}"),
         ({'age': 233, 'name': 'kinopico', 'educations': [{}]}, "cannot find field degree in data['educations'][0] = {}"),
         ({'age': 233, 'name': 'kinopico'}, "cannot find field educations in data = {'age': 233, 'name': 'kinopico'}"),
@@ -137,10 +137,10 @@ def test_field_with_alias():
         age = Field(type=int, default=233, alias='year')
 
     stuff = Stuff({'name': 'kinopico'})
-    assert stuff.year == 233
+    assert stuff.year == 233 # pylint: disable=no-member
 
     stuff = Stuff({'name': 'kinopico', 'year': 18})
-    assert stuff.year == 18
+    assert stuff.year == 18 # pylint: disable=no-member
 
 def test_assertion_exception():
     with pytest.raises(AssertionException) as information:

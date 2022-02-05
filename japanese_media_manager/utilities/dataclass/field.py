@@ -1,7 +1,7 @@
 from .null import Null
 
 class Field:
-    def __init__(self, type=None, alias=None, assertion=lambda x: True, default=Null()):
+    def __init__(self, type=None, alias=None, assertion=lambda x: True, default=Null()): # pylint: disable=redefined-builtin
         self.type = type or object
         self.alias = alias
         self.assertion = assertion

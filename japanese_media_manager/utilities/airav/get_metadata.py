@@ -4,9 +4,8 @@ import bs4
 def get_metadata(number, proxies=None):
     url = f'https://cn.airav.wiki/video/{number}'
     proxies = proxies or {'http': None, 'https': None}
-    # response = requests.get(url, proxies=proxies, verify=False)
-    # with open(f'./testcases/utilities/airav/data/{number.lower()}.html', 'w') as file:
-    #     file.write(bs4.BeautifulSoup(response.text, 'html.parser').prettify())
+    response = requests.get(url, proxies=proxies, verify=False)
+    return MetaData(response.json())
 
 class MetaData:
     def __init__(self, html, base_url='https://cn.airav.wiki'):
@@ -30,7 +29,7 @@ class MetaData:
 
     @property
     def keywords(self):
-        result = list()
+        result = []
         for tag in self.soup.find_all('div', 'tagBtnMargin'):
             for link in tag.find_all('a'):
                 result.append(link.text.strip())
@@ -42,7 +41,7 @@ class MetaData:
 
     @property
     def stars(self):
-        result = list()
+        result = []
         for tag in self.soup.find_all('ul', 'videoAvstarList'):
             for link in tag.find_all('a'):
                 result.append(

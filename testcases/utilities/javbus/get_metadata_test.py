@@ -1,7 +1,6 @@
-import pytest
 import datetime
+import pytest
 
-from japanese_media_manager.utilities.javbus import get_metadata
 from japanese_media_manager.utilities.javbus import MetaData
 
 
@@ -78,7 +77,10 @@ from japanese_media_manager.utilities.javbus import MetaData
             'CJOD-278 アナル見せつけWデカ尻メンズエステ 可愛い子の卑猥なケツ穴を眺めて何度も射精したい 松本いちか あおいれな',
             ['CJOD-278', '痴女ヘブン', '高畫質', 'DMM獨家', '肛交', '中出', '美容院', '姐姐', '多P'],
             '2021-01-23',
-            [{'avatar_url': 'https://www.javbus.com/pics/actress/vb3_a.jpg', 'name': '松本いちか'}, {'avatar_url': 'https://www.javbus.com/pics/actress/pey_a.jpg', 'name': 'あおいれな'}],
+            [
+                {'avatar_url': 'https://www.javbus.com/pics/actress/vb3_a.jpg', 'name': '松本いちか'},
+                {'avatar_url': 'https://www.javbus.com/pics/actress/pey_a.jpg', 'name': 'あおいれな'}
+            ],
             'トレンディ山口',
             None,
             '痴女ヘブン',
@@ -112,12 +114,12 @@ def test_metadata(number, title, keywords, release_date, stars, director, series
     with open(f'testcases/utilities/javbus/data/{number.lower()}.html', 'r', encoding='utf8') as file:
         metadata = MetaData(file.read())
 
-    metadata.title == title
-    metadata.keywords == keywords
-    metadata.release_date == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
-    metadata.length == length
-    metadata.stars == stars
-    metadata.number == number
-    metadata.director == director
-    metadata.series == series
-    metadata.studio == studio
+    assert metadata.title == title
+    assert metadata.keywords == keywords
+    assert metadata.release_date == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
+    assert metadata.length == length
+    assert metadata.stars == stars
+    assert metadata.number == number.upper()
+    assert metadata.director == director
+    assert metadata.series == series
+    assert metadata.studio == studio

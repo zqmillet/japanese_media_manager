@@ -1,8 +1,8 @@
 import re
 import datetime
-import requests
 import urllib
 import http
+import requests
 import bs4
 
 class TAG:
@@ -20,13 +20,13 @@ def get_metadata(number, proxies=None):
         'https': None,
     }
 
-    url = 'https://www.javbus.com/{number}'.format(number=urllib.parse.quote(number))
+    url = f'https://www.javbus.com/{urllib.parse.quote(number)}'
     response = requests.get(url, proxies=proxies, verify=False)
 
     if not response.status_code == http.HTTPStatus.OK:
-        return
+        raise Exception('status code error')
 
-    return parse(response.text)
+    return MetaData(response.json())
 
 class MetaData:
     def __init__(self, html, base_url='https://www.javbus.com'):
@@ -94,7 +94,7 @@ class MetaData:
 
     @property
     def stars(self):
-        result = list()
+        result = []
         for tag in self.soup.find_all('div', attrs={'id': 'avatar-waterfall'}):
             for img in tag.find_all('img'):
                 result.append(

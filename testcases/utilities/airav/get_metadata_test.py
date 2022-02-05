@@ -1,6 +1,5 @@
 import pytest
 
-from japanese_media_manager.utilities.airav import get_metadata
 from japanese_media_manager.utilities.airav import MetaData
 
 @pytest.mark.parametrize(

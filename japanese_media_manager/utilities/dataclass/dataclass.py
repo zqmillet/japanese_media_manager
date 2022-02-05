@@ -1,5 +1,3 @@
-import typing
-
 from .field import Field
 from .null import Null
 from .list import List
@@ -35,7 +33,7 @@ class DataClass:
             setattr(self, field.alias, value)
 
     def __get_fields__(self):
-        fields = list()
+        fields = []
         for key in dir(self):
             if key.startswith('_'):
                 continue
