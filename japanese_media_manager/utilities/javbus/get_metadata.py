@@ -34,6 +34,14 @@ class MetaData:
         self.base_url = base_url
 
     @property
+    def fanart(self):
+        pass
+
+    @property
+    def poster(self):
+        pass
+
+    @property
     def keywords(self):
         for tag in self.soup.find_all('meta', attrs={'name': 'keywords'}):
             if 'content' in tag.attrs:
