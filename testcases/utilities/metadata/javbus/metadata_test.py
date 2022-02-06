@@ -1,8 +1,8 @@
+import os
 import datetime
 import pytest
 
-from japanese_media_manager.utilities.metadata import JavBusMetaData 
-
+from japanese_media_manager.utilities.metadata import JavBusMetaData
 
 @pytest.mark.parametrize(
     'number, title, keywords, release_date, stars, director, series, studio, length', [
@@ -111,7 +111,7 @@ from japanese_media_manager.utilities.metadata import JavBusMetaData
     ]
 )
 def test_metadata(number, title, keywords, release_date, stars, director, series, studio, length, proxies):
-    with open(f'testcases/utilities/javbus/data/{number.lower()}.html', 'r', encoding='utf8') as file:
+    with open(os.path.join(os.path.dirname(__file__), 'data', number.lower() + '.html'), encoding='utf8') as file:
         metadata = JavBusMetaData(file.read(), proxies=proxies)
 
     assert metadata.title == title

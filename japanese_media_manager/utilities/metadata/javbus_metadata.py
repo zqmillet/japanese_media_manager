@@ -1,9 +1,9 @@
-import bs4
-import requests
 import datetime
 import re
 import io
-import PIL.Image as Image
+import bs4
+import requests
+import PIL.Image
 
 from .base import Base
 
@@ -32,7 +32,7 @@ class JavBusMetaData(Base):
             uri = tag.attrs["href"]
             url = f'{self.base_url}{uri}' if uri.startswith('/') else uri
             response = requests.get(url, proxies=self.proxies)
-            self.fanart = Image.open(io.BytesIO(response.content))
+            self.fanart = PIL.Image.open(io.BytesIO(response.content))
             return
 
     def load_poster(self):
