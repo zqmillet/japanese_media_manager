@@ -21,7 +21,7 @@ jobs:
     - name: Test with pytest
       run: |
         export PYTHONPATH='.'
-        pytest testcases -vv
+        pytest testcases -vv --app-id ${{ secrets.APP_ID }} --app-key ${{ secrets.APP_KEY }}
   test_on_linux:
     runs-on: ubuntu-latest
     strategy:
@@ -42,7 +42,7 @@ jobs:
     - name: Test with pytest
       run: |
         export PYTHONPATH='.'
-        pytest testcases --cov fast_tornado --cov-report xml
+        pytest testcases -vv --app-id ${{ secrets.APP_ID }} --app-key ${{ secrets.APP_KEY }}
   test_on_windows:
     runs-on: windows-latest
     strategy:
@@ -63,4 +63,4 @@ jobs:
     - name: Test with pytest
       run: |
         python -c "import site, os; file = open(os.path.join(site.getsitepackages()[0], 'path.pth'), 'w'); file.write('import sys; sys.path.append(\'.\')'); file.close()"
-        pytest testcases -vv
+        pytest testcases -vv --app-id ${{ secrets.APP_ID }} --app-key ${{ secrets.APP_KEY }}
