@@ -1,5 +1,5 @@
-import pytest
 import urllib
+import pytest
 
 def pytest_addoption(parser):
     parser.addoption(
@@ -82,7 +82,7 @@ def _proxies(proxy_host, proxy_port, proxy_username, proxy_password):
             'https': None
         }
 
-    if not proxy_username or not proxy_password:
+    if proxy_username and proxy_password:
         return {
             'http': f'http://{urllib.parse.quote(proxy_username)}:{urllib.parse.quote(proxy_password)}@{proxy_host}:{proxy_port}',
             'https': f'http://{urllib.parse.quote(proxy_username)}:{urllib.parse.quote(proxy_password)}@{proxy_host}:{proxy_port}',
