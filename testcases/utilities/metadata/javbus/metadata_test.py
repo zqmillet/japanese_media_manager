@@ -124,3 +124,4 @@ def test_metadata(number, title, keywords, release_date, stars, director, series
     assert metadata.series == series
     assert metadata.studio == studio
     assert metadata.fanart is not None
+    assert metadata.poster is not None

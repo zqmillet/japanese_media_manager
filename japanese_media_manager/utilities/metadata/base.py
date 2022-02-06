@@ -28,12 +28,15 @@ class Base(metaclass=abc.ABCMeta):
         self.load_outline()
         self.load_stars()
 
-    @abc.abstractmethod
-    def load_fanart(self):
-        pass
+    def load_poster(self):
+        if not self.fanart:
+            return
+
+        width, height = self.fanart.size
+        self.poster = self.fanart.crop((width - height // 1.42, 0, width, height))
 
     @abc.abstractmethod
-    def load_poster(self):
+    def load_fanart(self):
         pass
 
     @abc.abstractmethod

@@ -35,9 +35,6 @@ class JavBusMetaData(Base):
             self.fanart = PIL.Image.open(io.BytesIO(response.content))
             return
 
-    def load_poster(self):
-        self.poster = None
-
     def load_keywords(self):
         for tag in self.soup.find_all('meta', attrs={'name': 'keywords'}):
             if 'content' in tag.attrs:
