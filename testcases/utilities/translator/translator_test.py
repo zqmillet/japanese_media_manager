@@ -31,4 +31,8 @@ def test_translator_with_hight_frequency(app_id, app_key):
 
     with pytest.raises(TranslationException) as information:
         translator.translate('hello world')
+        translator.translate('hello world')
+        translator.translate('hello world')
+        translator.translate('hello world')
+        translator.translate('hello world')
     assert str(information.value) == 'code: 54003, Invalid Access Limit'
