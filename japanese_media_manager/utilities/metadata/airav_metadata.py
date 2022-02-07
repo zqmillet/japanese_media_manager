@@ -10,10 +10,12 @@ from .base import Base
 ignore_fanart_urls = ['https://wiki-img.airav.wiki/storage/settings/February2020/fbD5j1a1wC8Anwj6csCU.jpg']
 
 class AirAvMetaData(Base):
-    def __init__(self, html, base_url='https://cn.airav.wiki', proxies=None):
-        self.soup = bs4.BeautifulSoup(html, 'html.parser')
+    def __init__(self, number, base_url='https://cn.airav.wiki', proxies=None):
         self.base_url = base_url
         self.proxies = proxies or {'http': None, 'https': None}
+
+        response = requests.get(f'{self.base_url}/video/{number.upper()}', proxies=self.proxies, params={'lang': 'zh-TW'})
+        self.soup = bs4.BeautifulSoup(response.text, 'html.parser')
 
         super().__init__()
 

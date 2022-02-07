@@ -111,8 +111,7 @@ from japanese_media_manager.utilities.metadata import JavBusMetaData
     ]
 )
 def test_metadata(number, title, keywords, release_date, stars, director, series, studio, length, proxies):
-    with open(os.path.join(os.path.dirname(__file__), 'data', number.lower() + '.html'), encoding='utf8') as file:
-        metadata = JavBusMetaData(file.read(), proxies=proxies)
+    metadata = JavBusMetaData(number=number, proxies=proxies)
 
     assert metadata.title == title
     assert metadata.keywords == keywords

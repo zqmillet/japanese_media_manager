@@ -72,8 +72,7 @@ from japanese_media_manager.utilities.metadata import AirAvMetaData
     ]
 )
 def test_metadata(number, title, outline, keywords, stars, studio, release_date):
-    with open(os.path.join(os.path.dirname(__file__), 'data', number.lower() + '.html'), 'r', encoding='utf8') as file:
-        metadata = AirAvMetaData(file.read())
+    metadata = AirAvMetaData(number=number)
 
     assert metadata.length is None
     assert metadata.series is None
@@ -93,8 +92,7 @@ def test_metadata(number, title, outline, keywords, stars, studio, release_date)
     'number', ['100221_001', 'AVSW-061']
 )
 def test_metadata_with_nonexitant_number(number):
-    with open(os.path.join(os.path.dirname(__file__), 'data', number.lower() + '.html'), 'r', encoding='utf8') as file:
-        metadata = AirAvMetaData(file.read())
+    metadata = AirAvMetaData(number=number)
 
     assert metadata.length is None
     assert metadata.series is None
