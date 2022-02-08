@@ -44,7 +44,6 @@ class AvsoxMetaData(Base):
             return
 
     def load_keywords(self):
-        self.keywords = []
         for tag in self.soup.find_all('p', 'header'):
             if not tag.text == TAG.KEYWORDS:
                 continue
@@ -79,7 +78,6 @@ class AvsoxMetaData(Base):
                     return
 
     def load_stars(self):
-        self.stars = []
         for tag in self.soup.find_all('div', attrs={'id': 'avatar-waterfall'}):
             for item in tag.find_all('a', 'avatar-box'):
                 self.stars.append(

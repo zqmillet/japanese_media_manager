@@ -10,4 +10,6 @@ from japanese_media_manager.utilities.metadata import ArzonMetaData
 def test_arzon_metadata(number, proxies):
     metadata = ArzonMetaData(number, proxies=proxies)
 
-    assert metadata.fanart is not None
+    assert metadata.fanart is None
+    print(metadata.title)
+    print(metadata.release_date)

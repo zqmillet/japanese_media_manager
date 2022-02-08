@@ -100,8 +100,8 @@ def test_metadata_with_nonexitant_number(number):
     assert metadata.number is None
     assert metadata.title is None
     assert metadata.outline is None
-    assert metadata.keywords == []
-    assert metadata.stars == []
+    assert not metadata.keywords
+    assert not metadata.stars
     assert metadata.studio is None
     assert metadata.release_date is None
     assert metadata.fanart is None

@@ -1,11 +1,12 @@
 import datetime
 import re
-import io
 import bs4
 import requests
-import PIL.Image
 
 from .base import Base
+
+class TAG:
+    RELEASE_DATE = '発売日：'
 
 class ArzonMetaData(Base):
     session = None
@@ -36,11 +37,7 @@ class ArzonMetaData(Base):
         self.session.get(f'{self.base_url}/index.php', proxies=self.proxies, params=params)
 
     def load_fanart(self):
-        for tag in self.soup.find_all('table', 'item_detail'):
-            image = tag.find_next('img')
-            url = f'https:{image.attrs["src"]}'
-            response = self.session.get(url, proxies=self.proxies)
-            self.fanart = PIL.Image.open(io.BytesIO(response.content))
+        return
 
     def load_keywords(self):
         return
@@ -50,7 +47,16 @@ class ArzonMetaData(Base):
             self.title = tag.text
 
     def load_release_date(self):
-        pass
+        for tag in self.soup.find_all('td'):
+            if not tag.text == TAG.RELEASE_DATE:
+                continue
+
+            match = re.match(pattern=r'(?P<date>\d+/\d+/\d+)', string=tag.find_next('td').text.strip())
+            if not match:
+                continue
+
+            self.release_date = datetime.datetime.strptime(match.groupdict()['date'], '%Y/%m/%d').date()
+            return
 
     def load_length(self):
         pass

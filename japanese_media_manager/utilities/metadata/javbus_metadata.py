@@ -84,16 +84,14 @@ class JavBusMetaData(Base):
                 return
 
     def load_stars(self):
-        result = []
         for tag in self.soup.find_all('div', attrs={'id': 'avatar-waterfall'}):
             for img in tag.find_all('img'):
-                result.append(
+                self.stars.append(
                     {
                         'avatar_url': self.base_url + img.attrs['src'],
                         'name': img.attrs['title']
                     }
                 )
-        self.stars = result
 
     def load_outline(self):
         self.outline = None

@@ -100,8 +100,8 @@ def test_avsox_metadata_with_nonexistent_number(number, proxies):
     assert metadata.length is None
     assert metadata.studio is None
     assert metadata.title is None
-    assert metadata.keywords == []
-    assert metadata.stars == []
+    assert not metadata.keywords
+    assert not metadata.stars
     assert metadata.series is None
     assert metadata.fanart is None
     assert metadata.poster is None
