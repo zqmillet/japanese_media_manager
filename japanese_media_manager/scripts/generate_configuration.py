@@ -1,7 +1,7 @@
 import os
 import pathlib
 
-def get_answer(text, default=True):
+def get_answer(text):
     while True:
         answer = input(text).lower() or 'y'
         if answer in ['y', 'n']:
