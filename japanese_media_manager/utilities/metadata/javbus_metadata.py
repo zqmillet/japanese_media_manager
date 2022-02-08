@@ -19,10 +19,7 @@ class TAG:
 class JavBusMetaData(Base):
     def __init__(self, number, base_url='https://www.javbus.com', proxies=None):
         self.base_url = base_url
-        self.proxies = proxies or {
-            'http': None,
-            'https': None,
-        }
+        self.proxies = proxies or {'http': None, 'https': None}
 
         response = requests.get(f'{self.base_url}/{number.upper()}', proxies=self.proxies)
         self.soup = bs4.BeautifulSoup(response.text, 'html.parser')

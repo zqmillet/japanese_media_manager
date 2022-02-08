@@ -5,7 +5,7 @@ class Base(metaclass=abc.ABCMeta):
         self.fanart = None
         self.poster = None
         self.title = None
-        self.keywords = None
+        self.keywords = []
         self.release_date = None
         self.length = None
         self.number = None
@@ -13,7 +13,7 @@ class Base(metaclass=abc.ABCMeta):
         self.series = None
         self.studio = None
         self.outline = None
-        self.stars = None
+        self.stars = []
 
         self.load_fanart()
         self.load_poster()

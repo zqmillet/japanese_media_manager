@@ -12,6 +12,7 @@ def generate_configuration(file_path=os.path.join(pathlib.Path.home(), '.jmm.cfg
         configuration = file.read()
 
     if os.path.isfile(file_path) and not get_answer(f'file {file_path} exists, overwrite it? (Y/n) '):
+        print('cancelled by user')
         return
 
     with open(file_path, 'w', encoding='utf8') as file:
