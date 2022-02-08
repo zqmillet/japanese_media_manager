@@ -6,3 +6,4 @@ route:
 proxies:
     http: None
     https: None
+suffixes: [.mp4, .mkv, .wmv]
