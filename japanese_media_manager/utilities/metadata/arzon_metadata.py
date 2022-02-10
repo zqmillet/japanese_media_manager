@@ -1,5 +1,6 @@
 import datetime
 import re
+import time
 import bs4
 import requests
 
@@ -112,6 +113,7 @@ class ArzonMetaData(Base):
                 continue
 
             for link in tag.find_next('td').find_all('a'):
+                time.sleep(1)
                 response = self.session.get(f'{self.base_url}{link.attrs["href"]}', proxies=self.proxies)
                 response.encoding = 'utf8'
                 soup = bs4.BeautifulSoup(response.text, 'html.parser')
@@ -127,4 +129,5 @@ class ArzonMetaData(Base):
 
     def load_outline(self):
         for tag in self.soup.find_all('h2'):
-            import pdb; pdb.set_trace()
+            self.outline = tag.next.next.strip()
+            return
