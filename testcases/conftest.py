@@ -58,6 +58,13 @@ def pytest_addoption(parser):
         default='https://www.baidu.com',
     )
 
+    parser.addoption(
+        '--session-test-threthold',
+        action='store',
+        type=float,
+        help='specify a threthold for session testing',
+        default=0.1,
+    )
 
 @pytest.fixture(name='app_id', scope='session')
 def _app_id(request):
@@ -86,6 +93,10 @@ def _proxy_password(request):
 @pytest.fixture(name='session_test_url', scope='session')
 def _session_test_url(request):
     return request.config.getoption('session_test_url')
+
+@pytest.fixture(name='session_test_threthold', scope='session')
+def _session_test_threthold(request):
+    return request.config.getoption('session_test_threthold')
 
 @pytest.fixture(name='proxies', scope='session')
 def _proxies(proxy_host, proxy_port, proxy_username, proxy_password):
