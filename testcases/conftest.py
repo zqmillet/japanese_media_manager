@@ -63,7 +63,7 @@ def pytest_addoption(parser):
         action='store',
         type=float,
         help='specify a threthold for session testing',
-        default=0.1,
+        default=0.2,
     )
 
 @pytest.fixture(name='app_id', scope='session')

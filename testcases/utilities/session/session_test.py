@@ -1,4 +1,5 @@
 import time
+import http
 import pytest
 
 from japanese_media_manager.utilities.session import Session
@@ -9,7 +10,7 @@ def test_session(interval, session_test_url, session_test_threthold):
     session = Session(interval=interval)
 
     with Timer() as timer:
-        session.get(session_test_url)
+        assert session.get(session_test_url).status_code == http.HTTPStatus.OK
     assert timer.time < session_test_threthold
 
     for _ in range(4):
@@ -22,7 +23,7 @@ def test_session_with_sleep(interval, session_test_url, session_test_threthold):
     session = Session(interval=interval)
 
     with Timer() as timer:
-        session.get(session_test_url)
+        assert session.get(session_test_url).status_code == http.HTTPStatus.OK
     assert timer.time < session_test_threthold
 
     time.sleep(interval)
