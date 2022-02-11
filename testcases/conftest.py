@@ -1,4 +1,6 @@
 import urllib
+import os
+import pathlib
 import pytest
 
 def pytest_addoption(parser):
@@ -116,3 +118,23 @@ def _proxies(proxy_host, proxy_port, proxy_username, proxy_password):
         'http': f'http://{proxy_host}:{proxy_port}',
         'https': f'http://{proxy_host}:{proxy_port}',
     }
+
+
+@pytest.fixture(name='custom_config_file_path', scope='session')
+def _custom_config_file_path():
+    return os.path.join(pathlib.Path.home(), '.jmm.cfg')
+
+@pytest.fixture(name='protect_custom_config_file', scope='session')
+def _protect_custom_config_file(custom_config_file_path):
+    if not os.path.isfile(custom_config_file_path):
+        yield
+        if os.path.isfile(custom_config_file_path):
+            os.remove(custom_config_file_path)
+    else:
+        with open(custom_config_file_path, 'rb') as file:
+            content = file.read()
+
+        os.remove(custom_config_file_path)
+        yield
+        with open(custom_config_file_path, 'wb') as file:
+            file.write(content)
