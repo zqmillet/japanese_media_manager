@@ -2,7 +2,8 @@ import datetime
 import re
 import time
 import bs4
-import requests
+
+from japanese_media_manager.utilities.session import Session
 
 from .base import Base
 
@@ -38,7 +39,7 @@ class ArzonMetaData(Base):
 
     def load_session(self):
         if not ArzonMetaData.session:
-            ArzonMetaData.session = requests.session()
+            ArzonMetaData.session = Session(interval=1)
 
         params = {'action': 'adult_customer_agecheck', 'agecheck': '1'}
         self.session.get(f'{self.base_url}/index.php', proxies=self.proxies, params=params)

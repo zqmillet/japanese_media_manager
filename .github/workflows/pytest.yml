@@ -42,7 +42,11 @@ jobs:
     - name: Test with pytest
       run: |
         export PYTHONPATH='.'
-        pytest testcases -vv --app-id ${{ secrets.APP_ID }} --app-key ${{ secrets.APP_KEY }} --session-test-url "http://www.github.com" --session-test-threthold 0.5 --reruns 5
+        pytest testcases -vv --app-id ${{ secrets.APP_ID }} --app-key ${{ secrets.APP_KEY }} --session-test-url "http://www.github.com" --session-test-threthold 0.5 --reruns 5 --cov=japanese_media_manager
+    - name: Update converage
+      uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
   test_on_windows:
     runs-on: windows-latest
     strategy:
