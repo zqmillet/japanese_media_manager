@@ -1,33 +1,45 @@
-import time
 import http
+import requests
 import pytest
 
 from japanese_media_manager.utilities.session import Session
 from japanese_media_manager.utilities.timer import Timer
 
-@pytest.mark.parametrize('interval', [1, 1.5, 0.5, 0])
-def test_session(interval, session_test_url, session_test_threthold):
-    session = Session(interval=interval)
+from japanese_media_manager.utilities.mock_server import mock_server_manager
 
-    with Timer() as timer:
-        assert session.get(session_test_url).status_code == http.HTTPStatus.OK
-    assert timer.time < session_test_threthold
+def test_session():
+    api_path = r'/book'
+    url = f'http://localhost:{8001}{api_path}'
 
-    for _ in range(4):
-        with Timer() as timer:
-            session.get(session_test_url)
-        assert timer.time - interval < session_test_threthold
+    responses = [
+        {'response': 'test_session', 'status_code': http.HTTPStatus.OK},
+    ]
+    with mock_server_manager(api_path=api_path, responses=responses):
+        session = Session()
+        response = session.get(url)
+        assert response.status_code == http.HTTPStatus.OK
 
-@pytest.mark.parametrize('interval', [1, 1.5, 0.5, 0])
-def test_session_with_sleep(interval, session_test_url, session_test_threthold):
-    session = Session(interval=interval)
+def test_session_with_retry():
+    api_path = r'/book'
+    url = f'http://localhost:{8001}{api_path}'
 
-    with Timer() as timer:
-        assert session.get(session_test_url).status_code == http.HTTPStatus.OK
-    assert timer.time < session_test_threthold
+    responses = [
+        {'response': 'test_session_with_retry', 'status_code': http.HTTPStatus.INTERNAL_SERVER_ERROR},
+        {'response': 'test_session_with_retry', 'status_code': http.HTTPStatus.INTERNAL_SERVER_ERROR},
+        {'response': 'test_session_with_retry', 'status_code': http.HTTPStatus.INTERNAL_SERVER_ERROR},
+        {'response': 'test_session_with_retry', 'status_code': http.HTTPStatus.INTERNAL_SERVER_ERROR},
+        {'response': 'test_session_with_retry', 'status_code': http.HTTPStatus.OK},
+    ]
+    with mock_server_manager(api_path=api_path, responses=responses):
+        with pytest.raises(requests.exceptions.RetryError):
+            Session().get(url)
 
-    time.sleep(interval)
+    with mock_server_manager(api_path=api_path, responses=responses):
+        Session(retries=4).get(url)
 
-    with Timer() as timer:
-        session.get(session_test_url)
-    assert timer.time < session_test_threthold
+    with mock_server_manager(api_path=api_path, responses=responses):
+        Session(retries=5).get(url)
+
+    with mock_server_manager(api_path=api_path, responses=responses):
+        with pytest.raises(requests.exceptions.RetryError):
+            Session(retries=1).get(url)

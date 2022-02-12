@@ -1,22 +1,28 @@
 import time
-import functools
+import urllib3
 import requests
 
 class Session(requests.Session):
-    def __init__(self, *args, interval=1, **kwargs):
+    def __init__(self, *args, interval=1, timeout=None, proxies=None, retries=3, **kwargs):
         self.interval = interval
+        self.timeout = timeout
+
         super().__init__(*args, **kwargs)
-        for method_name in ['get', 'post', 'patch', 'put', 'delete']:
-            setattr(self, method_name, self.wrap(method_name))
+        self.proxies.update(proxies or {'http': None, 'https': None})
         self.last_access_time = 0
 
-    def wrap(self, method_name):
-        method = getattr(self, method_name)
+        adapter = requests.adapters.HTTPAdapter(
+            max_retries=urllib3.util.Retry(
+                total=retries,
+                allowed_methods=['GET', 'POST'],
+                status_forcelist=[500]
+            )
+        )
 
-        @functools.wraps(method)
-        def _method(*args, **kwargs):
-            time.sleep(max(0, self.interval - time.time() + self.last_access_time))
-            self.last_access_time = time.time()
-            return method(*args, **kwargs)
+        self.mount('https://', adapter)
+        self.mount('http://', adapter)
 
-        return _method
+    def request(self, *args, **kwargs):
+        time.sleep(max(0, self.interval - time.time() + self.last_access_time))
+        self.last_access_time = time.time()
+        return super().request(*args, **kwargs, timeout=self.timeout)
