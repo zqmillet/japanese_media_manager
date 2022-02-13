@@ -4,7 +4,7 @@ import bs4
 from japanese_media_manager.utilities.session import Session
 
 class Base(metaclass=abc.ABCMeta):
-    def __init__(self, number, proxies=None, session_initialization=None):
+    def __init__(self, number, **kwargs):
         self.fanart = None
         self.poster = None
         self.title = None
@@ -17,7 +17,7 @@ class Base(metaclass=abc.ABCMeta):
         self.studio = None
         self.outline = None
         self.stars = []
-        self.session = Session(proxies=proxies, identity=self.__class__.__name__, initialization=session_initialization)
+        self.session = Session(**kwargs, identity=self.__class__.__name__)
         self.parser = 'html.parser'
         self.soup = self.get_soup('')
 

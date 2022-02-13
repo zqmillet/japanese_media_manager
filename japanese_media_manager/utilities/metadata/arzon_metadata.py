@@ -18,9 +18,9 @@ def check_age(session, base_url):
     session.get(f'{base_url}/index.php', params=params)
 
 class ArzonMetaData(Base):
-    def __init__(self, number, base_url='https://www.arzon.jp', proxies=None):
+    def __init__(self, number, base_url='https://www.arzon.jp', proxies=None, interval=1):
         self.base_url = base_url
-        super().__init__(number=number, proxies=proxies, session_initialization={'call': check_age, 'args': (base_url,)})
+        super().__init__(number=number, proxies=proxies, session_initialization={'call': check_age, 'args': (base_url,)}, interval=interval)
 
     def load_soup(self, number):
         params = {'mitemcd': number, 'd': 'all', 't': 'all', 's': 'all', 'm': 'all'}

@@ -18,7 +18,7 @@ class Session(requests.Session):
             Session.instances[identity] = super().__new__(cls)
         return Session.instances[identity]
 
-    def __init__(self, *args, interval=0, timeout=None, proxies=None, retries=3, identity=None, initialization=None, **kwargs):
+    def __init__(self, *args, interval=0, timeout=None, proxies=None, retries=3, identity=None, session_initialization=None, **kwargs):
         self.interval = interval
         self.timeout = timeout
         self.identity = identity
@@ -43,8 +43,8 @@ class Session(requests.Session):
         self.mount('https://', adapter)
         self.mount('http://', adapter)
 
-        if initialization:
-            initialization['call'](self, *initialization.get('args'))
+        if session_initialization:
+            session_initialization['call'](self, *session_initialization.get('args'))
 
     def request(self, *args, **kwargs):
         time.sleep(max(0, self.interval - time.time() + self.last_access_time))

@@ -16,7 +16,7 @@ class TAG:
 class AvsoxMetaData(Base):
     def __init__(self, number, base_url='https://avsox.monster', proxies=None):
         self.base_url = base_url
-        super().__init__(number, proxies)
+        super().__init__(number=number, proxies=proxies)
 
     def load_soup(self, number):
         response = self.session.get(f'{self.base_url}/cn/search/{number.upper()}')

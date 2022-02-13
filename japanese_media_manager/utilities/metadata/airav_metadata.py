@@ -10,7 +10,7 @@ ignore_fanart_urls = ['https://wiki-img.airav.wiki/storage/settings/February2020
 class AirAvMetaData(Base):
     def __init__(self, number, base_url='https://cn.airav.wiki', proxies=None):
         self.base_url = base_url
-        super().__init__(number, proxies)
+        super().__init__(number=number, proxies=proxies)
 
     def load_soup(self, number):
         response = self.session.get(f'{self.base_url}/video/{number.upper()}', params={'lang': 'zh-TW'})

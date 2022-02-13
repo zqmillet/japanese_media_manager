@@ -17,7 +17,7 @@ class TAG:
 class JavBusMetaData(Base):
     def __init__(self, number, base_url='https://www.javbus.com', proxies=None):
         self.base_url = base_url
-        super().__init__(number, proxies)
+        super().__init__(number=number, proxies=proxies)
 
     def load_soup(self, number):
         response = self.session.get(f'{self.base_url}/{number.upper()}')
