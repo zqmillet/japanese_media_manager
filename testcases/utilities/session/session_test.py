@@ -93,6 +93,8 @@ def test_session_with_retry(status_code):
         with pytest.raises(requests.exceptions.RetryError):
             Session(retries=1).get(url)
 
+DELTA_TIME = 0.2
+
 @pytest.mark.flaky(reruns=0)
 def test_session_with_timeout():
     api_path = r'/book'
@@ -107,13 +109,13 @@ def test_session_with_timeout():
         session = Session()
         with Timer() as timer:
             session.get(url)
-        assert timer.time < 0.1
+        assert timer.time < DELTA_TIME
 
     with mock_server_manager(api_path=api_path, responses=responses, wait=1):
         session = Session()
         with Timer() as timer:
             session.get(url)
-        assert 1.0 < timer.time < 1.1
+        assert 1.0 < timer.time < 1 + DELTA_TIME
 
     with mock_server_manager(api_path=api_path, responses=responses, wait=1):
         session = Session(timeout=0.5)
@@ -146,7 +148,7 @@ def test_session_with_interval():
         with Timer() as timer:
             session.get(url)
             session.get(url)
-        assert 1 < timer.time < 1.1
+        assert 1 < timer.time < 1 + DELTA_TIME
 
     responses = [{'response': 'test_session_with_timeout', 'status_code': http.HTTPStatus.INTERNAL_SERVER_ERROR}]
     with mock_server_manager(api_path=api_path, responses=responses):
@@ -156,7 +158,7 @@ def test_session_with_interval():
             with pytest.raises(requests.exceptions.RequestException):
                 session.get(url)
 
-        assert 3 < timer.time < 3.1
+        assert 3 < timer.time < 3 + DELTA_TIME
 
 def test_session_with_proxies(proxies):
     session = Session(proxies=proxies)
