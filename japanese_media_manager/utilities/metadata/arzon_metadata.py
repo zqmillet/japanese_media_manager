@@ -27,6 +27,7 @@ class ArzonMetaData(Base):
         response = self.session.get(f'{self.base_url}/itemlist.html', params=params)
         response.encoding = 'utf8'
         soup = self.get_soup(response.text)
+        self.number = number
 
         for tag in soup.find_all('div', 'pictlist'):
             for link in tag.find_all('a'):
@@ -69,11 +70,7 @@ class ArzonMetaData(Base):
             return
 
     def load_number(self):
-        for tag in self.soup.find_all('strong'):
-            if not tag.text == TAG.NUMBER:
-                continue
-            self.number = tag.next.next.strip()
-            return
+        return
 
     def load_director(self):
         for tag in self.soup.find_all('td'):
