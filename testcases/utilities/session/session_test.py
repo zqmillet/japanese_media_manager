@@ -41,13 +41,15 @@ def start_tornado(api_path, port, method, responses, wait, queue):
 @contextlib.contextmanager
 def mock_server_manager(api_path, responses, port=8001, method='get', wait=0):
     queue = multiprocessing.Queue()
+
     process = multiprocessing.Process(target=start_tornado, args=(api_path, port, method, responses, wait, queue), daemon=True)
     process.start()
     queue.get()
     yield
-    os.kill(process.pid, signal.SIGINT)
+    os.kill(process.pid, signal.SIGTERM)
     process.join()
 
+@pytest.mark.flaky(reruns=0)
 def test_session():
     api_path = r'/book'
     port = 8001
@@ -61,6 +63,7 @@ def test_session():
         response = session.get(url)
         assert response.status_code == http.HTTPStatus.OK
 
+@pytest.mark.flaky(reruns=0)
 @pytest.mark.parametrize(
     'status_code', [http.HTTPStatus.INTERNAL_SERVER_ERROR, http.HTTPStatus.BAD_REQUEST, http.HTTPStatus.BAD_GATEWAY]
 )
@@ -90,6 +93,7 @@ def test_session_with_retry(status_code):
         with pytest.raises(requests.exceptions.RetryError):
             Session(retries=1).get(url)
 
+@pytest.mark.flaky(reruns=0)
 def test_session_with_timeout():
     api_path = r'/book'
     port = 8001
@@ -128,6 +132,7 @@ def test_session_with_timeout():
             session.get(url, timeout=0.5)
         assert 'timeout' in str(information.value)
 
+@pytest.mark.flaky(reruns=0)
 def test_session_with_interval():
     api_path = r'/book'
     port = 8001
