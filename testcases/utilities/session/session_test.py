@@ -158,7 +158,7 @@ def test_session_with_interval():
             with pytest.raises(requests.exceptions.RequestException):
                 session.get(url)
 
-        assert 3 < timer.time < 3 + DELTA_TIME
+        assert 3 < timer.time < 3 + 3 * DELTA_TIME
 
 def test_session_with_proxies(proxies):
     session = Session(proxies=proxies)
