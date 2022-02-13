@@ -44,51 +44,51 @@ class Base(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def load_fanart(self):
-        pass
+        pass # pragma: no cover
 
     @abc.abstractmethod
     def load_soup(self, number):
-        pass
+        pass # pragma: no cover
 
     @abc.abstractmethod
     def load_keywords(self):
-        pass
+        pass # pragma: no cover
 
     @abc.abstractmethod
     def load_title(self):
-        pass
+        pass # pragma: no cover
 
     @abc.abstractmethod
     def load_release_date(self):
-        pass
+        pass # pragma: no cover
 
     @abc.abstractmethod
     def load_length(self):
-        pass
+        pass # pragma: no cover
 
     @abc.abstractmethod
     def load_number(self):
-        pass
+        pass # pragma: no cover
 
     @abc.abstractmethod
     def load_director(self):
-        pass
+        pass # pragma: no cover
 
     @abc.abstractmethod
     def load_series(self):
-        pass
+        pass # pragma: no cover
 
     @abc.abstractmethod
     def load_studio(self):
-        pass
+        pass # pragma: no cover
 
     @abc.abstractmethod
     def load_outline(self):
-        pass
+        pass # pragma: no cover
 
     @abc.abstractmethod
     def load_stars(self):
-        pass
+        pass # pragma: no cover
 
     def get_soup(self, html):
         return bs4.BeautifulSoup(html, self.parser)
