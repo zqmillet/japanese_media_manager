@@ -62,7 +62,7 @@ def _url(port, api_path):
     return f'http://localhost:{port}{api_path}'
 
 @pytest.mark.flaky(reruns=0)
-def test_session(api_path, port, url):
+def test_session(api_path, url):
     responses = [
         {'response': 'test_session', 'status_code': http.HTTPStatus.OK},
     ]
@@ -75,7 +75,7 @@ def test_session(api_path, port, url):
 @pytest.mark.parametrize(
     'status_code', [http.HTTPStatus.INTERNAL_SERVER_ERROR, http.HTTPStatus.BAD_REQUEST, http.HTTPStatus.BAD_GATEWAY]
 )
-def test_session_with_retry(status_code, api_path, port, url):
+def test_session_with_retry(status_code, api_path, url):
     responses = [
         {'response': 'test_session_with_retry', 'status_code': status_code},
         {'response': 'test_session_with_retry', 'status_code': status_code},
@@ -100,7 +100,7 @@ def test_session_with_retry(status_code, api_path, port, url):
 DELTA_TIME = 0.2
 
 @pytest.mark.flaky(reruns=0)
-def test_session_with_timeout(api_path, port, url):
+def test_session_with_timeout(api_path, url):
     responses = [
         {'response': 'test_session_with_timeout', 'status_code': http.HTTPStatus.OK},
     ]
@@ -135,7 +135,7 @@ def test_session_with_timeout(api_path, port, url):
         assert 'timeout' in str(information.value)
 
 @pytest.mark.flaky(reruns=0)
-def test_session_with_interval(api_path, port, url):
+def test_session_with_interval(api_path, url):
     responses = [{'response': 'test_session_with_timeout', 'status_code': http.HTTPStatus.OK}]
 
     with mock_server_manager(api_path=api_path, responses=responses):
