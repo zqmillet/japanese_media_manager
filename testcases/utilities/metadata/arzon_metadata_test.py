@@ -80,7 +80,7 @@ def test_arzon_metadata_with_nonexistent_number(number, proxies):
     assert metadata.title is None
     assert metadata.number == number
     assert metadata.outline is None
-    assert metadata.stars == []
+    assert not metadata.stars
     assert metadata.series is None
     assert metadata.studio is None
     assert metadata.director is None
