@@ -1,9 +1,7 @@
 import re
 import io
 import datetime
-import bs4
 import PIL.Image
-import requests
 
 from .base import Base
 
@@ -15,31 +13,25 @@ class TAG:
     KEYWORDS = '类别:'
     SERIES = '系列:'
 
-
-
 class AvsoxMetaData(Base):
     def __init__(self, number, base_url='https://avsox.monster', proxies=None):
         self.base_url = base_url
-        self.proxies = proxies or {'http': None, 'https': None}
-        self.load_soup(number)
-
-        super().__init__()
+        super().__init__(number, proxies)
 
     def load_soup(self, number):
-        response = requests.get(f'{self.base_url}/cn/search/{number.upper()}', proxies=self.proxies)
+        response = self.session.get(f'{self.base_url}/cn/search/{number.upper()}')
 
-        soup = bs4.BeautifulSoup(response.text, 'html.parser')
+        soup = self.get_soup(response.text)
         for tag in soup.find_all('div', 'item'):
             for link in tag.find_all('a'):
                 if number.upper() in link.text.upper():
-                    response = requests.get(f'https:{link.attrs["href"]}', proxies=self.proxies)
-                    self.soup = bs4.BeautifulSoup(response.text, 'html.parser')
+                    response = self.session.get(f'https:{link.attrs["href"]}')
+                    self.soup = self.get_soup(response.text)
                     return
-        self.soup = bs4.BeautifulSoup('', 'html.parser')
 
     def load_fanart(self):
         for tag in self.soup.find_all('a', 'bigImage'):
-            response = requests.get(tag.attrs['href'], proxies=self.proxies)
+            response = self.session.get(tag.attrs['href'])
             self.fanart = PIL.Image.open(io.BytesIO(response.content))
             return
 

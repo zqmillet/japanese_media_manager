@@ -1,8 +1,6 @@
 # import datetime
 # import re
 # import io
-import bs4
-import requests
 # import PIL.Image
 
 from .base import Base
@@ -12,21 +10,20 @@ class TAG:
 
 class JavdbMetaData(Base):
     def __init__(self, number, base_url='https://www.javdb30.com', proxies=None):
-        self.soup = None
         self.base_url = base_url
-        self.proxies = proxies or {'http': None, 'https': None}
+        super().__init__(number, proxies=proxies)
 
-        response = requests.get(f'{self.base_url}/search', params={'q': number}, proxies=proxies)
-        soup = bs4.BeautifulSoup(response.text, 'html.parser')
+    def load_soup(self, number):
+        response = self.session.get(f'{self.base_url}/search', params={'q': number})
+        soup = self.get_soup(response.text)
         for tag in soup.find_all('div', 'grid-item column'):
             for item in tag.find_all('div', 'uid'):
                 if not item.text.lower() == number.lower():
                     continue
                 link = tag.find_next('a')
                 url = f'{self.base_url}{link.attrs["href"]}'
-                response = requests.get(url, proxies=proxies)
-                self.soup = bs4.BeautifulSoup(response.text, 'html.parser')
-                super().__init__()
+                response = self.session.get(url)
+                self.soup = self.get_soup(response.text)
                 return
 
     def load_fanart(self):

@@ -1,7 +1,10 @@
 import abc
+import bs4
+
+from japanese_media_manager.utilities.session import Session
 
 class Base(metaclass=abc.ABCMeta):
-    def __init__(self):
+    def __init__(self, number, proxies=None, session_initialization=None):
         self.fanart = None
         self.poster = None
         self.title = None
@@ -14,7 +17,11 @@ class Base(metaclass=abc.ABCMeta):
         self.studio = None
         self.outline = None
         self.stars = []
+        self.session = Session(proxies=proxies, identity=self.__class__.__name__, initialization=session_initialization)
+        self.parser = 'html.parser'
+        self.soup = self.get_soup('')
 
+        self.load_soup(number)
         self.load_fanart()
         self.load_poster()
         self.load_keywords()
@@ -37,6 +44,10 @@ class Base(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def load_fanart(self):
+        pass
+
+    @abc.abstractmethod
+    def load_soup(self, number):
         pass
 
     @abc.abstractmethod
@@ -78,3 +89,6 @@ class Base(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def load_stars(self):
         pass
+
+    def get_soup(self, html):
+        return bs4.BeautifulSoup(html, self.parser)

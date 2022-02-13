@@ -1,8 +1,6 @@
 import datetime
 import re
 import io
-import bs4
-import requests
 import PIL.Image
 
 from .base import Base
@@ -19,18 +17,17 @@ class TAG:
 class JavBusMetaData(Base):
     def __init__(self, number, base_url='https://www.javbus.com', proxies=None):
         self.base_url = base_url
-        self.proxies = proxies or {'http': None, 'https': None}
+        super().__init__(number, proxies)
 
-        response = requests.get(f'{self.base_url}/{number.upper()}', proxies=self.proxies)
-        self.soup = bs4.BeautifulSoup(response.text, 'html.parser')
-
-        super().__init__()
+    def load_soup(self, number):
+        response = self.session.get(f'{self.base_url}/{number.upper()}')
+        self.soup = self.get_soup(response.text)
 
     def load_fanart(self):
         for tag in self.soup.find_all('a', 'bigImage'):
             uri = tag.attrs["href"]
             url = f'{self.base_url}{uri}' if uri.startswith('/') else uri
-            response = requests.get(url, proxies=self.proxies)
+            response = self.session.get(url)
             self.fanart = PIL.Image.open(io.BytesIO(response.content))
             return
 

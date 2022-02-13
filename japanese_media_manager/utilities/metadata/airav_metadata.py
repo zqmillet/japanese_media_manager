@@ -1,9 +1,7 @@
 import datetime
 import re
 import io
-import bs4
 import PIL.Image
-import requests
 
 from .base import Base
 
@@ -12,12 +10,11 @@ ignore_fanart_urls = ['https://wiki-img.airav.wiki/storage/settings/February2020
 class AirAvMetaData(Base):
     def __init__(self, number, base_url='https://cn.airav.wiki', proxies=None):
         self.base_url = base_url
-        self.proxies = proxies or {'http': None, 'https': None}
+        super().__init__(number, proxies)
 
-        response = requests.get(f'{self.base_url}/video/{number.upper()}', proxies=self.proxies, params={'lang': 'zh-TW'})
-        self.soup = bs4.BeautifulSoup(response.text, 'html.parser')
-
-        super().__init__()
+    def load_soup(self, number):
+        response = self.session.get(f'{self.base_url}/video/{number.upper()}', params={'lang': 'zh-TW'})
+        self.soup = self.get_soup(response.text)
 
     def load_outline(self):
         for tag in self.soup.find_all('h5', 'mb-4'):
@@ -81,7 +78,7 @@ class AirAvMetaData(Base):
             url = tag.attrs.get('content')
             if not url or url in ignore_fanart_urls:
                 continue
-            response = requests.get(url, proxies=self.proxies)
+            response = self.session.get(url)
             self.fanart = PIL.Image.open(io.BytesIO(response.content))
             return
 

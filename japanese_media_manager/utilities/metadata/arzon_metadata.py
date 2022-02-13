@@ -1,9 +1,6 @@
 import datetime
 import re
 import time
-import bs4
-
-from japanese_media_manager.utilities.session import Session
 
 from .base import Base
 
@@ -16,33 +13,27 @@ class TAG:
     STUDIO = 'AVメーカー：'
     STARTS = 'AV女優：'
 
-class ArzonMetaData(Base):
-    session = None
+def check_age(session, base_url):
+    params = {'action': 'adult_customer_agecheck', 'agecheck': '1'}
+    session.get(f'{base_url}/index.php', params=params)
 
+class ArzonMetaData(Base):
     def __init__(self, number, base_url='https://www.arzon.jp', proxies=None):
         self.base_url = base_url
-        self.proxies = proxies or {'http': None, 'https': None}
-        self.load_session()
+        super().__init__(number=number, proxies=proxies, session_initialization={'call': check_age, 'args': (base_url,)})
 
+    def load_soup(self, number):
         params = {'mitemcd': number, 'd': 'all', 't': 'all', 's': 'all', 'm': 'all'}
-        response = self.session.get(f'{self.base_url}/itemlist.html', params=params, proxies=self.proxies)
+        response = self.session.get(f'{self.base_url}/itemlist.html', params=params)
         response.encoding = 'utf8'
-        soup = bs4.BeautifulSoup(response.text, 'html.parser')
+        soup = self.get_soup(response.text)
 
         for tag in soup.find_all('div', 'pictlist'):
             for link in tag.find_all('a'):
                 response = self.session.get(f'{self.base_url}{link.attrs["href"]}')
                 response.encoding = 'utf8'
-                self.soup = bs4.BeautifulSoup(response.text, 'html.parser')
-
-        super().__init__()
-
-    def load_session(self):
-        if not ArzonMetaData.session:
-            ArzonMetaData.session = Session(interval=1)
-
-        params = {'action': 'adult_customer_agecheck', 'agecheck': '1'}
-        self.session.get(f'{self.base_url}/index.php', proxies=self.proxies, params=params)
+                self.soup = self.get_soup(response.text)
+                return
 
     def load_fanart(self):
         return
@@ -115,9 +106,9 @@ class ArzonMetaData(Base):
 
             for link in tag.find_next('td').find_all('a'):
                 time.sleep(1)
-                response = self.session.get(f'{self.base_url}{link.attrs["href"]}', proxies=self.proxies)
+                response = self.session.get(f'{self.base_url}{link.attrs["href"]}')
                 response.encoding = 'utf8'
-                soup = bs4.BeautifulSoup(response.text, 'html.parser')
+                soup = self.get_soup(response.text)
 
                 for item in soup.find_all('table', 'p_list1'):
                     image = item.find_next('img')
