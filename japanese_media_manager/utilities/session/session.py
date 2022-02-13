@@ -10,9 +10,18 @@ def get_retry_class(interval):
     return Retry
 
 class Session(requests.Session):
-    def __init__(self, *args, interval=0, timeout=None, proxies=None, retries=3, **kwargs):
+    instances = {}
+
+    def __new__(cls, *args, **kwargs): # pylint: disable=unused-argument
+        identity = kwargs.get('identity')
+        if identity not in Session.instances:
+            Session.instances[identity] = super().__new__(cls)
+        return Session.instances[identity]
+
+    def __init__(self, *args, interval=0, timeout=None, proxies=None, retries=3, identity=None, **kwargs):
         self.interval = interval
         self.timeout = timeout
+        self.identity = identity
 
         super().__init__(*args, **kwargs)
         self.proxies.update(proxies or {'http': None, 'https': None})

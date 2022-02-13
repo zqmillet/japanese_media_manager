@@ -160,3 +160,19 @@ def test_session_with_proxies(proxies):
     session = Session(proxies=proxies)
     response = session.get('https://www.google.com')
     assert response.status_code == http.HTTPStatus.OK
+
+def test_singleton():
+    session_1 = Session()
+    session_2 = Session()
+    assert session_1 is session_2
+
+    session_3 = Session(identity='1')
+    session_4 = Session(identity='2')
+    assert session_3 is not session_4
+    assert session_3 is not session_1
+    assert session_3 is not session_2
+    assert session_4 is not session_1
+    assert session_4 is not session_2
+
+    session_5 = Session(identity='1', timeout=3)
+    assert session_5 is session_3
