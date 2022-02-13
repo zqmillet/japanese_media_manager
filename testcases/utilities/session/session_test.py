@@ -49,12 +49,20 @@ def mock_server_manager(api_path, responses, port=8001, method='get', wait=0):
     os.kill(process.pid, signal.SIGTERM)
     process.join()
 
-@pytest.mark.flaky(reruns=0)
-def test_session():
-    api_path = r'/book'
-    port = 8001
-    url = f'http://localhost:{port}{api_path}'
+@pytest.fixture(name='api_path', scope='session')
+def _api_path():
+    return r'/book'
 
+@pytest.fixture(name='port', scope='session')
+def _port():
+    return 8001
+
+@pytest.fixture(name='url', scope='session')
+def _url(port, api_path):
+    return f'http://localhost:{port}{api_path}'
+
+@pytest.mark.flaky(reruns=0)
+def test_session(api_path, port, url):
     responses = [
         {'response': 'test_session', 'status_code': http.HTTPStatus.OK},
     ]
@@ -67,11 +75,7 @@ def test_session():
 @pytest.mark.parametrize(
     'status_code', [http.HTTPStatus.INTERNAL_SERVER_ERROR, http.HTTPStatus.BAD_REQUEST, http.HTTPStatus.BAD_GATEWAY]
 )
-def test_session_with_retry(status_code):
-    api_path = r'/book'
-    port = 8001
-    url = f'http://localhost:{port}{api_path}'
-
+def test_session_with_retry(status_code, api_path, port, url):
     responses = [
         {'response': 'test_session_with_retry', 'status_code': status_code},
         {'response': 'test_session_with_retry', 'status_code': status_code},
@@ -96,11 +100,7 @@ def test_session_with_retry(status_code):
 DELTA_TIME = 0.2
 
 @pytest.mark.flaky(reruns=0)
-def test_session_with_timeout():
-    api_path = r'/book'
-    port = 8001
-    url = f'http://localhost:{port}{api_path}'
-
+def test_session_with_timeout(api_path, port, url):
     responses = [
         {'response': 'test_session_with_timeout', 'status_code': http.HTTPStatus.OK},
     ]
@@ -135,11 +135,7 @@ def test_session_with_timeout():
         assert 'timeout' in str(information.value)
 
 @pytest.mark.flaky(reruns=0)
-def test_session_with_interval():
-    api_path = r'/book'
-    port = 8001
-    url = f'http://localhost:{port}{api_path}'
-
+def test_session_with_interval(api_path, port, url):
     responses = [{'response': 'test_session_with_timeout', 'status_code': http.HTTPStatus.OK}]
 
     with mock_server_manager(api_path=api_path, responses=responses):
