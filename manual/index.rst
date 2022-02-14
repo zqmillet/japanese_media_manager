@@ -8,4 +8,3 @@ Japanese Media Manager
 
    chapters/at_the_very_beginning/what_is_jmm.rst
    chapters/at_the_very_beginning/why_is_jmm.rst
-   chapters/at_the_very_beginning/what_is_number.rst
