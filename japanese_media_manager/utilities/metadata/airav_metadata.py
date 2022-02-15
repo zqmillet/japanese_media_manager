@@ -4,85 +4,89 @@ import io
 import PIL.Image
 
 from .base import Base
+from .get_soup import get_soup
 
 ignore_fanart_urls = ['https://wiki-img.airav.wiki/storage/settings/February2020/fbD5j1a1wC8Anwj6csCU.jpg']
 
 class AirAvMetaData(Base):
-    def __init__(self, number, base_url='https://cn.airav.wiki', proxies=None):
+    def __init__(self, *args, base_url='https://cn.airav.wiki', **kwargs):
         self.base_url = base_url
-        super().__init__(number=number, proxies=proxies)
+        super().__init__(*args, **kwargs)
 
-    def load_soup(self, number):
-        response = self.session.get(f'{self.base_url}/video/{number.upper()}', params={'lang': 'zh-TW'})
-        self.soup = self.get_soup(response.text)
+    def get_soup(self, number):
+        response = self.get(f'{self.base_url}/video/{number.upper()}', params={'lang': 'zh-TW'})
+        return get_soup(response.text)
 
-    def load_outline(self):
-        for tag in self.soup.find_all('h5', 'mb-4'):
+    def get_outline(self, soup):
+        for tag in soup.find_all('h5', 'mb-4'):
             if not tag.text.strip() == '劇情':
                 continue
             for item in tag.next_elements:
                 if item.name == 'p':
-                    self.outline = item.text.strip()
-                    return
+                    return item.text.strip()
+        return None
 
-    def load_title(self):
-        for tag in self.soup.find_all('p', 'mb-1'):
-            self.title = tag.text.strip()
-            return
+    def get_title(self, soup):
+        for tag in soup.find_all('p', 'mb-1'):
+            return tag.text.strip()
+        return None
 
-    def load_keywords(self):
+    def get_keywords(self, soup):
         result = []
-        for tag in self.soup.find_all('div', 'tagBtnMargin'):
+        for tag in soup.find_all('div', 'tagBtnMargin'):
             for link in tag.find_all('a'):
                 result.append(link.text.strip())
-        self.keywords = result
+        return result
 
-    def load_length(self):
-        return
+    def get_length(self, soup):
+        return None
 
-    def load_stars(self):
-        self.stars = []
-        for tag in self.soup.find_all('ul', 'videoAvstarList'):
+    def get_stars(self, soup):
+        stars = []
+        for tag in soup.find_all('ul', 'videoAvstarList'):
             for link in tag.find_all('a'):
-                self.stars.append(
+                stars.append(
                     {
                         'name': link.text.strip(),
                         'avatar_url': None
                     }
                 )
+        return stars
 
-    def load_director(self):
-        return
+    def get_director(self, soup):
+        return None
 
-    def load_series(self):
-        return
+    def get_series(self, soup):
+        return None
 
-    def load_studio(self):
-        for tag in self.soup.find_all('ul', 'list-unstyled pl-2'):
+    def get_studio(self, soup):
+        for tag in soup.find_all('ul', 'list-unstyled pl-2'):
             for item in tag.find_all('li'):
                 match = re.match(r'廠商\：(?P<studio>.+)', item.text)
                 if not match:
                     continue
-                self.studio = match.groupdict()['studio']
+                return match.groupdict()['studio']
+        return None
 
-    def load_release_date(self):
-        for tag in self.soup.find_all('ul', 'list-unstyled pl-2'):
+    def get_release_date(self, soup):
+        for tag in soup.find_all('ul', 'list-unstyled pl-2'):
             for item in tag.find_all('li'):
                 match = re.match(r'發片日期\：(?P<release_date>.+)', item.text)
                 if not match:
                     continue
-                self.release_date = datetime.datetime.strptime(match.groupdict()['release_date'], '%Y-%m-%d').date()
+                return datetime.datetime.strptime(match.groupdict()['release_date'], '%Y-%m-%d').date()
+        return None
 
-    def load_fanart(self):
-        for tag in self.soup.find_all('meta', attrs={'property': 'og:image'}):
+    def get_fanart(self, soup):
+        for tag in soup.find_all('meta', attrs={'property': 'og:image'}):
             url = tag.attrs.get('content')
             if not url or url in ignore_fanart_urls:
                 continue
-            response = self.session.get(url)
-            self.fanart = PIL.Image.open(io.BytesIO(response.content))
-            return
+            response = self.get(url)
+            return PIL.Image.open(io.BytesIO(response.content))
+        return None
 
-    def load_number(self):
-        for tag in self.soup.find_all('h5', 'd-none d-md-block text-primary mb-3'):
-            self.number = tag.text
-            return
+    def get_number(self, soup):
+        for tag in soup.find_all('h5', 'd-none d-md-block text-primary mb-3'):
+            return tag.text
+        return None

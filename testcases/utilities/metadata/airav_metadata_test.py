@@ -70,39 +70,42 @@ from japanese_media_manager.utilities.metadata import AirAvMetaData
         ),
     ]
 )
-def test_metadata(number, title, outline, keywords, stars, studio, release_date):
-    metadata = AirAvMetaData(number=number)
+def test_metadata(number, title, outline, keywords, stars, studio, release_date, proxies):
+    airav_metadata = AirAvMetaData(proxies=proxies)
+    metadata = airav_metadata.get_metadata(number)
 
-    assert metadata.length is None
-    assert metadata.series is None
-    assert metadata.director is None
+    assert metadata['length'] is None
+    assert metadata['series'] is None
+    assert metadata['director'] is None
 
-    assert metadata.number == number
-    assert metadata.title == title
-    assert metadata.outline == outline
-    assert metadata.keywords == keywords
-    assert metadata.stars == stars
-    assert metadata.studio == studio
-    assert metadata.release_date == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
-    assert metadata.fanart is not None
-    assert metadata.poster is not None
+    assert metadata['number'] == number
+    assert metadata['title'] == title
+    assert metadata['outline'] == outline
+    assert metadata['keywords'] == keywords
+    assert metadata['stars'] == stars
+    assert metadata['studio'] == studio
+    assert metadata['release_date'] == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
+    assert metadata['fanart'] is not None
+    assert metadata['poster'] is not None
 
 @pytest.mark.parametrize(
     'number', ['100221_001', 'AVSW-061']
 )
 def test_metadata_with_nonexitant_number(number):
-    metadata = AirAvMetaData(number=number)
+    airav_metadata = AirAvMetaData()
+    metadata = airav_metadata.get_metadata(number)
 
-    assert metadata.length is None
-    assert metadata.series is None
-    assert metadata.director is None
+    assert not metadata['length']
+    assert not metadata['series']
+    assert not metadata['director']
+    assert not metadata['number']
+    assert not metadata['title']
+    assert not metadata['outline']
+    assert not metadata['keywords']
+    assert not metadata['stars']
+    assert not metadata['studio']
+    assert not metadata['release_date']
+    assert not metadata['fanart']
+    assert not metadata['poster']
 
-    assert metadata.number is None
-    assert metadata.title is None
-    assert metadata.outline is None
-    assert not metadata.keywords
-    assert not metadata.stars
-    assert metadata.studio is None
-    assert metadata.release_date is None
-    assert metadata.fanart is None
-    assert metadata.poster is None
+

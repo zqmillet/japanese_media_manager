@@ -1,5 +1,4 @@
 import abc
-import bs4
 
 from japanese_media_manager.utilities.session import Session
 
@@ -34,7 +33,7 @@ class Base(Session):
     @staticmethod
     def get_poster(fanart):
         if not fanart:
-            return
+            return None
 
         width, height = fanart.size
         return fanart.crop((width - height // 1.42, 0, width, height))
