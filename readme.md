@@ -1,5 +1,6 @@
 # Japanese Media Manager
 
+![license](https://img.shields.io/badge/license-MIT-green)
 ![pytest](https://github.com/zqmillet/japanese_media_manager/actions/workflows/pytest.yml/badge.svg)
 ![pylint](https://github.com/zqmillet/japanese_media_manager/actions/workflows/pylint.yml/badge.svg)
 [![codecov](https://codecov.io/gh/zqmillet/japanese_media_manager/branch/main/graph/badge.svg?token=XV3ZZ6JX15)](https://codecov.io/gh/zqmillet/japanese_media_manager)
