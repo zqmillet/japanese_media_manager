@@ -3,6 +3,8 @@ import re
 import io
 import PIL.Image
 
+
+from .get_soup import get_soup
 from .base import Base
 
 class TAG:
@@ -15,80 +17,84 @@ class TAG:
     SERIES = '系列:'
 
 class JavBusMetaData(Base):
-    def __init__(self, number, base_url='https://www.javbus.com', proxies=None):
+    def __init__(self, *args, base_url='https://www.javbus.com', **kwargs):
         self.base_url = base_url
-        super().__init__(number=number, proxies=proxies)
+        super().__init__(*args, **kwargs)
 
-    def load_soup(self, number):
-        response = self.session.get(f'{self.base_url}/{number.upper()}')
-        self.soup = self.get_soup(response.text)
+    def get_soup(self, number):
+        response = self.get(f'{self.base_url}/{number.upper()}')
+        return get_soup(response.text)
 
-    def load_fanart(self):
-        for tag in self.soup.find_all('a', 'bigImage'):
+    def get_fanart(self, soup):
+        for tag in soup.find_all('a', 'bigImage'):
             uri = tag.attrs["href"]
             url = f'{self.base_url}{uri}' if uri.startswith('/') else uri
-            response = self.session.get(url)
-            self.fanart = PIL.Image.open(io.BytesIO(response.content))
-            return
+            response = self.get(url)
+            return PIL.Image.open(io.BytesIO(response.content))
+        return None
 
-    def load_keywords(self):
-        for tag in self.soup.find_all('meta', attrs={'name': 'keywords'}):
+    def get_keywords(self, soup):
+        for tag in soup.find_all('meta', attrs={'name': 'keywords'}):
             if 'content' in tag.attrs:
-                self.keywords = tag.attrs['content'].split(',')
-                return
+                return tag.attrs['content'].split(',')
+        return None
 
-    def load_title(self):
-        for tag in self.soup.find_all('h3'):
-            self.title = tag.text
-            return
+    def get_title(self, soup):
+        for tag in soup.find_all('h3'):
+            return tag.text
+        return None
 
-    def load_release_date(self):
-        for tag in self.soup.find_all('span', 'header', text=TAG.RELASE_DATE):
+    def get_release_date(self, soup):
+        for tag in soup.find_all('span', 'header', text=TAG.RELASE_DATE):
             *_, date = tag.parent.contents
-            self.release_date = datetime.datetime.strptime(date.strip(), '%Y-%m-%d').date()
+            return datetime.datetime.strptime(date.strip(), '%Y-%m-%d').date()
+        return None
 
-    def load_length(self):
+    def get_length(self, soup):
         pattern = r'(?P<minutes>\d+)(?P<unit>.+)'
-        for tag in self.soup.find_all('span', 'header', text=TAG.LENGTH):
+        for tag in soup.find_all('span', 'header', text=TAG.LENGTH):
             *_, length = tag.parent.contents
             match = re.match(pattern, length.strip())
             if match:
-                self.length = (int(match.groupdict()['minutes']), match.groupdict()['unit'])
+                return (int(match.groupdict()['minutes']), match.groupdict()['unit'])
+        return None
 
-    def load_number(self):
-        for tag in self.soup.find_all('span', 'header', text=TAG.NUMBER):
+    def get_number(self, soup):
+        for tag in soup.find_all('span', 'header', text=TAG.NUMBER):
             for item in tag.parent.find_all():
                 if 'style' in item.attrs:
-                    self.number = item.text
-                    return
+                    return item.text
+        return None
 
-    def load_director(self):
-        for tag in self.soup.find_all('span', 'header', text=TAG.DIRECTOR):
+    def get_director(self, soup):
+        for tag in soup.find_all('span', 'header', text=TAG.DIRECTOR):
             for link in tag.parent.find_all('a'):
-                self.director = link.text
-                return
+                return link.text
+        return None
 
-    def load_series(self):
-        for tag in self.soup.find_all('span', 'header', text=TAG.SERIES):
+    def get_series(self, soup):
+        for tag in soup.find_all('span', 'header', text=TAG.SERIES):
             for link in tag.parent.find_all('a'):
-                self.series = link.text
-                return
+                return link.text
+        return None
 
-    def load_studio(self):
-        for tag in self.soup.find_all('span', 'header', text=TAG.STUDIO):
+    def get_studio(self, soup):
+        for tag in soup.find_all('span', 'header', text=TAG.STUDIO):
             for link in tag.parent.find_all('a'):
-                self.studio = link.text
-                return
+                return link.text
+        return None
 
-    def load_stars(self):
-        for tag in self.soup.find_all('div', attrs={'id': 'avatar-waterfall'}):
+    def get_stars(self, soup):
+        stars = []
+        for tag in soup.find_all('div', attrs={'id': 'avatar-waterfall'}):
             for img in tag.find_all('img'):
-                self.stars.append(
+                stars.append(
                     {
                         'avatar_url': self.base_url + img.attrs['src'],
                         'name': img.attrs['title']
                     }
                 )
+        return stars
 
-    def load_outline(self):
-        self.outline = None
+    def get_outline(self, soup):
+        return None

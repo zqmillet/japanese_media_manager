@@ -3,92 +3,78 @@ import bs4
 
 from japanese_media_manager.utilities.session import Session
 
-class Base(metaclass=abc.ABCMeta):
-    def __init__(self, number, **kwargs):
-        self.fanart = None
-        self.poster = None
-        self.title = None
-        self.keywords = []
-        self.release_date = None
-        self.length = None
-        self.number = None
-        self.director = None
-        self.series = None
-        self.studio = None
-        self.outline = None
-        self.stars = []
-        self.session = Session(**kwargs, identity=self.__class__.__name__)
-        self.parser = 'html.parser'
-        self.soup = self.get_soup('')
+class Base(Session):
+    def get_metadata(self, number):
+        soup = self.get_soup(number)
+        fanart = self.get_fanart(soup)
 
-        self.load_soup(number)
-        self.load_fanart()
-        self.load_poster()
-        self.load_keywords()
-        self.load_title()
-        self.load_release_date()
-        self.load_length()
-        self.load_number()
-        self.load_director()
-        self.load_series()
-        self.load_studio()
-        self.load_outline()
-        self.load_stars()
+        return {
+            'fanart': fanart,
+            'poster': self.get_poster(fanart),
+            'keywords': self.get_keywords(soup),
+            'title': self.get_title(soup),
+            'release_date': self.get_release_date(soup),
+            'length': self.get_length(soup),
+            'number': self.get_number(soup),
+            'director': self.get_director(soup),
+            'series': self.get_series(soup),
+            'studio': self.get_studio(soup),
+            'stars': self.get_stars(soup),
+            'outline': self.get_outline(soup)
+        }
 
-    def load_poster(self):
-        if not self.fanart:
+    @abc.abstractmethod
+    def get_soup(self, number):
+        pass # pragma: no cover
+
+    @abc.abstractmethod
+    def get_fanart(self, soup):
+        pass # pragma: no cover
+
+    @staticmethod
+    def get_poster(fanart):
+        if not fanart:
             return
 
-        width, height = self.fanart.size
-        self.poster = self.fanart.crop((width - height // 1.42, 0, width, height))
+        width, height = fanart.size
+        return fanart.crop((width - height // 1.42, 0, width, height))
 
     @abc.abstractmethod
-    def load_fanart(self):
+    def get_keywords(self, soup):
         pass # pragma: no cover
 
     @abc.abstractmethod
-    def load_soup(self, number):
+    def get_title(self, soup):
         pass # pragma: no cover
 
     @abc.abstractmethod
-    def load_keywords(self):
+    def get_release_date(self, soup):
         pass # pragma: no cover
 
     @abc.abstractmethod
-    def load_title(self):
+    def get_length(self, soup):
         pass # pragma: no cover
 
     @abc.abstractmethod
-    def load_release_date(self):
+    def get_number(self, soup):
         pass # pragma: no cover
 
     @abc.abstractmethod
-    def load_length(self):
+    def get_director(self, soup):
         pass # pragma: no cover
 
     @abc.abstractmethod
-    def load_number(self):
+    def get_series(self, soup):
         pass # pragma: no cover
 
     @abc.abstractmethod
-    def load_director(self):
+    def get_studio(self, soup):
         pass # pragma: no cover
 
     @abc.abstractmethod
-    def load_series(self):
+    def get_outline(self, soup):
         pass # pragma: no cover
 
     @abc.abstractmethod
-    def load_studio(self):
+    def get_stars(self, soup):
         pass # pragma: no cover
-
-    @abc.abstractmethod
-    def load_outline(self):
-        pass # pragma: no cover
-
-    @abc.abstractmethod
-    def load_stars(self):
-        pass # pragma: no cover
-
-    def get_soup(self, html):
-        return bs4.BeautifulSoup(html, self.parser)

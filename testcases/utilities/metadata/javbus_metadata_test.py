@@ -110,16 +110,18 @@ from japanese_media_manager.utilities.metadata import JavBusMetaData
     ]
 )
 def test_metadata(number, title, keywords, release_date, stars, director, series, studio, length, proxies):
-    metadata = JavBusMetaData(number=number, proxies=proxies)
+    javbus_metadata = JavBusMetaData(proxies=proxies)
+    metadata = javbus_metadata.get_metadata(number)
 
-    assert metadata.title == title
-    assert metadata.keywords == keywords
-    assert metadata.release_date == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
-    assert metadata.length == length
-    assert metadata.stars == stars
-    assert metadata.number == number.upper()
-    assert metadata.director == director
-    assert metadata.series == series
-    assert metadata.studio == studio
-    assert metadata.fanart is not None
-    assert metadata.poster is not None
+    assert metadata['title'] == title
+    assert metadata['keywords'] == keywords
+    assert metadata['release_date'] == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
+    assert metadata['length'] == length
+    assert metadata['stars'] == stars
+    assert metadata['number'] == number.upper()
+    assert metadata['director'] == director
+    assert metadata['series'] == series
+    assert metadata['studio'] == studio
+    assert metadata['fanart'] is not None
+    assert metadata['poster'] is not None
+    assert metadata['outline'] is None
