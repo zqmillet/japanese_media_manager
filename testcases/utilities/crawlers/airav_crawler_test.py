@@ -1,7 +1,7 @@
 import datetime
 import pytest
 
-from japanese_media_manager.utilities.metadata import AirAvMetaData
+from japanese_media_manager.utilities.crawlers import AirAvCrawler
 
 @pytest.mark.parametrize(
     'number, title, outline, keywords, stars, studio, release_date', [
@@ -71,8 +71,8 @@ from japanese_media_manager.utilities.metadata import AirAvMetaData
     ]
 )
 def test_metadata(number, title, outline, keywords, stars, studio, release_date, proxies):
-    airav_metadata = AirAvMetaData(proxies=proxies)
-    metadata = airav_metadata.get_metadata(number)
+    crawler = AirAvCrawler(proxies=proxies)
+    metadata = crawler.get_metadata(number)
 
     assert metadata['length'] is None
     assert metadata['series'] is None
@@ -86,19 +86,18 @@ def test_metadata(number, title, outline, keywords, stars, studio, release_date,
     assert metadata['studio'] == studio
     assert metadata['release_date'] == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
     assert metadata['fanart'] is not None
-    assert metadata['poster'] is not None
+    assert metadata['poster'] is None
 
 @pytest.mark.parametrize(
     'number', ['100221_001', 'AVSW-061']
 )
 def test_metadata_with_nonexitant_number(number):
-    airav_metadata = AirAvMetaData()
-    metadata = airav_metadata.get_metadata(number)
+    crawler = AirAvCrawler()
+    metadata = crawler.get_metadata(number)
 
     assert not metadata['length']
     assert not metadata['series']
     assert not metadata['director']
-    assert not metadata['number']
     assert not metadata['title']
     assert not metadata['outline']
     assert not metadata['keywords']
@@ -107,5 +106,4 @@ def test_metadata_with_nonexitant_number(number):
     assert not metadata['release_date']
     assert not metadata['fanart']
     assert not metadata['poster']
-
-
+    assert metadata['number'] == number

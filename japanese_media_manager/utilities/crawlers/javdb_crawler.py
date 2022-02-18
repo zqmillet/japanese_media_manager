@@ -10,13 +10,13 @@ class TAG:
     RELEASE_DATE = '日期:'
     LENGTH = '時長:'
 
-class JavdbMetaData(Base):
-    def __init__(self, number, base_url='https://www.javdb30.com', proxies=None):
+class JavdbCrawler(Base):
+    def __init__(self, *args, base_url='https://www.javdb30.com', **kwargs):
         self.base_url = base_url
-        super().__init__(number, proxies=proxies)
+        super().__init__(*args, **kwargs)
 
-    def load_soup(self, number):
-        response = self.session.get(f'{self.base_url}/search', params={'q': number})
+    def get_page_soup(self, number):
+        response = self.get(f'{self.base_url}/search', params={'q': number})
         soup = self.get_soup(response.text)
         for tag in soup.find_all('div', 'grid-item column'):
             for item in tag.find_all('div', 'uid'):
@@ -24,40 +24,42 @@ class JavdbMetaData(Base):
                     continue
                 link = tag.find_next('a')
                 url = f'{self.base_url}{link.attrs["href"]}'
-                response = self.session.get(url)
-                self.soup = self.get_soup(response.text)
-                return
+                response = self.get(url)
+                return self.get_soup(response.text)
+        return self.get_soup('')
 
-    def load_fanart(self):
-        for tag in self.soup.find_all('div', 'column column-video-cover'):
+    def get_fanart(self, soup):
+        for tag in soup.find_all('div', 'column column-video-cover'):
             for image in tag.find_all('img'):
-                response = self.session.get(image.attrs['src'])
-                self.fanart = PIL.Image.open(io.BytesIO(response.content))
-                return
+                response = self.get(image.attrs['src'])
+                return PIL.Image.open(io.BytesIO(response.content))
+        return None
 
-    def load_keywords(self):
-        for tag in self.soup.find_all('div', 'panel-block'):
+    def get_keywords(self, soup):
+        keywords = []
+        for tag in soup.find_all('div', 'panel-block'):
             if not tag.find_next('strong').text == TAG.KEYWORDS:
                 continue
             for link in tag.find_all('a'):
-                self.keywords.append(link.text)
+                keywords.append(link.text)
+        return keywords
 
-    def load_title(self):
-        for tag in self.soup.find_all('h2'):
-            self.title = tag.text.strip()
-            return
+    def get_title(self, soup):
+        for tag in soup.find_all('h2'):
+            return tag.text.strip()
+        return None
 
-    def load_release_date(self):
-        for tag in self.soup.find_all('div', 'panel-block'):
+    def get_release_date(self, soup):
+        for tag in soup.find_all('div', 'panel-block'):
             strong = tag.find_next('strong')
             if not strong.text == TAG.RELEASE_DATE:
                 continue
 
-            self.release_date = datetime.datetime.strptime(strong.find_next('span').text, '%Y-%m-%d').date()
-            return
+            return datetime.datetime.strptime(strong.find_next('span').text, '%Y-%m-%d').date()
+        return None
 
-    def load_length(self):
-        for tag in self.soup.find_all('div', 'panel-block'):
+    def get_length(self, soup):
+        for tag in soup.find_all('div', 'panel-block'):
             strong = tag.find_next('strong')
             if not strong.text == TAG.LENGTH:
                 continue
@@ -66,23 +68,26 @@ class JavdbMetaData(Base):
             if not match:
                 continue
 
-            self.length = (match.groupdict()['number'], match.groupdict()['unit'])
-            return
+            return (match.groupdict()['number'], match.groupdict()['unit'])
+        return None
 
-    def load_number(self):
+    def get_number(self, soup):
         pass
 
-    def load_director(self):
+    def get_poster(self, soup):
         pass
 
-    def load_series(self):
+    def get_director(self, soup):
         pass
 
-    def load_studio(self):
+    def get_series(self, soup):
         pass
 
-    def load_stars(self):
+    def get_studio(self, soup):
         pass
 
-    def load_outline(self):
+    def get_stars(self, soup):
+        pass
+
+    def get_outline(self, soup):
         pass

@@ -1,7 +1,7 @@
 import datetime
 import pytest
 
-from japanese_media_manager.utilities.metadata import ArzonMetaData
+from japanese_media_manager.utilities.crawlers import ArzonCrawler
 
 @pytest.mark.parametrize(
     'number, title, outline, stars, series, studio, director, length, release_date', [
@@ -60,29 +60,34 @@ from japanese_media_manager.utilities.metadata import ArzonMetaData
     ]
 )
 def test_arzon_metadata(number, title, outline, stars, series, studio, director, length, release_date, proxies):
-    metadata = ArzonMetaData(number, proxies=proxies)
+    crawler = ArzonCrawler(proxies=proxies)
+    metadata = crawler.get_metadata(number)
 
-    assert metadata.fanart is None
-    assert metadata.title == title
-    assert metadata.number == number
-    assert metadata.outline == outline
-    assert metadata.stars == stars
-    assert metadata.series == series
-    assert metadata.studio == studio
-    assert metadata.director == director
-    assert metadata.length == length
-    assert metadata.release_date == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
+    assert metadata['fanart'] is None
+    assert metadata['poster'] is None
+    assert metadata['title'] == title
+    assert metadata['number'] == number
+    assert metadata['outline'] == outline
+    assert metadata['stars'] == stars
+    assert metadata['series'] == series
+    assert metadata['studio'] == studio
+    assert metadata['director'] == director
+    assert metadata['length'] == length
+    assert metadata['release_date'] == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
 
 @pytest.mark.parametrize('number', ['XXX-250', 'SB-250'])
 def test_arzon_metadata_with_nonexistent_number(number, proxies):
-    metadata = ArzonMetaData(number, proxies=proxies)
+    crawler = ArzonCrawler(proxies=proxies)
+    metadata = crawler.get_metadata(number)
 
-    assert metadata.title is None
-    assert metadata.number == number
-    assert metadata.outline is None
-    assert not metadata.stars
-    assert metadata.series is None
-    assert metadata.studio is None
-    assert metadata.director is None
-    assert metadata.length is None
-    assert metadata.release_date is None
+    assert metadata['fanart'] is None
+    assert metadata['poster'] is None
+    assert metadata['title'] is None
+    assert metadata['number'] == number
+    assert metadata['outline'] is None
+    assert metadata['series'] is None
+    assert metadata['studio'] is None
+    assert metadata['director'] is None
+    assert metadata['length'] is None
+    assert metadata['release_date'] is None
+    assert not metadata['stars']

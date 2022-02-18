@@ -6,16 +6,15 @@ from japanese_media_manager.utilities.session import Session
 class Base(Session):
     def get_metadata(self, number):
         soup = self.get_page_soup(number)
-        fanart = self.get_fanart(soup)
 
         return {
-            'fanart': fanart,
-            'poster': self.get_poster(fanart),
+            'fanart': self.get_fanart(soup),
+            'poster': self.get_poster(soup),
             'keywords': self.get_keywords(soup),
             'title': self.get_title(soup),
             'release_date': self.get_release_date(soup),
             'length': self.get_length(soup),
-            'number': self.get_number(soup),
+            'number': self.get_number(soup) or number,
             'director': self.get_director(soup),
             'series': self.get_series(soup),
             'studio': self.get_studio(soup),
@@ -35,13 +34,9 @@ class Base(Session):
     def get_fanart(self, soup):
         pass # pragma: no cover
 
-    @staticmethod
-    def get_poster(fanart):
-        if not fanart:
-            return None
-
-        width, height = fanart.size
-        return fanart.crop((width - height // 1.42, 0, width, height))
+    @abc.abstractmethod
+    def get_poster(self, soup):
+        pass # pragma: no cover
 
     @abc.abstractmethod
     def get_keywords(self, soup):

@@ -1,8 +1,9 @@
 import pytest
 
-from japanese_media_manager.utilities.metadata import JavdbMetaData
+from japanese_media_manager.utilities.crawlers import JavdbCrawler
 
 @pytest.mark.parametrize('number', ['star-325'])
 def test_javdb_metadata(number, proxies):
-    metadata = JavdbMetaData(number, proxies=proxies)
+    crawler = JavdbCrawler(proxies=proxies)
+    metadata = crawler.get_metadata(number)
     assert metadata

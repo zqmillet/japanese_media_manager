@@ -31,6 +31,9 @@ class JavBusCrawler(Base):
             return PIL.Image.open(io.BytesIO(response.content))
         return None
 
+    def get_poster(self, soup):
+        return None
+
     def get_keywords(self, soup):
         for tag in soup.find_all('meta', attrs={'name': 'keywords'}):
             if 'content' in tag.attrs:

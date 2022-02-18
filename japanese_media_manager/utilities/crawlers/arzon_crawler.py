@@ -1,6 +1,5 @@
 import datetime
 import re
-import time
 
 from .base import Base
 
@@ -13,41 +12,41 @@ class TAG:
     STUDIO = 'AVメーカー：'
     STARTS = 'AV女優：'
 
-def check_age(session, base_url):
-    params = {'action': 'adult_customer_agecheck', 'agecheck': '1'}
-    session.get(f'{base_url}/index.php', params=params)
-
-class ArzonMetaData(Base):
-    def __init__(self, number, base_url='https://www.arzon.jp', proxies=None, interval=1):
+class ArzonCrawler(Base):
+    def __init__(self, *args, base_url='https://www.arzon.jp', **kwargs):
         self.base_url = base_url
-        super().__init__(number=number, proxies=proxies, session_initialization={'call': check_age, 'args': (base_url,)}, interval=interval)
+        super().__init__(*args, **kwargs)
+        self.get(f'{self.base_url}/index.php', params={'action': 'adult_customer_agecheck', 'agecheck': '1'})
 
-    def load_soup(self, number):
+    def get_page_soup(self, number):
         params = {'mitemcd': number, 'd': 'all', 't': 'all', 's': 'all', 'm': 'all'}
-        response = self.session.get(f'{self.base_url}/itemlist.html', params=params)
+        response = self.get(f'{self.base_url}/itemlist.html', params=params)
         response.encoding = 'utf8'
         soup = self.get_soup(response.text)
-        self.number = number
 
         for tag in soup.find_all('div', 'pictlist'):
             for link in tag.find_all('a'):
-                response = self.session.get(f'{self.base_url}{link.attrs["href"]}')
+                response = self.get(f'{self.base_url}{link.attrs["href"]}')
                 response.encoding = 'utf8'
-                self.soup = self.get_soup(response.text)
-                return
+                return self.get_soup(response.text)
+        return self.get_soup('')
 
-    def load_fanart(self):
-        return
+    def get_fanart(self, soup):
+        return None
 
-    def load_keywords(self):
-        return
+    def get_poster(self, soup):
+        return None
 
-    def load_title(self):
-        for tag in self.soup.find_all('h1'):
-            self.title = tag.text
+    def get_keywords(self, soup):
+        return None
 
-    def load_release_date(self):
-        for tag in self.soup.find_all('td'):
+    def get_title(self, soup):
+        for tag in soup.find_all('h1'):
+            return tag.text
+        return None
+
+    def get_release_date(self, soup):
+        for tag in soup.find_all('td'):
             if not tag.text == TAG.RELEASE_DATE:
                 continue
 
@@ -55,68 +54,69 @@ class ArzonMetaData(Base):
             if not match:
                 continue
 
-            self.release_date = datetime.datetime.strptime(match.groupdict()['date'], '%Y/%m/%d').date()
-            return
+            return datetime.datetime.strptime(match.groupdict()['date'], '%Y/%m/%d').date()
+        return None
 
-    def load_length(self):
-        for tag in self.soup.find_all('td'):
+    def get_length(self, soup):
+        for tag in soup.find_all('td'):
             if not tag.text == TAG.LENGHT:
                 continue
 
             match = re.match(pattern=r'(?P<length>\d+)(?P<unit>\w+)', string=tag.find_next('td').text.strip())
             if not match:
                 continue
-            self.length = (match.groupdict()['length'], match.groupdict()['unit'])
-            return
+            return (match.groupdict()['length'], match.groupdict()['unit'])
+        return None
 
-    def load_number(self):
-        return
+    def get_number(self, soup):
+        return None
 
-    def load_director(self):
-        for tag in self.soup.find_all('td'):
+    def get_director(self, soup):
+        for tag in soup.find_all('td'):
             if not tag.text == TAG.DIRECTOR:
                 continue
 
-            self.director = tag.find_next('td').text.strip()
-            return
+            return tag.find_next('td').text.strip()
+        return None
 
-    def load_series(self):
-        for tag in self.soup.find_all('td'):
+    def get_series(self, soup):
+        for tag in soup.find_all('td'):
             if not tag.text == TAG.SERIES:
                 continue
 
-            self.series = tag.find_next('td').text.strip()
-            return
+            return tag.find_next('td').text.strip()
+        return None
 
-    def load_studio(self):
-        for tag in self.soup.find_all('td'):
+    def get_studio(self, soup):
+        for tag in soup.find_all('td'):
             if not tag.text == TAG.STUDIO:
                 continue
 
-            self.studio = tag.find_next('td').text.strip()
-            return
+            return tag.find_next('td').text.strip()
+        return None
 
-    def load_stars(self):
-        for tag in self.soup.find_all('td'):
+    def get_stars(self, soup):
+        stars = []
+        for tag in soup.find_all('td'):
             if not tag.text == TAG.STARTS:
                 continue
 
             for link in tag.find_next('td').find_all('a'):
-                time.sleep(1)
-                response = self.session.get(f'{self.base_url}{link.attrs["href"]}')
+                response = self.get(f'{self.base_url}{link.attrs["href"]}')
                 response.encoding = 'utf8'
                 soup = self.get_soup(response.text)
 
                 for item in soup.find_all('table', 'p_list1'):
                     image = item.find_next('img')
-                    self.stars.append(
+                    stars.append(
                         {
                             'name': image.attrs['alt'],
                             'avatar_url': f'https:{image.attrs["src"]}'
                         }
                     )
+        return stars
 
-    def load_outline(self):
-        for tag in self.soup.find_all('h2'):
-            self.outline = tag.next.next.strip()
-            return
+    def get_outline(self, soup):
+        for tag in soup.find_all('h2'):
+            return tag.next.next.strip()
+        return None

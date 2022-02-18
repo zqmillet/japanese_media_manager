@@ -1,7 +1,7 @@
 import datetime
 import pytest
 
-from japanese_media_manager.utilities.metadata import AvsoxMetaData
+from japanese_media_manager.utilities.crawlers import AvsoxCrawler
 
 @pytest.mark.parametrize(
     'number, release_date, length, studio, title, keywords, stars, series', [
@@ -78,30 +78,32 @@ from japanese_media_manager.utilities.metadata import AvsoxMetaData
     ]
 )
 def test_avsox_metadata(number, release_date, length, studio, title, keywords, stars, series, proxies):
-    metadata = AvsoxMetaData(number, proxies=proxies)
+    crawler = AvsoxCrawler(proxies=proxies)
+    metadata = crawler.get_metadata(number)
 
-    assert metadata.number == number
-    assert metadata.release_date == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
-    assert metadata.length == length
-    assert metadata.studio == studio
-    assert metadata.title == title
-    assert metadata.keywords == keywords
-    assert metadata.stars == stars
-    assert metadata.series == series
-    assert metadata.fanart is not None
-    assert metadata.poster is not None
+    assert metadata['number'] == number
+    assert metadata['release_date'] == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
+    assert metadata['length'] == length
+    assert metadata['studio'] == studio
+    assert metadata['title'] == title
+    assert metadata['keywords'] == keywords
+    assert metadata['stars'] == stars
+    assert metadata['series'] == series
+    assert metadata['fanart'] is not None
+    assert metadata['poster'] is None
 
 @pytest.mark.parametrize('number', ['XXX-1234', 'yyy-2333', 'gouliguojiashengsiyi'])
 def test_avsox_metadata_with_nonexistent_number(number, proxies):
-    metadata = AvsoxMetaData(number, proxies=proxies)
+    crawler = AvsoxCrawler(proxies=proxies)
+    metadata = crawler.get_metadata(number)
 
-    assert metadata.number is None
-    assert metadata.release_date is None
-    assert metadata.length is None
-    assert metadata.studio is None
-    assert metadata.title is None
-    assert not metadata.keywords
-    assert not metadata.stars
-    assert metadata.series is None
-    assert metadata.fanart is None
-    assert metadata.poster is None
+    assert metadata['number'] == number
+    assert metadata['release_date'] is None
+    assert metadata['length'] is None
+    assert metadata['studio'] is None
+    assert metadata['title'] is None
+    assert metadata['series'] is None
+    assert metadata['fanart'] is None
+    assert metadata['poster'] is None
+    assert not metadata['keywords']
+    assert not metadata['stars']

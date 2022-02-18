@@ -4,18 +4,17 @@ import io
 import PIL.Image
 
 from .base import Base
-from .get_soup import get_soup
 
 ignore_fanart_urls = ['https://wiki-img.airav.wiki/storage/settings/February2020/fbD5j1a1wC8Anwj6csCU.jpg']
 
-class AirAvMetaData(Base):
+class AirAvCrawler(Base):
     def __init__(self, *args, base_url='https://cn.airav.wiki', **kwargs):
         self.base_url = base_url
         super().__init__(*args, **kwargs)
 
-    def get_soup(self, number):
+    def get_page_soup(self, number):
         response = self.get(f'{self.base_url}/video/{number.upper()}', params={'lang': 'zh-TW'})
-        return get_soup(response.text)
+        return self.get_soup(response.text)
 
     def get_outline(self, soup):
         for tag in soup.find_all('h5', 'mb-4'):
@@ -24,6 +23,9 @@ class AirAvMetaData(Base):
             for item in tag.next_elements:
                 if item.name == 'p':
                     return item.text.strip()
+        return None
+
+    def get_poster(self, soup):
         return None
 
     def get_title(self, soup):
