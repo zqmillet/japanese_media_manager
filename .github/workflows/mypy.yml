@@ -1,4 +1,4 @@
-name: flake8
+name: mypy
 on: [push]
 jobs:
   build:
@@ -15,10 +15,10 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8
+        pip install mypy
         pip install -r japanese_media_manager/requirements.txt
         pip install -r testcases/requirements.txt
-    - name: run flake8
+    - name: run mypy
       run: |
         export PYTHONPATH='.'
-        flake8 japanese_media_manager testcases
+        python -m mypy japanese_media_manager testcases
