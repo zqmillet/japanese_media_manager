@@ -3,8 +3,6 @@ import re
 import io
 import PIL.Image
 
-
-from .get_soup import get_soup
 from .base import Base
 
 class TAG:
@@ -16,14 +14,14 @@ class TAG:
     LABEL = '發行商:'
     SERIES = '系列:'
 
-class JavBusMetaData(Base):
+class JavBusCrawler(Base):
     def __init__(self, *args, base_url='https://www.javbus.com', **kwargs):
         self.base_url = base_url
         super().__init__(*args, **kwargs)
 
-    def get_soup(self, number):
+    def get_page_soup(self, number):
         response = self.get(f'{self.base_url}/{number.upper()}')
-        return get_soup(response.text)
+        return self.get_soup(response.text)
 
     def get_fanart(self, soup):
         for tag in soup.find_all('a', 'bigImage'):

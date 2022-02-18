@@ -1,10 +1,11 @@
 import abc
+import bs4
 
 from japanese_media_manager.utilities.session import Session
 
 class Base(Session):
     def get_metadata(self, number):
-        soup = self.get_soup(number)
+        soup = self.get_page_soup(number)
         fanart = self.get_fanart(soup)
 
         return {
@@ -22,8 +23,12 @@ class Base(Session):
             'outline': self.get_outline(soup)
         }
 
+    @staticmethod
+    def get_soup(html):
+        return bs4.BeautifulSoup(html, 'html.parser')
+
     @abc.abstractmethod
-    def get_soup(self, number):
+    def get_page_soup(self, number):
         pass # pragma: no cover
 
     @abc.abstractmethod

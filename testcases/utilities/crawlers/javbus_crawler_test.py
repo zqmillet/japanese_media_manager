@@ -1,7 +1,7 @@
 import datetime
 import pytest
 
-from japanese_media_manager.utilities.metadata import JavBusMetaData
+from japanese_media_manager.utilities.crawlers import JavBusCrawler
 
 @pytest.mark.parametrize(
     'number, title, keywords, release_date, stars, director, series, studio, length', [
@@ -110,8 +110,8 @@ from japanese_media_manager.utilities.metadata import JavBusMetaData
     ]
 )
 def test_metadata(number, title, keywords, release_date, stars, director, series, studio, length, proxies):
-    javbus_metadata = JavBusMetaData(proxies=proxies)
-    metadata = javbus_metadata.get_metadata(number)
+    crawler = JavBusCrawler(proxies=proxies)
+    metadata = crawler.get_metadata(number)
 
     assert metadata['title'] == title
     assert metadata['keywords'] == keywords
