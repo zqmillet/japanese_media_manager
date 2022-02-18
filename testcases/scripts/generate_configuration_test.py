@@ -10,7 +10,6 @@ def test_generate_configuration(monkeypatch, capsys, custom_config_file_path):
     result = capsys.readouterr()
     assert result.out.strip() == f'configuration has been saved in file {custom_config_file_path}'
 
-
     monkeypatch.setattr('sys.stdin', io.StringIO('n\n'))
     generate_configuration()
     result = capsys.readouterr()

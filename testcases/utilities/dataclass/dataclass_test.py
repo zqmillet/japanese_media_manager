@@ -31,8 +31,8 @@ def test_dataclass():
     employee = Employee(data)
     assert employee.age == 233
     assert employee.name == 'kinopico'
-    assert employee.educations[0].school == 'jialidun' # pylint: disable=unsubscriptable-object
-    assert employee.educations[0].degree == 'master' # pylint: disable=unsubscriptable-object
+    assert employee.educations[0].school == 'jialidun'  # pylint: disable=unsubscriptable-object
+    assert employee.educations[0].degree == 'master'  # pylint: disable=unsubscriptable-object
 
     assert isinstance(repr(employee), str)
 
@@ -91,8 +91,8 @@ def test_nested_classes():
     }
 
     employee = Stuff(data)
-    assert employee.company.name == 'jialidun' # pylint: disable=no-member
-    assert employee.company.location == 'anywhere' # pylint: disable=no-member
+    assert employee.company.name == 'jialidun'  # pylint: disable=no-member
+    assert employee.company.location == 'anywhere'  # pylint: disable=no-member
     assert employee.age == 233
     assert employee.name == 'kinopico'
 
@@ -137,10 +137,10 @@ def test_field_with_alias():
         age = Field(type=int, default=233, alias='year')
 
     stuff = Stuff({'name': 'kinopico'})
-    assert stuff.year == 233 # pylint: disable=no-member
+    assert stuff.year == 233  # pylint: disable=no-member
 
     stuff = Stuff({'name': 'kinopico', 'year': 18})
-    assert stuff.year == 18 # pylint: disable=no-member
+    assert stuff.year == 18  # pylint: disable=no-member
 
 def test_assertion_exception():
     with pytest.raises(AssertionException) as information:

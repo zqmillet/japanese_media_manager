@@ -16,10 +16,10 @@ from japanese_media_manager.utilities.timer import Timer
 def start_tornado(api_path, port, method, responses, wait, queue):
     logging.getLogger('tornado.access').disabled = True
 
-    class RequestHandler(tornado.web.RequestHandler): # pylint: disable = abstract-method
+    class RequestHandler(tornado.web.RequestHandler):  # pylint: disable = abstract-method
         response_index = 0
 
-    def _method(self, *args, **kwargs): # pylint: disable = unused-argument
+    def _method(self, *args, **kwargs):  # pylint: disable = unused-argument
         response = responses[RequestHandler.response_index % len(responses)]
         RequestHandler.response_index += 1
         time.sleep(wait)

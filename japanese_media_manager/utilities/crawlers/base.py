@@ -28,52 +28,52 @@ class Base(Session):
 
     @abc.abstractmethod
     def get_page_soup(self, number):
-        pass # pragma: no cover
+        pass  # pragma: no cover
 
     @abc.abstractmethod
     def get_fanart(self, soup):
-        pass # pragma: no cover
+        pass  # pragma: no cover
 
     @abc.abstractmethod
     def get_poster(self, soup):
-        pass # pragma: no cover
+        pass  # pragma: no cover
 
     @abc.abstractmethod
     def get_keywords(self, soup):
-        pass # pragma: no cover
+        pass  # pragma: no cover
 
     @abc.abstractmethod
     def get_title(self, soup):
-        pass # pragma: no cover
+        pass  # pragma: no cover
 
     @abc.abstractmethod
     def get_release_date(self, soup):
-        pass # pragma: no cover
+        pass  # pragma: no cover
 
     @abc.abstractmethod
     def get_length(self, soup):
-        pass # pragma: no cover
+        pass  # pragma: no cover
 
     @abc.abstractmethod
     def get_number(self, soup):
-        pass # pragma: no cover
+        pass  # pragma: no cover
 
     @abc.abstractmethod
     def get_director(self, soup):
-        pass # pragma: no cover
+        pass  # pragma: no cover
 
     @abc.abstractmethod
     def get_series(self, soup):
-        pass # pragma: no cover
+        pass  # pragma: no cover
 
     @abc.abstractmethod
     def get_studio(self, soup):
-        pass # pragma: no cover
+        pass  # pragma: no cover
 
     @abc.abstractmethod
     def get_outline(self, soup):
-        pass # pragma: no cover
+        pass  # pragma: no cover
 
     @abc.abstractmethod
     def get_stars(self, soup):
-        pass # pragma: no cover
+        pass  # pragma: no cover
