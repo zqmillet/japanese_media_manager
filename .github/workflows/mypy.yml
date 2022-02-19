@@ -22,4 +22,4 @@ jobs:
     - name: run mypy
       run: |
         export PYTHONPATH='.'
-        python -m mypy japanese_media_manager testcases
+        python -m mypy japanese_media_manager

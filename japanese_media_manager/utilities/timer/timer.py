@@ -1,16 +1,17 @@
-import time as _time
+from __future__ import annotations
+from time import time
+from typing import Any
 
-class Timer():
+class Timer:
+    def __init__(self) -> None:
+        self.start_time = 0.0
+        self.end_time = 0.0
+        self.time = 0.0
 
-    def __init__(self):
-        self.start_time = 0
-        self.end_time = 0
-        self.time = 0
-
-    def __enter__(self):
-        self.start_time = _time.time()
+    def __enter__(self) -> Timer:
+        self.start_time = time()
         return self
 
-    def __exit__(self, exception_type, value, trace):
-        self.end_time = _time.time()
+    def __exit__(self, exception_type: type, value: Exception, trace: Any) -> None:
+        self.end_time = time()
         self.time = self.end_time - self.start_time
