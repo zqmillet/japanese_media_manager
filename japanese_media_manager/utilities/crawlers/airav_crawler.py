@@ -10,7 +10,16 @@ from .base import Base
 ignore_fanart_urls = ['https://wiki-img.airav.wiki/storage/settings/February2020/fbD5j1a1wC8Anwj6csCU.jpg']
 
 class AirAvCrawler(Base):
+    """
+    AirAV 爬虫.
+    """
+
     def __init__(self, *args: Any, base_url: str = 'https://cn.airav.wiki', **kwargs: Any):
+        """
+        :param base_url: AirAV 的网址, 并有默认值, 如果网址发生变化, 构造实例的时候可以指定 :py:obj:`base_url`.
+        :param args: 透传给父类 :py:obj:`Base`.
+        :param kwargs: 透传给父类 :py:obj:`Base`.
+        """
         self.base_url = base_url
         super().__init__(*args, **kwargs)
 

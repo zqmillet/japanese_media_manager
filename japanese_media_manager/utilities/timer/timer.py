@@ -3,7 +3,20 @@ from time import time
 from typing import Any
 
 class Timer:
+    """
+    计时上下文管理器, 仅供自动化测试使用.
+
+    .. code-block:: python
+
+        with Timer() as timer:
+            # some code
+        print('consuming time is', timer.time)
+    """
+
     def __init__(self) -> None:
+        """
+        构造时无需任何参数.
+        """
         self.start_time = 0.0
         self.end_time = 0.0
         self.time = 0.0

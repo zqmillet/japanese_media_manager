@@ -18,6 +18,7 @@ from japanese_media_manager.utilities.get_number import get_number
         ('100221_001', '100221-001'),
         ('100221_001hdd', '100221-001'),
         ('100221_001-C', '100221-001'),
+        ('AAA-C', None),
     ]
 )
 def test_get_number(number, expected_output):

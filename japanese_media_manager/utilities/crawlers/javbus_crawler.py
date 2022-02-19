@@ -17,7 +17,16 @@ class TAG:
     SERIES = '系列:'
 
 class JavBusCrawler(Base):
+    """
+    JavBus 爬虫.
+    """
+
     def __init__(self, *args: Any, base_url: str = 'https://www.javbus.com', **kwargs: Any):
+        """
+        :param base_url: JavBus 的网址, 并有默认值, 如果网址发生变化, 构造实例的时候可以指定 :py:obj:`base_url`.
+        :param args: 透传给父类 :py:obj:`Base`.
+        :param kwargs: 透传给父类 :py:obj:`Base`.
+        """
         self.base_url = base_url
         super().__init__(*args, **kwargs)
 

@@ -7,7 +7,17 @@ from PIL.Image import Image
 from japanese_media_manager.utilities.session import Session
 
 class Base(Session):
+    """
+    :py:class:`Base` 继承自 :py:class:`Session` 类, 是所有 Crawler 的父类, 并且是抽象类, 其所有子类, 需要实现 :py:meth:`get_page_soup`, :py:meth:`get_fanart` 等成员方法.
+    :py:class:`Base` 类会自动控制这些成员方法的调用, 并获取影片的元数据, 通过 :py:meth:`get_metadata` 方法返回给调用方.
+
+    如果你想写另一个新网站的爬虫, 请继承该类.
+    """
+
     def get_metadata(self, number: str) -> dict:
+        """
+        根据番号 :py:obj:`number` 获取元数据.
+        """
         soup = self.get_page_soup(number)
 
         return {
@@ -27,56 +37,103 @@ class Base(Session):
 
     @staticmethod
     def get_soup(html: str) -> BeautifulSoup:
+        """
+        将 HTML 格式的字符串 :py:obj:`html` 转换成 :py:class:`BeautifulSoup`. 该函数并非虚函数, 继承时可以不用重写此函数.
+        """
         return BeautifulSoup(html, 'html.parser')
 
     @abstractmethod
     def get_page_soup(self, number: str) -> BeautifulSoup:
+        """
+        该函数的作用是根据番号 :py:obj:`number` 获取影片页面的地址, 并获取 :py:obj:`BeautifulSoup` 格式的页面内容.
+        """
         pass  # pragma: no cover
 
     @abstractmethod
     def get_fanart(self, soup: BeautifulSoup) -> Optional[Image]:
+        """
+        从影片页面 :py:obj:`soup` 中获取 Fanart 地址, 并加载到内存中并返回图片.
+        """
         pass  # pragma: no cover
 
     @abstractmethod
     def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:
+        """
+        从影片页面 :py:obj:`soup` 中获取海报地址, 并加载到内存中并返回图片.
+        """
         pass  # pragma: no cover
 
     @abstractmethod
     def get_keywords(self, soup: BeautifulSoup) -> List[str]:
+        """
+        从影片页面 :py:obj:`soup` 中获影片的关键字列表.
+        """
         pass  # pragma: no cover
 
     @abstractmethod
     def get_title(self, soup: BeautifulSoup) -> Optional[str]:
+        """
+        从影片页面 :py:obj:`soup` 中获影片的标题.
+        """
         pass  # pragma: no cover
 
     @abstractmethod
     def get_release_date(self, soup: BeautifulSoup) -> Optional[date]:
+        """
+        从影片页面 :py:obj:`soup` 中获影片的发售日期.
+        """
         pass  # pragma: no cover
 
     @abstractmethod
     def get_length(self, soup: BeautifulSoup) -> Optional[Tuple[int, str]]:
+        """
+        从影片页面 :py:obj:`soup` 中获影片的时长.
+        """
         pass  # pragma: no cover
 
     @abstractmethod
     def get_number(self, soup: BeautifulSoup) -> Optional[str]:
+        """
+        从影片页面 :py:obj:`soup` 中获影片的番号.
+        """
         pass  # pragma: no cover
 
     @abstractmethod
     def get_director(self, soup: BeautifulSoup) -> Optional[str]:
+        """
+        从影片页面 :py:obj:`soup` 中获影片的导演.
+        """
         pass  # pragma: no cover
 
     @abstractmethod
     def get_series(self, soup: BeautifulSoup) -> Optional[str]:
+        """
+        从影片页面 :py:obj:`soup` 中获影片的系列名称.
+        """
         pass  # pragma: no cover
 
     @abstractmethod
     def get_studio(self, soup: BeautifulSoup) -> Optional[str]:
+        """
+        从影片页面 :py:obj:`soup` 中获影片的工作室名称.
+        """
         pass  # pragma: no cover
 
     @abstractmethod
     def get_outline(self, soup: BeautifulSoup) -> Optional[str]:
+        """
+        从影片页面 :py:obj:`soup` 中获影片的故事梗概.
+        """
         pass  # pragma: no cover
 
     @abstractmethod
     def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:
+        """
+        从影片页面 :py:obj:`soup` 中获影片的演员列表.
+
+        列表中的元素是一个字典, 字典中有两个字段, 分别是:
+
+        - ``name`` 演员姓名.
+        - ``avatar_url`` 头像地址.
+        """
         pass  # pragma: no cover

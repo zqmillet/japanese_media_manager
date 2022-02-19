@@ -25,3 +25,10 @@ Japanese Media Manager
 
    chapters/contribution/welcom_to_contribute.rst
    chapters/contribution/contributors.rst
+
+.. toctree::
+   :maxdepth: 4
+   :caption: 源代码
+   :numbered:
+
+   chapters/source_code/utilities.rst
