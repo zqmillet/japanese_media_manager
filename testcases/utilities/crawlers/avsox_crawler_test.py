@@ -78,7 +78,7 @@ from japanese_media_manager.utilities.crawlers import AvsoxCrawler
     ]
 )
 def test_avsox_metadata(number, release_date, length, studio, title, keywords, stars, series, proxies):
-    crawler = AvsoxCrawler(proxies=proxies)
+    crawler = AvsoxCrawler(proxies=proxies, verify=False)
     metadata = crawler.get_metadata(number)
 
     assert metadata['number'] == number
@@ -94,7 +94,7 @@ def test_avsox_metadata(number, release_date, length, studio, title, keywords, s
 
 @pytest.mark.parametrize('number', ['XXX-1234', 'yyy-2333', 'gouliguojiashengsiyi'])
 def test_avsox_metadata_with_nonexistent_number(number, proxies):
-    crawler = AvsoxCrawler(proxies=proxies)
+    crawler = AvsoxCrawler(proxies=proxies, verify=False)
     metadata = crawler.get_metadata(number)
 
     assert metadata['number'] == number

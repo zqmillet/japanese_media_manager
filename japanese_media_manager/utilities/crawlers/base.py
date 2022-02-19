@@ -1,10 +1,13 @@
-import abc
-import bs4
+from abc import abstractmethod
+from datetime import date
+from typing import List, Tuple, Dict, Optional
+from bs4 import BeautifulSoup
+from PIL.Image import Image
 
 from japanese_media_manager.utilities.session import Session
 
 class Base(Session):
-    def get_metadata(self, number):
+    def get_metadata(self, number: str) -> dict:
         soup = self.get_page_soup(number)
 
         return {
@@ -23,57 +26,57 @@ class Base(Session):
         }
 
     @staticmethod
-    def get_soup(html):
-        return bs4.BeautifulSoup(html, 'html.parser')
+    def get_soup(html: str) -> BeautifulSoup:
+        return BeautifulSoup(html, 'html.parser')
 
-    @abc.abstractmethod
-    def get_page_soup(self, number):
+    @abstractmethod
+    def get_page_soup(self, number: str) -> BeautifulSoup:
         pass  # pragma: no cover
 
-    @abc.abstractmethod
-    def get_fanart(self, soup):
+    @abstractmethod
+    def get_fanart(self, soup: BeautifulSoup) -> Optional[Image]:
         pass  # pragma: no cover
 
-    @abc.abstractmethod
-    def get_poster(self, soup):
+    @abstractmethod
+    def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:
         pass  # pragma: no cover
 
-    @abc.abstractmethod
-    def get_keywords(self, soup):
+    @abstractmethod
+    def get_keywords(self, soup: BeautifulSoup) -> List[str]:
         pass  # pragma: no cover
 
-    @abc.abstractmethod
-    def get_title(self, soup):
+    @abstractmethod
+    def get_title(self, soup: BeautifulSoup) -> Optional[str]:
         pass  # pragma: no cover
 
-    @abc.abstractmethod
-    def get_release_date(self, soup):
+    @abstractmethod
+    def get_release_date(self, soup: BeautifulSoup) -> Optional[date]:
         pass  # pragma: no cover
 
-    @abc.abstractmethod
-    def get_length(self, soup):
+    @abstractmethod
+    def get_length(self, soup: BeautifulSoup) -> Optional[Tuple[int, str]]:
         pass  # pragma: no cover
 
-    @abc.abstractmethod
-    def get_number(self, soup):
+    @abstractmethod
+    def get_number(self, soup: BeautifulSoup) -> Optional[str]:
         pass  # pragma: no cover
 
-    @abc.abstractmethod
-    def get_director(self, soup):
+    @abstractmethod
+    def get_director(self, soup: BeautifulSoup) -> Optional[str]:
         pass  # pragma: no cover
 
-    @abc.abstractmethod
-    def get_series(self, soup):
+    @abstractmethod
+    def get_series(self, soup: BeautifulSoup) -> Optional[str]:
         pass  # pragma: no cover
 
-    @abc.abstractmethod
-    def get_studio(self, soup):
+    @abstractmethod
+    def get_studio(self, soup: BeautifulSoup) -> Optional[str]:
         pass  # pragma: no cover
 
-    @abc.abstractmethod
-    def get_outline(self, soup):
+    @abstractmethod
+    def get_outline(self, soup: BeautifulSoup) -> Optional[str]:
         pass  # pragma: no cover
 
-    @abc.abstractmethod
-    def get_stars(self, soup):
+    @abstractmethod
+    def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:
         pass  # pragma: no cover

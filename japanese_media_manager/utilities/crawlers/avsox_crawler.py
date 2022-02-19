@@ -1,7 +1,9 @@
-import re
-import io
-import datetime
-import PIL.Image
+from re import match
+from datetime import datetime, date
+from io import BytesIO
+from typing import List, Any, Tuple, Dict, Optional
+from bs4 import BeautifulSoup
+from PIL.Image import Image, open as open_image
 
 from .base import Base
 
@@ -14,11 +16,11 @@ class TAG:
     SERIES = '系列:'
 
 class AvsoxCrawler(Base):
-    def __init__(self, *args, base_url='https://avsox.monster', **kwargs):
+    def __init__(self, *args: Any, base_url: str = 'https://avsox.monster', **kwargs: Any):
         self.base_url = base_url
         super().__init__(*args, **kwargs)
 
-    def get_page_soup(self, number):
+    def get_page_soup(self, number: str) -> BeautifulSoup:
         response = self.get(f'{self.base_url}/cn/search/{number.upper()}')
 
         soup = self.get_soup(response.text)
@@ -29,16 +31,16 @@ class AvsoxCrawler(Base):
                     return self.get_soup(response.text)
         return self.get_soup('')
 
-    def get_poster(self, soup):
+    def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:
         return None
 
-    def get_fanart(self, soup):
+    def get_fanart(self, soup: BeautifulSoup) -> Optional[Image]:
         for tag in soup.find_all('a', 'bigImage'):
             response = self.get(tag.attrs['href'])
-            return PIL.Image.open(io.BytesIO(response.content))
+            return open_image(BytesIO(response.content))
         return None
 
-    def get_keywords(self, soup):
+    def get_keywords(self, soup: BeautifulSoup) -> List[str]:
         keywords = []
         for tag in soup.find_all('p', 'header'):
             if not tag.text == TAG.KEYWORDS:
@@ -47,34 +49,34 @@ class AvsoxCrawler(Base):
                 keywords.append(item.text)
         return keywords
 
-    def get_series(self, soup):
+    def get_series(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('p', 'header'):
             if tag.text == TAG.SERIES:
                 return tag.find_next('p').text
         return None
 
-    def get_number(self, soup):
+    def get_number(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('span', 'header'):
             if tag.text == TAG.NUMBER:
                 _, number_tag = tag.parent.find_all('span')
                 return number_tag.text
         return None
 
-    def get_release_date(self, soup):
+    def get_release_date(self, soup: BeautifulSoup) -> Optional[date]:
         for tag in soup.find_all('span', 'header'):
             if tag.text == TAG.RELEASE_DATE:
-                return datetime.datetime.strptime(tag.next.next.strip(), '%Y-%m-%d').date()
+                return datetime.strptime(tag.next.next.strip(), '%Y-%m-%d').date()
         return None
 
-    def get_length(self, soup):
+    def get_length(self, soup: BeautifulSoup) -> Optional[Tuple[int, str]]:
         for tag in soup.find_all('span', 'header'):
             if tag.text == TAG.LENGTH:
-                match = re.match(pattern=r'(?P<number>\d+)(?P<unit>\w+)', string=tag.next.next.strip())
-                if match:
-                    return match.groupdict()['number'], match.groupdict()['unit']
+                result = match(pattern=r'(?P<number>\d+)(?P<unit>\w+)', string=tag.next.next.strip())
+                if result:
+                    return result.groupdict()['number'], result.groupdict()['unit']
         return None
 
-    def get_stars(self, soup):
+    def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:
         stars = []
         for tag in soup.find_all('div', attrs={'id': 'avatar-waterfall'}):
             for item in tag.find_all('a', 'avatar-box'):
@@ -86,19 +88,19 @@ class AvsoxCrawler(Base):
                 )
         return stars
 
-    def get_studio(self, soup):
+    def get_studio(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('p', 'header'):
             if tag.text.strip() == TAG.STUDIO:
                 return tag.find_next('p').text
         return None
 
-    def get_title(self, soup):
+    def get_title(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('h3'):
             return tag.text
         return None
 
-    def get_director(self, soup):
+    def get_director(self, soup: BeautifulSoup) -> Optional[str]:
         return None
 
-    def get_outline(self, soup):
+    def get_outline(self, soup: BeautifulSoup) -> Optional[str]:
         return None

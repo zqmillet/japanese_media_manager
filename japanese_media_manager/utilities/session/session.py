@@ -1,23 +1,34 @@
 import time
 import http
+import typing
 import urllib3
 import requests
 
-def get_retry_class(interval):
+def get_retry_class(interval: float) -> type:
     class Retry(urllib3.util.Retry):
-        def sleep(self, response=None):
+        def sleep(self, response: urllib3.response.HTTPResponse = None) -> None:
             time.sleep(interval)
     return Retry
 
 class Session(requests.Session):
-    def __init__(self, *args, interval=0, timeout=None, proxies=None, retries=3, identity=None, **kwargs):
+    def __init__(
+        self,
+        *args: typing.Any,
+        interval: float = 0,
+        timeout: typing.Optional[float] = None,
+        proxies: typing.Optional[dict] = None,
+        retries: int = 3,
+        identity: str = None,
+        verify: bool = False,
+        **kwargs: typing.Any
+    ):
+        super().__init__(*args, **kwargs)
         self.interval = interval
         self.timeout = timeout
         self.identity = identity
-
-        super().__init__(*args, **kwargs)
+        self.verify = verify
         self.proxies.update(proxies or {'http': None, 'https': None})
-        self.last_access_time = 0
+        self.last_access_time = 0.0
 
         for prefix in ['http://', 'https://']:
             self.mount(
@@ -36,8 +47,9 @@ class Session(requests.Session):
                 )
             )
 
-    def request(self, *args, **kwargs):
+    def request(self, *args: typing.Any, **kwargs: typing.Any) -> requests.models.Response:
         time.sleep(max(0, self.interval - time.time() + self.last_access_time))
         self.last_access_time = time.time()
         kwargs['timeout'] = kwargs.get('timeout') or self.timeout
+        kwargs['verify'] = kwargs.get('verify') or self.verify
         return super().request(*args, **kwargs)

@@ -1,7 +1,9 @@
-import datetime
-import re
-import io
-import PIL.Image
+from re import match
+from datetime import datetime, date
+from io import BytesIO
+from typing import List, Any, Tuple, Dict, Optional
+from bs4 import BeautifulSoup
+from PIL.Image import Image, open as open_image
 
 from .base import Base
 
@@ -11,11 +13,11 @@ class TAG:
     LENGTH = '時長:'
 
 class JavdbCrawler(Base):
-    def __init__(self, *args, base_url='https://www.javdb30.com', **kwargs):
+    def __init__(self, *args: Any, base_url: str = 'https://www.javdb30.com', **kwargs: Any):
         self.base_url = base_url
         super().__init__(*args, **kwargs)
 
-    def get_page_soup(self, number):
+    def get_page_soup(self, number: str) -> BeautifulSoup:
         response = self.get(f'{self.base_url}/search', params={'q': number})
         soup = self.get_soup(response.text)
         for tag in soup.find_all('div', 'grid-item column'):
@@ -28,14 +30,14 @@ class JavdbCrawler(Base):
                 return self.get_soup(response.text)
         return self.get_soup('')
 
-    def get_fanart(self, soup):
+    def get_fanart(self, soup: BeautifulSoup) -> Optional[Image]:
         for tag in soup.find_all('div', 'column column-video-cover'):
             for image in tag.find_all('img'):
                 response = self.get(image.attrs['src'])
-                return PIL.Image.open(io.BytesIO(response.content))
+                return open_image(BytesIO(response.content))
         return None
 
-    def get_keywords(self, soup):
+    def get_keywords(self, soup: BeautifulSoup) -> List[str]:
         keywords = []
         for tag in soup.find_all('div', 'panel-block'):
             if not tag.find_next('strong').text == TAG.KEYWORDS:
@@ -44,50 +46,50 @@ class JavdbCrawler(Base):
                 keywords.append(link.text)
         return keywords
 
-    def get_title(self, soup):
+    def get_title(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('h2'):
             return tag.text.strip()
         return None
 
-    def get_release_date(self, soup):
+    def get_release_date(self, soup: BeautifulSoup) -> Optional[date]:
         for tag in soup.find_all('div', 'panel-block'):
             strong = tag.find_next('strong')
             if not strong.text == TAG.RELEASE_DATE:
                 continue
 
-            return datetime.datetime.strptime(strong.find_next('span').text, '%Y-%m-%d').date()
+            return datetime.strptime(strong.find_next('span').text, '%Y-%m-%d').date()
         return None
 
-    def get_length(self, soup):
+    def get_length(self, soup: BeautifulSoup) -> Optional[Tuple[int, str]]:
         for tag in soup.find_all('div', 'panel-block'):
             strong = tag.find_next('strong')
             if not strong.text == TAG.LENGTH:
                 continue
 
-            match = re.match(pattern=r'(?P<number>\d+).(?P<unit>\w+)', string=strong.find_next('span').text)
-            if not match:
+            result = match(pattern=r'(?P<number>\d+).(?P<unit>\w+)', string=strong.find_next('span').text)
+            if not result:
                 continue
 
-            return (match.groupdict()['number'], match.groupdict()['unit'])
+            return (result.groupdict()['number'], result.groupdict()['unit'])
         return None
 
-    def get_number(self, soup):
+    def get_number(self, soup: BeautifulSoup) -> Optional[str]:
         pass
 
-    def get_poster(self, soup):
+    def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:
         pass
 
-    def get_director(self, soup):
+    def get_director(self, soup: BeautifulSoup) -> Optional[str]:
         pass
 
-    def get_series(self, soup):
+    def get_series(self, soup: BeautifulSoup) -> Optional[str]:
         pass
 
-    def get_studio(self, soup):
+    def get_studio(self, soup: BeautifulSoup) -> Optional[str]:
         pass
 
-    def get_stars(self, soup):
+    def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:
         pass
 
-    def get_outline(self, soup):
+    def get_outline(self, soup: BeautifulSoup) -> Optional[str]:
         pass
