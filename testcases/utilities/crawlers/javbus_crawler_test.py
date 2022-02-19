@@ -125,3 +125,21 @@ def test_metadata(number, title, keywords, release_date, stars, director, series
     assert metadata['fanart'] is not None
     assert metadata['poster'] is None
     assert metadata['outline'] is None
+
+@pytest.mark.parametrize('number', ['SB-250', 'gouliguojiashengsiyi'])
+def test_metadata_with_nonexistent_number(number, proxies):
+    crawler = JavBusCrawler(proxies=proxies)
+    metadata = crawler.get_metadata(number)
+
+    assert metadata['title'] is None
+    assert metadata['keywords'] == []
+    assert metadata['release_date'] is None
+    assert metadata['length']  is None
+    assert metadata['stars'] == []
+    assert metadata['number'] == number
+    assert metadata['director'] is None
+    assert metadata['series'] is None
+    assert metadata['studio'] is None
+    assert metadata['fanart'] is None
+    assert metadata['poster'] is None
+    assert metadata['outline'] is None

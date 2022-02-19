@@ -38,7 +38,7 @@ class JavBusCrawler(Base):
 
     def get_keywords(self, soup: BeautifulSoup) -> List[str]:
         for tag in soup.find_all('meta', attrs={'name': 'keywords'}):
-            if 'content' in tag.attrs:
+            if tag.attrs.get('content'):
                 return tag.attrs['content'].split(',')
         return []
 
