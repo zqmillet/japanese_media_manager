@@ -16,9 +16,8 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install mypy
-        python3 -m mypy --install-types --non-interactive
         pip install -r japanese_media_manager/requirements.txt
-        pip install -r testcases/requirements.txt
+        python3 -m mypy japanese_media_manager --install-types --non-interactive
     - name: run mypy
       run: |
         export PYTHONPATH='.'
