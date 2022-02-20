@@ -1,3 +1,9 @@
+import os
+import sys
+
+working_directory = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(working_directory)
+
 author = 'kinopico'
 project = 'the manual of jMM'
 extensions = ['sphinx.ext.autodoc']
