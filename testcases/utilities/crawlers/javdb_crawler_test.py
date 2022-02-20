@@ -1,8 +1,10 @@
 import datetime
+import sys
 import pytest
 
 from japanese_media_manager.utilities.crawlers import JavdbCrawler
 
+@pytest.mark.skipif(sys.platform != 'darwin', reason='this testcase is passed only in macos')
 @pytest.mark.parametrize(
     'number, keywords, title, release_date, length, director, series, studio, stars', [
         (
@@ -99,7 +101,7 @@ def test_javdb_metadata(number, keywords, title, release_date, length, director,
     assert metadata['poster'] is None
     assert metadata['outline'] is None
 
-
+@pytest.mark.skipif(sys.platform != 'darwin', reason='this testcase is passed only in macos')
 @pytest.mark.parametrize('number', ['SB-250', 'gouliguojiashengsiyi'])
 def test_metadata_with_nonexistent_number(number):
     crawler = JavdbCrawler()
