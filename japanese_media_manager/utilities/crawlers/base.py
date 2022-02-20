@@ -47,84 +47,72 @@ class Base(Session):
         """
         该函数的作用是根据番号 :py:obj:`number` 获取影片页面的地址, 并获取 :py:obj:`BeautifulSoup` 格式的页面内容.
         """
-        pass  # pragma: no cover
 
     @abstractmethod
     def get_fanart(self, soup: BeautifulSoup) -> Optional[Image]:
         """
         从影片页面 :py:obj:`soup` 中获取 Fanart 地址, 并加载到内存中并返回图片.
         """
-        pass  # pragma: no cover
 
     @abstractmethod
     def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:
         """
         从影片页面 :py:obj:`soup` 中获取海报地址, 并加载到内存中并返回图片.
         """
-        pass  # pragma: no cover
 
     @abstractmethod
     def get_keywords(self, soup: BeautifulSoup) -> List[str]:
         """
         从影片页面 :py:obj:`soup` 中获影片的关键字列表.
         """
-        pass  # pragma: no cover
 
     @abstractmethod
     def get_title(self, soup: BeautifulSoup) -> Optional[str]:
         """
         从影片页面 :py:obj:`soup` 中获影片的标题.
         """
-        pass  # pragma: no cover
 
     @abstractmethod
     def get_release_date(self, soup: BeautifulSoup) -> Optional[date]:
         """
         从影片页面 :py:obj:`soup` 中获影片的发售日期.
         """
-        pass  # pragma: no cover
 
     @abstractmethod
     def get_length(self, soup: BeautifulSoup) -> Optional[Tuple[int, str]]:
         """
         从影片页面 :py:obj:`soup` 中获影片的时长.
         """
-        pass  # pragma: no cover
 
     @abstractmethod
     def get_number(self, soup: BeautifulSoup) -> Optional[str]:
         """
         从影片页面 :py:obj:`soup` 中获影片的番号.
         """
-        pass  # pragma: no cover
 
     @abstractmethod
     def get_director(self, soup: BeautifulSoup) -> Optional[str]:
         """
         从影片页面 :py:obj:`soup` 中获影片的导演.
         """
-        pass  # pragma: no cover
 
     @abstractmethod
     def get_series(self, soup: BeautifulSoup) -> Optional[str]:
         """
         从影片页面 :py:obj:`soup` 中获影片的系列名称.
         """
-        pass  # pragma: no cover
 
     @abstractmethod
     def get_studio(self, soup: BeautifulSoup) -> Optional[str]:
         """
         从影片页面 :py:obj:`soup` 中获影片的工作室名称.
         """
-        pass  # pragma: no cover
 
     @abstractmethod
     def get_outline(self, soup: BeautifulSoup) -> Optional[str]:
         """
         从影片页面 :py:obj:`soup` 中获影片的故事梗概.
         """
-        pass  # pragma: no cover
 
     @abstractmethod
     def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:
@@ -136,4 +124,3 @@ class Base(Session):
         - ``name`` 演员姓名.
         - ``avatar_url`` 头像地址.
         """
-        pass  # pragma: no cover
