@@ -4,6 +4,8 @@ import typing
 import urllib3
 import requests
 
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 def get_retry_class(interval: float) -> type:
     class Retry(urllib3.util.Retry):
         def sleep(self, response: urllib3.response.HTTPResponse = None) -> None:

@@ -11,13 +11,17 @@ class TAG:
     KEYWORDS = '類別:'
     RELEASE_DATE = '日期:'
     LENGTH = '時長:'
+    DIRECTOR = '導演:'
+    SERIES = '系列:'
+    STUDIO = '片商:'
+    STARS = '演員:'
 
 class JavdbCrawler(Base):
     """
     JavDB 爬虫.
     """
 
-    def __init__(self, *args: Any, base_url: str = 'https://www.javdb30.com', **kwargs: Any):
+    def __init__(self, *args: Any, base_url: str = 'https://www.javdb36.com', **kwargs: Any):
         """
         :param base_url: JavDB 的网址, 并有默认值, 如果网址发生变化, 构造实例的时候可以指定 :py:obj:`base_url`.
         :param args: 透传给父类 :py:obj:`Base`.
@@ -27,8 +31,9 @@ class JavdbCrawler(Base):
         super().__init__(*args, **kwargs)
 
     def get_page_soup(self, number: str) -> BeautifulSoup:
-        response = self.get(f'{self.base_url}/search', params={'q': number})
+        response = self.get(f'{self.base_url}/search', params={'q': number, 'f': 'all'})
         soup = self.get_soup(response.text)
+
         for tag in soup.find_all('div', 'grid-item column'):
             for item in tag.find_all('div', 'uid'):
                 if not item.text.lower() == number.lower():
@@ -83,22 +88,72 @@ class JavdbCrawler(Base):
         return None
 
     def get_number(self, soup: BeautifulSoup) -> Optional[str]:
-        pass
+        for tag in soup.find_all('div', 'panel-block first-block'):
+            for link in tag.find_all('a', 'button'):
+                return link.attrs['data-clipboard-text']
+        return None
 
     def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:
-        pass
+        return None
 
     def get_director(self, soup: BeautifulSoup) -> Optional[str]:
-        pass
+        for tag in soup.find_all('div', 'panel-block'):
+            strong = tag.find_next('strong')
+            if not strong.text == TAG.DIRECTOR:
+                continue
+
+            return tag.find_next('span').text
+        return None
 
     def get_series(self, soup: BeautifulSoup) -> Optional[str]:
-        pass
+        for tag in soup.find_all('div', 'panel-block'):
+            strong = tag.find_next('strong')
+            if not strong.text == TAG.SERIES:
+                continue
+
+            return tag.find_next('span').text
+        return None
 
     def get_studio(self, soup: BeautifulSoup) -> Optional[str]:
-        pass
+        for tag in soup.find_all('div', 'panel-block'):
+            strong = tag.find_next('strong')
+            if not strong.text == TAG.STUDIO:
+                continue
+
+            return tag.find_next('span').text
+        return None
 
     def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:
-        pass
+        stars = []
+        for tag in soup.find_all('div', 'panel-block'):
+            strong = tag.find_next('strong')
+            if not strong.text == TAG.STARS:
+                continue
+
+            for link in tag.find_all('a'):
+                star = self.get_star(link.attrs['href'])
+                if star:
+                    stars.append(star)
+        return stars
 
     def get_outline(self, soup: BeautifulSoup) -> Optional[str]:
         pass
+
+    def get_star(self, href: str) -> Optional[Dict[str, str]]:
+        soup = self.get_soup(self.get(f'{self.base_url}{href}').text)
+        for tag in soup.find_all('span', 'actor-section-name'):
+            name = tag.text
+            break
+        else:
+            return None
+
+        pattern = r'.+url\((?P<url>.+)\)'
+        for tag in soup.find_all('div', 'column actor-avatar'):
+            result = match(pattern, tag.find_next('span').attrs['style'])
+            if result:
+                url = result.groupdict()['url']
+                break
+        else:
+            return None
+
+        return {'name': name, 'avatar_url': url}
