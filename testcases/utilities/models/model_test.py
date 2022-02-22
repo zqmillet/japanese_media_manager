@@ -1,11 +1,10 @@
+import os
+import datetime
 import sqlalchemy
 import sqlalchemy.orm
-import datetime
-import os
 import pytest
 
 from japanese_media_manager.utilities.models import Video
-from japanese_media_manager.utilities.models import Star
 from japanese_media_manager.utilities.models import Base
 
 @pytest.fixture(name='file_path')
@@ -20,7 +19,7 @@ def _session(file_path):
     engine = sqlalchemy.create_engine(f'sqlite:///{file_path}')
     session = sqlalchemy.orm.sessionmaker(bind=engine)()
 
-    for name, table in Base.metadata.tables.items():
+    for table in Base.metadata.tables.values():
         table.create(bind=engine)
 
     yield session
@@ -46,4 +45,3 @@ def test_video_model(session, title, keywords, series, outline, director, length
     session.commit()
 
     assert session.query(Video).one() is video
-
