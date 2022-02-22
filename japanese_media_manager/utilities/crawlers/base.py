@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from datetime import date
-from typing import List, Tuple, Dict, Optional
+from typing import List, Dict, Optional
 from bs4 import BeautifulSoup
 from PIL.Image import Image
 

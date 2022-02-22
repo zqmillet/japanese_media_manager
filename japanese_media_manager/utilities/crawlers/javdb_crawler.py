@@ -1,7 +1,7 @@
 from re import match
 from datetime import datetime, date
 from io import BytesIO
-from typing import List, Any, Tuple, Dict, Optional
+from typing import List, Any, Dict, Optional
 from bs4 import BeautifulSoup
 from PIL.Image import Image, open as open_image
 

@@ -1,6 +1,6 @@
 from re import match
 from datetime import datetime, date
-from typing import List, Any, Tuple, Dict, Optional
+from typing import List, Any, Dict, Optional
 from bs4 import BeautifulSoup
 from PIL.Image import Image
 
