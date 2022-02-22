@@ -14,7 +14,7 @@ from japanese_media_manager.utilities.crawlers import JavBusCrawler
             '本田教仁',
             '美人潜入捜査官',
             'SODクリエイト',
-            (120, '分鐘'),
+            120,
         ),
         (
             'ABP-888',
@@ -25,7 +25,7 @@ from japanese_media_manager.utilities.crawlers import JavBusCrawler
             'プノンペン凌',
             None,
             'プレステージ',
-            (150, '分鐘'),
+            150,
         ),
         (
             'ABP-960',
@@ -36,7 +36,7 @@ from japanese_media_manager.utilities.crawlers import JavBusCrawler
             None,
             '美少女と、貸し切り温泉と、濃密性交と。',
             'プレステージ',
-            (133, '分鐘'),
+            133,
         ),
         (
             'MMNT-010',
@@ -47,7 +47,7 @@ from japanese_media_manager.utilities.crawlers import JavBusCrawler
             '馨',
             None,
             'ケイ・エム・プロデュース',
-            (135, '分鐘'),
+            135,
         ),
         (
             'ipx-292',
@@ -58,7 +58,7 @@ from japanese_media_manager.utilities.crawlers import JavBusCrawler
             '朝霧浄',
             None,
             'アイデアポケット',
-            (120, '分鐘'),
+            120,
         ),
         (
             'CEMD-011',
@@ -69,7 +69,7 @@ from japanese_media_manager.utilities.crawlers import JavBusCrawler
             None,
             None,
             'セレブの友',
-            (139, '分鐘'),
+            139,
         ),
         (
             'CJOD-278',
@@ -83,7 +83,7 @@ from japanese_media_manager.utilities.crawlers import JavBusCrawler
             'トレンディ山口',
             None,
             '痴女ヘブン',
-            (160, '分鐘'),
+            160,
         ),
         (
             '100221_001',
@@ -94,7 +94,7 @@ from japanese_media_manager.utilities.crawlers import JavBusCrawler
             None,
             '濃厚な接吻と肉体の交わり',
             '一本道',
-            (59, '分鐘'),
+            59,
         ),
         (
             'AVSW-061',
@@ -105,7 +105,7 @@ from japanese_media_manager.utilities.crawlers import JavBusCrawler
             None,
             '○○の世界',
             'AVS collector’s',
-            (240, '分鐘'),
+            240,
         )
     ]
 )

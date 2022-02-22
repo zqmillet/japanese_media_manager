@@ -74,7 +74,7 @@ class JavdbCrawler(Base):
             return datetime.strptime(strong.find_next('span').text, '%Y-%m-%d').date()
         return None
 
-    def get_length(self, soup: BeautifulSoup) -> Optional[Tuple[int, str]]:
+    def get_length(self, soup: BeautifulSoup) -> Optional[int]:
         for tag in soup.find_all('div', 'panel-block'):
             strong = tag.find_next('strong')
             if not strong.text == TAG.LENGTH:
@@ -84,7 +84,7 @@ class JavdbCrawler(Base):
             if not result:
                 continue
 
-            return (result.groupdict()['number'], result.groupdict()['unit'])
+            return int(result.groupdict()['number'])
         return None
 
     def get_number(self, soup: BeautifulSoup) -> Optional[str]:

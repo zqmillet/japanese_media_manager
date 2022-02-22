@@ -8,7 +8,7 @@ from japanese_media_manager.utilities.crawlers import AvsoxCrawler
         (
             'Jukujo2474',
             '2022-02-05',
-            ('59', '分钟'),
+            59,
             '熟女倶楽部( Jukujo Club )',
             'Jukujo2474 有田典子\u3000旦那とAV出演編',
             ['素人'],
@@ -18,7 +18,7 @@ from japanese_media_manager.utilities.crawlers import AvsoxCrawler
         (
             'FC2-PPV-2645773',
             '2022-02-05',
-            ('36', '分钟'),
+            36,
             'FC2-PPV',
             'FC2-PPV-2645773 初撮影【新シネマ画風】個数限定【無修正】どこか寂しげで一途で真面目な女子大生・・・徐々に色濃く乱れていく美白の身体に2回膣内射精。恋に落ちいる寒い日の夜だった（長編）',
             ['素人'],
@@ -28,7 +28,7 @@ from japanese_media_manager.utilities.crawlers import AvsoxCrawler
         (
             'HEYZO-2713',
             '2022-02-06',
-            ('60', '分钟'),
+            60,
             'HEYZO',
             'HEYZO-2713 安芸美咲 【あきみさき】 欲求不満なヤリたがりセフレをハメ倒してヤッた',
             ['内射'],
@@ -38,7 +38,7 @@ from japanese_media_manager.utilities.crawlers import AvsoxCrawler
         (
             'FC2-PPV-2639303',
             '2022-02-05',
-            ('62', '分钟'),
+            62,
             'FC2-PPV',
             'FC2-PPV-2639303 独占販売第34貝 さや 20代 千葉県在住 職業非公開 正統派清楚系スレンダー美女 敏感な陥没乳首 クンニやおもちゃで細い身体をのけ反らせて絶頂 最後は引き締まった腹筋に濃い精子をぶっかけ大量射精',
             ['素人'],
@@ -48,7 +48,7 @@ from japanese_media_manager.utilities.crawlers import AvsoxCrawler
         (
             '020322_001',
             '2022-02-03',
-            ('61', '分钟'),
+            61,
             '一本道( 1pondo )',
             '020322_001 モデルコレクション 森田みゆ',
             ['苗条'],
@@ -58,7 +58,7 @@ from japanese_media_manager.utilities.crawlers import AvsoxCrawler
         (
             '012222_01',
             '2022-01-22',
-            ('55', '分钟'),
+            55,
             '天然むすめ( 10musume )',
             '012222_01 経験人数がギリ二桁の絶倫娘を紹介してもらいました',
             ['素人'],
@@ -68,7 +68,7 @@ from japanese_media_manager.utilities.crawlers import AvsoxCrawler
         (
             'FC2-PPV-2608212',
             '2022-01-20',
-            ('9', '分钟'),
+            9,
             'FC2-PPV',
             'FC2-PPV-2608212 【個撮】都立チアダンス部② 色白剛毛な清楚美少女　海外留学のために定期的に中出し',
             ['素人'],

@@ -62,13 +62,13 @@ class JavBusCrawler(Base):
             return datetime.strptime(date_string.strip(), '%Y-%m-%d').date()
         return None
 
-    def get_length(self, soup: BeautifulSoup) -> Optional[Tuple[int, str]]:
+    def get_length(self, soup: BeautifulSoup) -> Optional[int]:
         pattern = r'(?P<minutes>\d+)(?P<unit>.+)'
         for tag in soup.find_all('span', 'header', text=TAG.LENGTH):
             *_, length = tag.parent.contents
             result = match(pattern, length.strip())
             if result:
-                return (int(result.groupdict()['minutes']), result.groupdict()['unit'])
+                return int(result.groupdict()['minutes'])
         return None
 
     def get_number(self, soup: BeautifulSoup) -> Optional[str]:

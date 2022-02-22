@@ -79,9 +79,9 @@ class Base(Session):
         """
 
     @abstractmethod
-    def get_length(self, soup: BeautifulSoup) -> Optional[Tuple[int, str]]:
+    def get_length(self, soup: BeautifulSoup) -> Optional[int]:
         """
-        从影片页面 :py:obj:`soup` 中获影片的时长.
+        从影片页面 :py:obj:`soup` 中获影片的时长, 单位(分钟).
         """
 
     @abstractmethod

@@ -71,7 +71,7 @@ class ArzonCrawler(Base):
             return datetime.strptime(result.groupdict()['date'], '%Y/%m/%d').date()
         return None
 
-    def get_length(self, soup: BeautifulSoup) -> Optional[Tuple[int, str]]:
+    def get_length(self, soup: BeautifulSoup) -> Optional[int]:
         for tag in soup.find_all('td'):
             if not tag.text == TAG.LENGHT:
                 continue
@@ -79,7 +79,7 @@ class ArzonCrawler(Base):
             result = match(pattern=r'(?P<length>\d+)(?P<unit>\w+)', string=tag.find_next('td').text.strip())
             if not result:
                 continue
-            return (result.groupdict()['length'], result.groupdict()['unit'])
+            return int(result.groupdict()['length'])
         return None
 
     def get_number(self, soup: BeautifulSoup) -> Optional[str]:

@@ -51,7 +51,7 @@ class AirAvCrawler(Base):
                 result.append(link.text.strip())
         return result
 
-    def get_length(self, soup: BeautifulSoup) -> Optional[Tuple[int, str]]:
+    def get_length(self, soup: BeautifulSoup) -> Optional[int]:
         return None
 
     def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:

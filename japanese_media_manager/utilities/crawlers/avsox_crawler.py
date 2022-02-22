@@ -76,12 +76,12 @@ class AvsoxCrawler(Base):
                 return datetime.strptime(tag.next.next.strip(), '%Y-%m-%d').date()
         return None
 
-    def get_length(self, soup: BeautifulSoup) -> Optional[Tuple[int, str]]:
+    def get_length(self, soup: BeautifulSoup) -> Optional[int]:
         for tag in soup.find_all('span', 'header'):
             if tag.text == TAG.LENGTH:
                 result = match(pattern=r'(?P<number>\d+)(?P<unit>\w+)', string=tag.next.next.strip())
                 if result:
-                    return result.groupdict()['number'], result.groupdict()['unit']
+                    return int(result.groupdict()['number'])
         return None
 
     def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:

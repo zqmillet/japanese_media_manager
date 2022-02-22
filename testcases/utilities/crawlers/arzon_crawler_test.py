@@ -13,7 +13,7 @@ from japanese_media_manager.utilities.crawlers import ArzonCrawler
             'ＳＯＤｓｔａｒ',
             'ＳＯＤクリエイト（ソフトオンデマンド）',
             '本田教仁',
-            ('120', '分'),
+            120,
             '2011-12-08',
         ),
         (
@@ -24,7 +24,7 @@ from japanese_media_manager.utilities.crawlers import ArzonCrawler
             'Ｓ１　ＮＯ．１　ＳＴＹＬＥ',
             'Ｓ１（エスワン　ナンバーワンスタイル）',
             '真咲南朋',
-            ('150', '分'),
+            150,
             '2021-12-28'
         ),
         (
@@ -42,7 +42,7 @@ from japanese_media_manager.utilities.crawlers import ArzonCrawler
             'アイデアポケットBEST',
             'アイデアポケット',
             '',
-            ('480', '分'),
+            480,
             '2019-11-13'
         ),
         (
@@ -54,7 +54,7 @@ from japanese_media_manager.utilities.crawlers import ArzonCrawler
             'ＢＤ－Ｓ１　ＮＯ．１　ＳＴＹＬＥ',
             'Ｓ１（エスワン　ナンバーワンスタイル）',
             '',
-            ('4378', '分'),
+            4378,
             '2019-11-07',
         )
     ]
