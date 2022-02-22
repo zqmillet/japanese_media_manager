@@ -53,14 +53,6 @@ def pytest_addoption(parser):
     )
 
     parser.addoption(
-        '--session-test-url',
-        action='store',
-        type=str,
-        help='specify a url for session testing',
-        default='https://www.baidu.com',
-    )
-
-    parser.addoption(
         '--session-test-threthold',
         action='store',
         type=float,
@@ -91,10 +83,6 @@ def _proxy_username(request):
 @pytest.fixture(name='proxy_password', scope='session')
 def _proxy_password(request):
     return request.config.getoption('proxy_password')
-
-@pytest.fixture(name='session_test_url', scope='session')
-def _session_test_url(request):
-    return request.config.getoption('session_test_url')
 
 @pytest.fixture(name='session_test_threthold', scope='session')
 def _session_test_threthold(request):
