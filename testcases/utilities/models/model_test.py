@@ -23,6 +23,7 @@ def _session(file_path):
         table.create(bind=engine)
 
     yield session
+    session.close_all()
 
 @pytest.mark.parametrize('title', ['gouliguojiashengsiyi'])
 @pytest.mark.parametrize('keywords', [['haha', 'hoho'], []])
