@@ -20,8 +20,6 @@ Japanese Media Manager (jMM) is a CLI tool for management of Japanese xxx media.
 * [Running the tests](#running-the-tests)
     * [unit tests](#unit-tests)
     * [coding style tests](#coding-style-tests)
-* [Deployment](#deployment)
-* [Built With](#built-with)
 * [Contributing](#contributing)
 * [License](#license)
 * [Acknowledgments](#acknowledgments)
@@ -87,10 +85,6 @@ If you does not specify the arguments `<app_id>` or `<app_key>`, the testcases a
   python -m mypy japanese_media_manager
   ```
 
-## Deployment
-
-## Built With
-
 ## Contributing
 
 ## License
@@ -104,15 +98,15 @@ Thanks to [AVDC](https://github.com/moyy996/AVDC) and [Movie_Data_Capture](https
 ## ToDo
 
 - [x] crawlers
-  - [x] JavBus
-  - [x] JavDB
-  - [x] AirAV
-  - [x] Arzon 
-  - [x] Avsox
+  - [x] javbus crawler
+  - [x] javdb crawler
+  - [x] airav crawler
+  - [x] arzon crawler
+  - [x] avsox crawler
 - [x] translator
 - [x] models
-  - [x] Video
-  - [x] Star
+  - [x] video
+  - [x] star
 - [ ] cache
 - [ ] scripts
   - [x] generate configuration
