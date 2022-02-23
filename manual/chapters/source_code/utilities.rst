@@ -25,3 +25,10 @@
 .. automodule:: japanese_media_manager.utilities.timer
    :members:
    :special-members:
+
+:py:mod:`utilities.models`
+==========================
+
+.. automodule:: japanese_media_manager.utilities.models
+   :members:
+   :special-members:
