@@ -49,7 +49,7 @@ pip install -r testcases/requirements.txt
 Then run all tests by following command.
 
 ``` bash
-pytest --app-id <app_id> --app-key <app_key> --reruns 5 --cov=japanese_media_manager --cov-report term-missing
+pytest --app-id <app_id> --app-key <app_key>
 ```
 
 where:
@@ -74,7 +74,7 @@ If you does not specify the arguments `<app_id>` or `<app_key>`, the testcases a
   - pycodestyle,
   - Ned Batchelder's McCabe script.
 
-  You can run flake8 check by following command.
+  You can run [flake8](https://flake8.pycqa.org/en/latest/) check by following command.
 
   ``` bash
   # pip install flake8
@@ -90,9 +90,17 @@ If you does not specify the arguments `<app_id>` or `<app_key>`, the testcases a
 
 ## Contributing
 
+I love your contribution! you can make contributing to this project as easy and transparent as possible, whether it's:
+
+- reporting a bug.
+- discussing the current state of the code.
+- submitting a fix.
+- proposing new features.
+- becoming a maintainer.
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+This project is licensed under the MIT License, see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
@@ -115,10 +123,10 @@ Thanks to [AVDC](https://github.com/moyy996/AVDC) and [Movie_Data_Capture](https
   - [x] generate configuration
   - [ ] scrape video
 - [ ] manual
-    [x] autodoc
-    [x] introduction
-    [ ] usage
-    [ ] framework
+  - [x] autodoc
+  - [x] introduction
+  - [ ] usage
+  - [ ] framework
 
 [^1]: Theoretically, jMM can run on any OS, in which Python3 can be deployed. But, I just test jMM on these three OSs.
 [^2]: You need to regist Baidu account and request the service of translation, then you will get APP ID and APP Key.
