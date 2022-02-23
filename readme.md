@@ -8,8 +8,44 @@
 [![codecov](https://codecov.io/gh/zqmillet/japanese_media_manager/branch/main/graph/badge.svg?token=XV3ZZ6JX15)](https://codecov.io/gh/zqmillet/japanese_media_manager)
 [![Documentation Status](https://readthedocs.org/projects/japanese-media-manager/badge/?version=latest)](https://japanese-media-manager.readthedocs.io/zh_CN/latest/?badge=latest)
 
-如果你听过 tMM, 那么一定会知道 jMM 是做什么的. tMM 是一款我非常喜欢的电影管理系统, 但是我只用它来刮削我的影库. 虽然, 我知道它不仅仅是刮削电影, 但是对我来说, 它意味着刮削电影, 它是电影刮削的代名词.
+Japanese Media Manager (jMM) is a CLI tool for management of Japanese xxx media. The name of Japanese Media Manager pays tribute to tMM, which is short for tinyMediaManager.
 
-据我所知, tMM 是不可以刮削小姐姐的, jMM, 即 Japanese Media Manager, 名字是向 tiny Media Manager 致敬, 功能则是 tMM 的延伸.
+## Getting Started
 
-如果你也有很多小姐姐, 除了给小姐姐们买大房间, 你也需要给小姐姐们好好安排一下, 所以, 我相信, 你也需要 jMM.
+### Prerequisites
+
+- System OS: Windows, Linux, MacOS[^1].
+- Python: 3.7+.
+
+### Installing
+
+## Running the tests
+
+### Break down into end to end tests
+
+### And coding style tests
+
+## Deployment
+
+## Built With
+
+## Contributing
+
+## Versioning
+
+
+## Authors
+
+* **Qiqi**
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+## Footnotes
+
+[^1] theoretically, jMM can run on any OS, in which Python can be deployed. But, I just test jMM on these three OS.
+
+## ToDo
