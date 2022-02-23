@@ -36,6 +36,10 @@ Japanese Media Manager (jMM) is a CLI tool for management of Japanese xxx media.
 
 ### Installing
 
+``` bash
+pip install jmm
+```
+
 ## Running the tests
 
 ### unit tests
@@ -90,12 +94,12 @@ If you does not specify the arguments `<app_id>` or `<app_key>`, the testcases a
 
 ## Contributing
 
-I love your contribution! you can make contributing to this project as easy and transparent as possible, whether it's:
+I love your contribution! You can make contributing to this project as easy and transparent as possible, whether it's:
 
-- reporting a bug.
-- discussing the current state of the code.
-- submitting a fix.
-- proposing new features.
+- reporting a bug,
+- discussing the current state of the code,
+- submitting a fix,
+- proposing new features, or
 - becoming a maintainer.
 
 ## License
