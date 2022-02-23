@@ -23,8 +23,6 @@ Japanese Media Manager (jMM) is a CLI tool for management of Japanese xxx media.
 * [Deployment](#deployment)
 * [Built With](#built-with)
 * [Contributing](#contributing)
-* [Versioning](#versioning)
-* [Authors](#authors)
 * [License](#license)
 * [Acknowledgments](#acknowledgments)
 * [ToDo](#todo)
@@ -95,20 +93,30 @@ If you does not specify the arguments `<app_id>` or `<app_key>`, the testcases a
 
 ## Contributing
 
-## Versioning
-
-
-## Authors
-
-* **Qiqi**
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 
+Thanks to [AVDC](https://github.com/moyy996/AVDC) and [Movie_Data_Capture](https://github.com/yoshiko2/Movie_Data_Capture). They are both excellent tools, and give a great inspiration to me. 
+
 ## ToDo
+
+- [x] crawlers
+  - [x] JavBus
+  - [x] JavDB
+  - [x] AirAV
+  - [x] Arzon 
+  - [x] Avsox
+- [x] translator
+- [x] models
+  - [x] Video
+  - [x] Star
+- [ ] cache
+- [ ] scripts
+  - [x] generate configuration
+  - [ ] scrape video
 
 [^1]: Theoretically, jMM can run on any OS, in which Python3 can be deployed. But, I just test jMM on these three OSs.
 [^2]: You need to regist Baidu account and request the service of translation, then you will get APP ID and APP Key.
