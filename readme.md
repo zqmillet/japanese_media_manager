@@ -44,13 +44,19 @@ If you does not specify the arguments `<app_id>` or `<app_key>`, the testcases a
 
 ### coding style tests
 
-- pylint:
+- pylint: you can check the quality of all code with [pylint](https://pylint.org/).
 
   ``` bash
   pylint japanese_media_manager testcases
   ```
 
-- flake8:
+- flake8: it is a wrapper around these tools:
+
+  - PyFlakes,
+  - pycodestyle,
+  - Ned Batchelder's McCabe script.
+
+  You can run flake8 check by following command.
 
   ``` bash
   flake8 japanese_media_manager testcases
