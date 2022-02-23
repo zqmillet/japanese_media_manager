@@ -21,6 +21,8 @@ Japanese Media Manager (jMM) is a CLI tool for management of Japanese xxx media.
 
 ## Running the tests
 
+### unit tests
+
 If you want to run the tests, you need to install requirements first.
 
 ``` bash
@@ -38,11 +40,27 @@ where:
 - `<app_id>` is the APP ID of Baidu translation service[^2].
 - `<app_key>` is the APP Key of Baidu translation service.
 
-If you does not specify the arguments `<app_id>` and `<app_key>`, the testcases about class `Translator` will be ignored.
+If you does not specify the arguments `<app_id>` or `<app_key>`, the testcases about class `Translator` will be ignored.
 
-### Break down into end to end tests
+### coding style tests
 
-### And coding style tests
+- pylint:
+
+  ``` bash
+  pylint japanese_media_manager testcases
+  ```
+
+- flake8:
+
+  ``` bash
+  flake8 japanese_media_manager testcases
+  ```
+
+- mypy: all code in directory `japanese_media_manager` observe [PEP 484](https://www.python.org/dev/peps/pep-0484/), you can use [mypy](http://mypy-lang.org/) to static type check.
+
+  ``` bash
+  python -m mypy japanese_media_manager
+  ```
 
 ## Deployment
 
