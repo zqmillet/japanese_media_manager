@@ -10,6 +10,25 @@
 
 Japanese Media Manager (jMM) is a CLI tool for management of Japanese xxx media. The name of Japanese Media Manager pays tribute to tMM, which is short for tinyMediaManager.
 
+<!-- vim-markdown-toc GFM -->
+
+* [Getting Started](#getting-started)
+    * [Prerequisites](#prerequisites)
+    * [Installing](#installing)
+* [Running the tests](#running-the-tests)
+    * [unit tests](#unit-tests)
+    * [coding style tests](#coding-style-tests)
+* [Deployment](#deployment)
+* [Built With](#built-with)
+* [Contributing](#contributing)
+* [Versioning](#versioning)
+* [Authors](#authors)
+* [License](#license)
+* [Acknowledgments](#acknowledgments)
+* [ToDo](#todo)
+
+<!-- vim-markdown-toc -->
+
 ## Getting Started
 
 ### Prerequisites
