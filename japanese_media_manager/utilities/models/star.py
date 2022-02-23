@@ -9,7 +9,7 @@ class Star(Base):
 
     name = Column(String(50), primary_key=True)
     avatar = Column(BLOB)
-    videos = relationship('Video', secondary=VideoStarRelationship)
+    videos = relationship('Video', secondary=VideoStarRelationship, overlaps='stars')
 
     def __repr__(self) -> str:
         return f'<star {self.name}>'
