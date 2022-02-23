@@ -46,6 +46,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Footnotes
 
-[^1] theoretically, jMM can run on any OS, in which Python can be deployed. But, I just test jMM on these three OS.
+[^1]: theoretically, jMM can run on any OS, in which Python can be deployed. But, I just test jMM on these three OS.
 
 ## ToDo
