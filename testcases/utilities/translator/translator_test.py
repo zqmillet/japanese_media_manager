@@ -13,6 +13,9 @@ from japanese_media_manager.utilities.translator import TranslationException
     ]
 )
 def test_translator(app_id, app_key, text, expected_text):
+    if not app_id or not app_key:
+        pytest.skip()
+
     translator = Translator(app_id, app_key)
     assert translator.translate(text) == expected_text
     time.sleep(1)
@@ -28,6 +31,9 @@ def test_translator_with_wrong_app_id_and_app_key(text):
 
 @pytest.mark.skipif(sys.platform == 'linux', reason='in linux, the TranslationException will not be raised, i have no idea about it')
 def test_translator_with_hight_frequency(app_id, app_key):
+    if not app_id or not app_key:
+        pytest.skip()
+
     translator = Translator(app_id, app_key)
     translator.translate('hello world')
 

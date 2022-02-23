@@ -64,6 +64,7 @@ If you does not specify the arguments `<app_id>` or `<app_key>`, the testcases a
 - pylint: you can check the quality of all code with [pylint](https://pylint.org/).
 
   ``` bash
+  # pip install pylint
   pylint japanese_media_manager testcases
   ```
 
@@ -76,12 +77,14 @@ If you does not specify the arguments `<app_id>` or `<app_key>`, the testcases a
   You can run flake8 check by following command.
 
   ``` bash
+  # pip install flake8
   flake8 japanese_media_manager testcases
   ```
 
 - mypy: all code in directory `japanese_media_manager` observe [PEP 484](https://www.python.org/dev/peps/pep-0484/), you can use [mypy](http://mypy-lang.org/) to static type check.
 
   ``` bash
+  # pip install mypy
   python -m mypy japanese_media_manager
   ```
 
@@ -111,6 +114,11 @@ Thanks to [AVDC](https://github.com/moyy996/AVDC) and [Movie_Data_Capture](https
 - [ ] scripts
   - [x] generate configuration
   - [ ] scrape video
+- [ ] manual
+    [x] autodoc
+    [x] introduction
+    [ ] usage
+    [ ] framework
 
 [^1]: Theoretically, jMM can run on any OS, in which Python3 can be deployed. But, I just test jMM on these three OSs.
 [^2]: You need to regist Baidu account and request the service of translation, then you will get APP ID and APP Key.

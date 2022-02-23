@@ -9,7 +9,7 @@ def pytest_addoption(parser):
         action='store',
         type=str,
         help='specify the app id of baidu translation service',
-        required=True
+        default=None
     )
 
     parser.addoption(
@@ -17,7 +17,7 @@ def pytest_addoption(parser):
         action='store',
         type=str,
         help='specify the app key of baidu translation service',
-        required=True
+        default=None
     )
 
     parser.addoption(
