@@ -1,14 +1,16 @@
 import os
+import uuid
 import datetime
 import sqlalchemy
 import sqlalchemy.orm
+import sqlalchemy.exc
 import pytest
 
 from japanese_media_manager.utilities.models import Video
 from japanese_media_manager.utilities.models import Star
 from japanese_media_manager.utilities.models import Base
 
-@pytest.fixture(name='file_path')
+@pytest.fixture(name='file_path', scope='function')
 def _file_path():
     file_path = './sqlite.db'
     yield file_path
@@ -60,3 +62,30 @@ def test_video_model(session, title, keywords, series, outline, director, length
     assert star_2.videos == [video]
     assert star_3.videos == []
     assert star_4.videos == []
+
+@pytest.mark.parametrize('title', ['gouliguojiashengsiyi'])
+@pytest.mark.parametrize('keywords', [['haha', 'hoho'], []])
+@pytest.mark.parametrize('series', [None, 'xianggangjizhe'])
+@pytest.mark.parametrize('outline', [None, 'weixiaodegongxian'])
+@pytest.mark.parametrize('director', [None, 'zhangzhe'])
+@pytest.mark.parametrize('length', [233, None])
+def test_video_star_model(session, title, keywords, series, outline, director, length):
+    name = str(uuid.uuid1())
+    star = Star(name=name, avatar=None)
+    video = Video(
+        number='HAHA-233',
+        title=title,
+        keywords=keywords,
+        release_date=datetime.datetime.today().date(),
+        length=length,
+        series=series,
+        outline=outline,
+        director=director,
+        stars=[star]
+    )
+
+    session.add(video)
+    session.commit()
+    stars = session.query(Star).all()
+    assert len(stars) == 1
+    assert stars[0] is star
