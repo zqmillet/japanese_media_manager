@@ -1,3 +1,6 @@
+from ast import parse, Constant, Return
+from textwrap import dedent
+from inspect import getsource
 from abc import abstractmethod
 from datetime import date
 from typing import List, Dict, Optional
@@ -5,6 +8,7 @@ from bs4 import BeautifulSoup
 from PIL.Image import Image
 
 from japanese_media_manager.utilities.session import Session
+from .do_nothing import do_nothing
 
 class Base(Session):
     """
@@ -13,6 +17,11 @@ class Base(Session):
 
     如果你想写另一个新网站的爬虫, 请继承该类.
     """
+    all_fields = ['fanart', 'poster', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'outline', 'stars']
+
+    @classmethod
+    def get_fields(cls) -> List[str]:
+        return [field for field in cls.all_fields if not do_nothing(getattr(cls, f'get_{field}'))]
 
     def get_metadata(self, number: str) -> dict:
         """
