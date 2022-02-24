@@ -22,21 +22,21 @@ def function_5(number):
         return None
     return None
 
-def function_6(number):
+def function_6():
     return
 
-def function_7(number):
+def function_7():
     '''
     do_nothing
     '''
 
-def function_8(number):
+def function_8():
     '''
     do_nothing
     '''
     return
 
-def function_9(number):
+def function_9():
     pass
 
 @pytest.mark.parametrize(

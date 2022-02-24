@@ -7,6 +7,7 @@ from ast import Expr
 from ast import Return
 from ast import Constant
 from ast import Pass
+from ast import FunctionDef
 
 def is_docstring(item: AST) -> bool:
     if not isinstance(item, Expr):
@@ -30,6 +31,9 @@ def is_pass(item: AST) -> bool:
 def do_nothing(function: Callable) -> bool:
     tree = parse(dedent(getsource(function)))
     function_definition, *_ = tree.body
+
+    if not isinstance(function_definition, FunctionDef):
+        return False
 
     expressions = [item for item in function_definition.body if not is_docstring(item)]
     return all(is_return_none(expression) or is_pass(expression) for expression in expressions)
