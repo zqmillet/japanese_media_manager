@@ -8,7 +8,6 @@ author = 'kinopico'
 project = 'the manual of jMM'
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.viewcode',
 ]
 
 html_theme = 'sphinx_rtd_theme'
