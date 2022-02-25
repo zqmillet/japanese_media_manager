@@ -39,6 +39,19 @@ def function_8():
 def function_9():
     pass
 
+def function_10():
+    '''
+    gouliguojiashengsiyi.
+    '''
+    ...
+
+def function_11():
+    '''
+    gouliguojiashengsiyi.
+    '''
+    ...
+    return None
+
 @pytest.mark.parametrize(
     'function, result', [
         (function_1, True),
@@ -50,6 +63,8 @@ def function_9():
         (function_7, True),
         (function_8, True),
         (function_9, True),
+        (function_10, True),
+        (function_11, True),
     ]
 )
 def test_only_return_none(function, result):

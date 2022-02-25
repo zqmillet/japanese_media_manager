@@ -28,6 +28,13 @@ def is_return_none(item: AST) -> bool:
 def is_pass(item: AST) -> bool:
     return isinstance(item, Pass)
 
+def is_ellipsis(item: AST) -> bool:
+    if not isinstance(item, Expr):
+        return False
+    if not isinstance(item.value, Constant):
+        return False
+    return item.value.value is ...
+
 def do_nothing(function: Callable) -> bool:
     tree = parse(dedent(getsource(function)))
     function_definition, *_ = tree.body
@@ -36,4 +43,4 @@ def do_nothing(function: Callable) -> bool:
         return False
 
     expressions = [item for item in function_definition.body if not is_docstring(item)]
-    return all(is_return_none(expression) or is_pass(expression) for expression in expressions)
+    return all(is_return_none(expression) or is_pass(expression) or is_ellipsis(expression) for expression in expressions)
