@@ -36,6 +36,12 @@ def is_ellipsis(item: AST) -> bool:
     return item.value.value is ...
 
 def do_nothing(function: Callable) -> bool:
+    """
+    判断一个函数 :py:obj:`function` 是否什么也没做. 如果什么也没做, 就返回 ``True``, 否则返回 ``False``.
+
+    :param function: 可执行函数, 但是不可以是 Lambda 函数, 也不可以是可执行的对象(实现了 :py:obj:`__call__` 方法).
+    """
+
     tree = parse(dedent(getsource(function)))
     function_definition, *_ = tree.body
 
