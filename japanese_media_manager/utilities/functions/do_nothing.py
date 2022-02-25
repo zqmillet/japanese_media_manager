@@ -10,6 +10,12 @@ from ast import Pass
 from ast import FunctionDef
 
 def is_docstring(item: AST) -> bool:
+    """
+    判断一个抽象语法树中的元素是否是 docstring.
+
+    :param item: 抽象语法树中的元素.
+    """
+
     if not isinstance(item, Expr):
         return False
     if not isinstance(item.value, Constant):
@@ -17,6 +23,12 @@ def is_docstring(item: AST) -> bool:
     return isinstance(item.value.value, str)
 
 def is_return_none(item: AST) -> bool:
+    """
+    判断一个抽象语法树中的元素是否是 ``return`` 或者 ``return None``.
+
+    :param item: 抽象语法树中的元素.
+    """
+
     if not isinstance(item, Return):
         return False
     if item.value is None:
@@ -26,9 +38,21 @@ def is_return_none(item: AST) -> bool:
     return item.value.value is None
 
 def is_pass(item: AST) -> bool:
+    """
+    判断一个抽象语法树中的元素是否是 ``pass`` 语句.
+
+    :param item: 抽象语法树中的元素.
+    """
+
     return isinstance(item, Pass)
 
 def is_ellipsis(item: AST) -> bool:
+    """
+    判断一个抽象语法树中的元素是否是 ``...`` 语句.
+
+    :param item: 抽象语法树中的元素.
+    """
+
     if not isinstance(item, Expr):
         return False
     if not isinstance(item.value, Constant):
@@ -38,6 +62,8 @@ def is_ellipsis(item: AST) -> bool:
 def do_nothing(function: Callable) -> bool:
     """
     判断一个函数 :py:obj:`function` 是否什么也没做. 如果什么也没做, 就返回 ``True``, 否则返回 ``False``.
+
+    这个函数被用在 :py:obj:`utilities.crawlers.Base` 中, 用于判断子类实现了哪些成员方法.
 
     :param function: 可执行函数, 但是不可以是 Lambda 函数, 也不可以是可执行的对象(实现了 :py:obj:`__call__` 方法).
     """
