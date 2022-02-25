@@ -6,7 +6,10 @@ sys.path.append(working_directory)
 
 author = 'kinopico'
 project = 'the manual of jMM'
-extensions = ['sphinx.ext.autodoc']
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.viewcode',
+]
 
 html_theme = 'sphinx_rtd_theme'
 source_suffix = ['.rst']
