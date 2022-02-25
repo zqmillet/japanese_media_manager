@@ -1,6 +1,6 @@
 import pytest
 
-from japanese_media_manager.utilities.get_number import get_number
+from japanese_media_manager.utilities.functions import get_number
 
 @pytest.mark.parametrize(
     'number, expected_output', [

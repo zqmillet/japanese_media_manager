@@ -32,3 +32,10 @@
 .. automodule:: japanese_media_manager.utilities.models
    :members:
    :special-members:
+
+:py:mod:`utilities.functions`
+=============================
+
+.. automodule:: japanese_media_manager.utilities.functions
+   :members:
+   :special-members:

@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from PIL.Image import Image
 
 from japanese_media_manager.utilities.session import Session
-from .do_nothing import do_nothing
+from japanese_media_manager.utilities.functions import do_nothing
 
 class Base(Session):
     """

@@ -1,6 +1,6 @@
 import pytest
 
-from japanese_media_manager.utilities.crawlers.do_nothing import do_nothing
+from japanese_media_manager.utilities.functions import do_nothing
 
 def function_1():
     return None
@@ -45,7 +45,7 @@ def function_10():
     '''
     ...
 
-def function_11():
+def function_11():  # pylint: disable = useless-return
     '''
     gouliguojiashengsiyi.
     '''
