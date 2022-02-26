@@ -5,6 +5,13 @@
    :members:
    :special-members:
 
+:py:mod:`utilities.logger`
+==========================
+
+.. automodule:: japanese_media_manager.utilities.logger
+   :members:
+   :special-members:
+
 :py:mod:`utilities.crawlers`
 ============================
 

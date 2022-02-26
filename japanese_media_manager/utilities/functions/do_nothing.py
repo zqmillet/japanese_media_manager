@@ -110,6 +110,9 @@ def do_nothing(function: Callable) -> bool:
         def func_d(*args, **kwargs):
             ...
 
+        def func_e(*args, **kwargs):
+            return []
+
     :param function: 可执行函数, 但是不可以是 Lambda 函数, 也不可以是可执行的对象(实现了 :py:obj:`__call__` 方法).
     """
 
