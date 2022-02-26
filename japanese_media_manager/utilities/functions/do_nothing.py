@@ -73,6 +73,20 @@ def is_ellipsis(item: AST) -> bool:
         return False
     return item.value.value is ...
 
+def is_do_nothing(item: AST) -> bool:
+    """
+    该函数是以下函数的集合:
+    - :py:obj:`is_return_none`,
+    - :py:obj:`is_pass`,
+    - :py:obj:`is_ellipsis`,
+    - :py:obj:`is_docstring`, 和
+    - :py:obj:`is_return_empty_list`.
+
+    当以上所有函数只要有一个返回 ``False``, 则该函数返回 ``False``, 否则返回 ``True``.
+    """
+
+    return any(method(item) for method in (is_return_none, is_pass, is_ellipsis, is_docstring, is_return_empty_list))
+
 def do_nothing(function: Callable) -> bool:
     """
     判断一个函数 :py:obj:`function` 是否什么也没做. 如果什么也没做, 就返回 ``True``, 否则返回 ``False``.
@@ -105,8 +119,4 @@ def do_nothing(function: Callable) -> bool:
     if not isinstance(function_definition, FunctionDef):
         return False
 
-    method = lambda e: any(method(e) for method in (is_return_none, is_pass, is_ellipsis, is_docstring, is_return_empty_list))
-    for expression in function_definition.body:
-        if not method(expression):
-            return False
-    return True
+    return all(map(is_do_nothing, function_definition.body))
