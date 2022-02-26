@@ -65,6 +65,23 @@ def do_nothing(function: Callable) -> bool:
 
     这个函数被用在 :py:obj:`utilities.crawlers.Base` 中, 用于判断子类实现了哪些成员方法.
 
+    .. code-block:: python
+        :caption: 几个什么也没做的函数示例
+
+        def func_a(*args, **kwargs):
+            return
+
+        def func_b(*args, **kwargs):
+            '''
+            do nothing
+            '''
+
+        def func_c(*args, **kwargs):
+            return None
+
+        def func_d(*args, **kwargs):
+            ...
+
     :param function: 可执行函数, 但是不可以是 Lambda 函数, 也不可以是可执行的对象(实现了 :py:obj:`__call__` 方法).
     """
 

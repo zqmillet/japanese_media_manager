@@ -36,6 +36,6 @@
 :py:mod:`utilities.functions`
 =============================
 
-.. automodule:: japanese_media_manager.utilities.functions.do_nothing
+.. automodule:: japanese_media_manager.utilities.functions
    :members:
    :special-members:
