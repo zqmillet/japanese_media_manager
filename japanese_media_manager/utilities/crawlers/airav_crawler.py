@@ -55,16 +55,7 @@ class AirAvCrawler(Base):
         return None
 
     def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:
-        stars = []
-        for tag in soup.find_all('ul', 'videoAvstarList'):
-            for link in tag.find_all('a'):
-                stars.append(
-                    {
-                        'name': link.text.strip(),
-                        'avatar_url': None
-                    }
-                )
-        return stars
+        return []
 
     def get_director(self, soup: BeautifulSoup) -> Optional[str]:
         return None

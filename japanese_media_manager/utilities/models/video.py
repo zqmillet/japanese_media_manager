@@ -1,4 +1,9 @@
-from sqlalchemy import Column, String, Text, Date, JSON, Integer
+from sqlalchemy import Column
+from sqlalchemy import String
+from sqlalchemy import Text
+from sqlalchemy import Date
+from sqlalchemy import JSON
+from sqlalchemy import Integer
 from sqlalchemy.orm import relationship
 
 from .base import Base

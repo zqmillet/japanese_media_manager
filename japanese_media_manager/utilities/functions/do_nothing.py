@@ -7,6 +7,7 @@ from ast import Expr
 from ast import Return
 from ast import Constant
 from ast import Pass
+from ast import List
 from ast import FunctionDef
 
 def is_docstring(item: AST) -> bool:
@@ -21,6 +22,19 @@ def is_docstring(item: AST) -> bool:
     if not isinstance(item.value, Constant):
         return False
     return isinstance(item.value.value, str)
+
+def is_return_empty_list(item: AST) -> bool:
+    """
+    判断一个抽象语法树中的元素是否是 ``return []``.
+
+    :param item: 抽象语法树中的元素.
+    """
+
+    if not isinstance(item, Return):
+        return False
+    if not isinstance(item.value, List):
+        return False
+    return not bool(item.value.elts)
 
 def is_return_none(item: AST) -> bool:
     """
@@ -91,5 +105,8 @@ def do_nothing(function: Callable) -> bool:
     if not isinstance(function_definition, FunctionDef):
         return False
 
-    expressions = [item for item in function_definition.body if not is_docstring(item)]
-    return all(is_return_none(expression) or is_pass(expression) or is_ellipsis(expression) for expression in expressions)
+    method = lambda e: any(method(e) for method in (is_return_none, is_pass, is_ellipsis, is_docstring, is_return_empty_list))
+    for expression in function_definition.body:
+        if not method(expression):
+            return False
+    return True

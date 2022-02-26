@@ -23,6 +23,8 @@ class Base(Session):
     def get_metadata(self, number: str) -> dict:
         """
         根据番号 :py:obj:`number` 获取元数据.
+
+        :param number: 影片番号.
         """
         soup = self.get_page_soup(number)
 
@@ -45,6 +47,8 @@ class Base(Session):
     def get_soup(html: str) -> BeautifulSoup:
         """
         将 HTML 格式的字符串 :py:obj:`html` 转换成 :py:class:`BeautifulSoup`. 该函数并非虚函数, 继承时可以不用重写此函数.
+
+        :param html: 网页源代码.
         """
         return BeautifulSoup(html, 'html.parser')
 
@@ -52,72 +56,96 @@ class Base(Session):
     def get_page_soup(self, number: str) -> BeautifulSoup:
         """
         该函数的作用是根据番号 :py:obj:`number` 获取影片页面的地址, 并获取 :py:obj:`BeautifulSoup` 格式的页面内容.
+
+        :param number: 影片番号.
         """
 
     @abstractmethod
     def get_fanart(self, soup: BeautifulSoup) -> Optional[Image]:
         """
         从影片页面 :py:obj:`soup` 中获取 Fanart 地址, 并加载到内存中并返回图片.
+
+        :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
 
     @abstractmethod
     def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:
         """
         从影片页面 :py:obj:`soup` 中获取海报地址, 并加载到内存中并返回图片.
+
+        :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
 
     @abstractmethod
     def get_keywords(self, soup: BeautifulSoup) -> List[str]:
         """
         从影片页面 :py:obj:`soup` 中获影片的关键字列表.
+
+        :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
 
     @abstractmethod
     def get_title(self, soup: BeautifulSoup) -> Optional[str]:
         """
         从影片页面 :py:obj:`soup` 中获影片的标题.
+
+        :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
 
     @abstractmethod
     def get_release_date(self, soup: BeautifulSoup) -> Optional[date]:
         """
         从影片页面 :py:obj:`soup` 中获影片的发售日期.
+
+        :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
 
     @abstractmethod
     def get_length(self, soup: BeautifulSoup) -> Optional[int]:
         """
         从影片页面 :py:obj:`soup` 中获影片的时长, 单位(分钟).
+
+        :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
 
     @abstractmethod
     def get_number(self, soup: BeautifulSoup) -> Optional[str]:
         """
         从影片页面 :py:obj:`soup` 中获影片的番号.
+
+        :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
 
     @abstractmethod
     def get_director(self, soup: BeautifulSoup) -> Optional[str]:
         """
         从影片页面 :py:obj:`soup` 中获影片的导演.
+
+        :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
 
     @abstractmethod
     def get_series(self, soup: BeautifulSoup) -> Optional[str]:
         """
         从影片页面 :py:obj:`soup` 中获影片的系列名称.
+
+        :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
 
     @abstractmethod
     def get_studio(self, soup: BeautifulSoup) -> Optional[str]:
         """
         从影片页面 :py:obj:`soup` 中获影片的工作室名称.
+
+        :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
 
     @abstractmethod
     def get_outline(self, soup: BeautifulSoup) -> Optional[str]:
         """
         从影片页面 :py:obj:`soup` 中获影片的故事梗概.
+
+        :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
 
     @abstractmethod
@@ -129,4 +157,6 @@ class Base(Session):
 
         - ``name`` 演员姓名.
         - ``avatar_url`` 头像地址.
+
+        :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """

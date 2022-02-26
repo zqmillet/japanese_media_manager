@@ -52,6 +52,12 @@ def function_11():  # pylint: disable = useless-return
     ...
     return None
 
+def function_12():
+    return []
+
+def function_13():
+    return [0]
+
 @pytest.mark.parametrize(
     'function, result', [
         (function_1, True),
@@ -65,6 +71,8 @@ def function_11():  # pylint: disable = useless-return
         (function_9, True),
         (function_10, True),
         (function_11, True),
+        (function_12, True),
+        (function_13, False),
     ]
 )
 def test_only_return_none(function, result):

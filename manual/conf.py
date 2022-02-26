@@ -16,5 +16,7 @@ source_suffix = ['.rst']
 autodoc_default_options = {
     'member-order': 'bysource',
     'special-members': True,
-    'exclude-members': 'request, __weakref__'
+    'exclude-members': 'request, __weakref__',
 }
+autodoc_typehints = 'both'
+autodoc_class_signature = 'separated'
