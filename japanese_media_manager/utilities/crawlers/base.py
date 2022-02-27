@@ -160,3 +160,9 @@ class Base(Session):
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
+
+    def __repr__(self) -> str:
+        """
+        重写函数, 便于调试.
+        """
+        return f'<crawler {self.__class__.__name__}>'
