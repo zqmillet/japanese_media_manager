@@ -1,7 +1,10 @@
 from logging import Logger
-from typing import List, Optional, Dict
+from typing import List
+from typing import Optional
+from typing import Dict
 
 from japanese_media_manager.utilities.logger import dumb
+
 from .base import Base
 
 class Crawlers:
@@ -19,6 +22,14 @@ class Crawlers:
         self.required_fields = required_fields
         self.logger = logger
 
+        fields = set()
+        for crawler in crawlers:
+            fields |= set(crawler.get_fields())
+
+        missing_fields = set(required_fields) - fields
+        if missing_fields:
+            logger.warning(f'cannot get fields {", ".join(map(repr, sorted(missing_fields)))} by the {len(crawlers)} crawler(s)')
+
     def get_metadata(self, number: str) -> Optional[Dict]:
         """
         该函数会依次利用 :py:obj:`self.crawlers` 列表中的爬虫爬取影片元数据.
@@ -27,4 +38,3 @@ class Crawlers:
 
         :param number: 影片番号.
         """
-        pass
