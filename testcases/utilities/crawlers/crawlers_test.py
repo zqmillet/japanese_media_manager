@@ -136,9 +136,11 @@ def test_crawlers_warning(logger, arzon, avsox, javbus):
         )
     ]
 )
-def test_get_metadata(number, metatada, javbus, javdb, airav):
-    crawlers = Crawlers([javbus, javdb, airav], required_fields=['poster', 'stars', 'outline'])
+def test_get_metadata(number, metatada, javbus, javdb, airav, logger):
+    crawlers = Crawlers([javbus, javdb, airav], required_fields=['poster', 'stars', 'outline'], logger=logger)
     _metatada = crawlers.get_metadata(number)
 
     assert isinstance(_metatada.pop('fanart'), PIL.JpegImagePlugin.JpegImageFile)
     assert _metatada == metatada
+    for info in logger:
+        print(info)
