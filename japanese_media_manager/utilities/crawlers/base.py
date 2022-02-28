@@ -8,7 +8,7 @@ from japanese_media_manager.utilities.session import Session
 
 ALL_FIELDS: List[str] = ['fanart', 'poster', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'outline', 'stars']
 
-class Meta(type):
+class MetaClass(type):
     def __init__(cls, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
         _, (base_class,), *_ = args
@@ -18,7 +18,7 @@ class Meta(type):
 
         cls.fields = [field for field in ALL_FIELDS if getattr(base_class, f'get_{field}') is not getattr(cls, f'get_{field}')]
 
-class Base(Session, metaclass=Meta):
+class Base(Session, metaclass=MetaClass):
     """
     :py:class:`Base` 继承自 :py:class:`Session` 类, 是所有 Crawler 的父类, 并且是抽象类, 其所有子类, 需要实现 :py:meth:`get_page_soup`, :py:meth:`get_fanart` 等成员方法.
     :py:class:`Base` 类会自动控制这些成员方法的调用, 并获取影片的元数据, 通过 :py:meth:`get_metadata` 方法返回给调用方.
@@ -64,7 +64,7 @@ class Base(Session, metaclass=Meta):
 
         :param number: 影片番号.
         """
-        return self.get_soup('')
+        return self.get_soup('')  # pragma: no cover
 
     def get_fanart(self, soup: BeautifulSoup) -> Optional[Image]:  # pylint: disable = unused-argument, no-self-use
         """
@@ -72,7 +72,7 @@ class Base(Session, metaclass=Meta):
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
-        return None
+        return None  # pragma: no cover
 
     def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:  # pylint: disable = unused-argument, no-self-use
         """
@@ -80,7 +80,7 @@ class Base(Session, metaclass=Meta):
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
-        return None
+        return None  # pragma: no cover
 
     def get_keywords(self, soup: BeautifulSoup) -> List[str]:  # pylint: disable = unused-argument, no-self-use
         """
@@ -88,7 +88,7 @@ class Base(Session, metaclass=Meta):
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
-        return []
+        return []  # pragma: no cover
 
     def get_title(self, soup: BeautifulSoup) -> Optional[str]:  # pylint: disable = unused-argument, no-self-use
         """
@@ -96,7 +96,7 @@ class Base(Session, metaclass=Meta):
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
-        return None
+        return None  # pragma: no cover
 
     def get_release_date(self, soup: BeautifulSoup) -> Optional[date]:  # pylint: disable = unused-argument, no-self-use
         """
@@ -104,7 +104,7 @@ class Base(Session, metaclass=Meta):
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
-        return None
+        return None  # pragma: no cover
 
     def get_length(self, soup: BeautifulSoup) -> Optional[int]:  # pylint: disable = unused-argument, no-self-use
         """
@@ -112,7 +112,7 @@ class Base(Session, metaclass=Meta):
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
-        return None
+        return None  # pragma: no cover
 
     def get_number(self, soup: BeautifulSoup) -> Optional[str]:  # pylint: disable = unused-argument, no-self-use
         """
@@ -120,7 +120,7 @@ class Base(Session, metaclass=Meta):
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
-        return None
+        return None  # pragma: no cover
 
     def get_director(self, soup: BeautifulSoup) -> Optional[str]:  # pylint: disable = unused-argument, no-self-use
         """
@@ -128,7 +128,7 @@ class Base(Session, metaclass=Meta):
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
-        return None
+        return None  # pragma: no cover
 
     def get_series(self, soup: BeautifulSoup) -> Optional[str]:  # pylint: disable = unused-argument, no-self-use
         """
@@ -136,7 +136,7 @@ class Base(Session, metaclass=Meta):
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
-        return None
+        return None  # pragma: no cover
 
     def get_studio(self, soup: BeautifulSoup) -> Optional[str]:  # pylint: disable = unused-argument, no-self-use
         """
@@ -144,7 +144,7 @@ class Base(Session, metaclass=Meta):
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
-        return None
+        return None  # pragma: no cover
 
     def get_outline(self, soup: BeautifulSoup) -> Optional[str]:  # pylint: disable = unused-argument, no-self-use
         """
@@ -152,7 +152,7 @@ class Base(Session, metaclass=Meta):
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
-        return None
+        return None  # pragma: no cover
 
     def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:  # pylint: disable = unused-argument, no-self-use
         """
@@ -165,7 +165,7 @@ class Base(Session, metaclass=Meta):
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
-        return []
+        return []  # pragma: no cover
 
     def __repr__(self) -> str:
         """
