@@ -1,8 +1,10 @@
 from re import match
 from datetime import datetime, date
-from typing import List, Any, Dict, Optional
+from typing import List
+from typing import Any
+from typing import Dict
+from typing import Optional
 from bs4 import BeautifulSoup
-from PIL.Image import Image
 
 from .base import Base
 
@@ -45,15 +47,6 @@ class ArzonCrawler(Base):
                 return self.get_soup(response.text)
         return self.get_soup('')
 
-    def get_fanart(self, soup: BeautifulSoup) -> Optional[Image]:
-        return None
-
-    def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:
-        return None
-
-    def get_keywords(self, soup: BeautifulSoup) -> List[str]:
-        return []
-
     def get_title(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('h1'):
             return tag.text
@@ -80,9 +73,6 @@ class ArzonCrawler(Base):
             if not result:
                 continue
             return int(result.groupdict()['length'])
-        return None
-
-    def get_number(self, soup: BeautifulSoup) -> Optional[str]:
         return None
 
     def get_director(self, soup: BeautifulSoup) -> Optional[str]:

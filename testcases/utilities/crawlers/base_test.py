@@ -15,5 +15,5 @@ from japanese_media_manager.utilities.crawlers import JavBusCrawler
         (JavBusCrawler, ['fanart', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'stars']),
     ]
 )
-def test_get_fields(crawler, fields):
-    assert crawler.get_fields() == fields
+def test_class_fields(crawler, fields):
+    assert crawler.fields == fields

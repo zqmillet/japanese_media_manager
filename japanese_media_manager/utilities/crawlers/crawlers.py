@@ -22,17 +22,13 @@ class Crawlers:
         self.crawlers = crawlers
         self.logger = logger
 
-        fields = set()
-        for crawler in crawlers:
-            fields |= set(crawler.get_fields())
-
-        self.impossible_fields = set(required_fields) - fields
-        if self.impossible_fields:
-            self.logger.warning('cannot get fields %s by the %d crawler(s)', ', '.join(map(repr, sorted(self.impossible_fields))), len(crawlers))
-
+        self.impossible_fields = set(required_fields) - set().union(*(crawler.fields for crawler in crawlers))
         self.required_fields = [field for field in required_fields if field not in self.impossible_fields]
         self.logger.info('crawlers grouped by %s is ready', ', '.join(map(repr, crawlers)))
         self.logger.info('%d field(s): %s can be crawled by this crawler group', len(self.required_fields), ', '.join(self.required_fields))
+        if not self.impossible_fields:
+            return
+        self.logger.warning('%d field(s): %s cannot be crawled by this crawler group', len(self.impossible_fields), ', '.join(sorted(self.impossible_fields)))
 
     def get_metadata(self, number: str) -> Optional[Dict]:
         """
@@ -44,19 +40,24 @@ class Crawlers:
         """
 
         metadata: Dict[str, Any] = {}
-        for index, crawler in enumerate(self.crawlers, start=1):
+        missing_fields = set(self.required_fields)
+
+        for crawler in self.crawlers:
+            if not set(crawler.fields) & missing_fields:
+                self.logger.info('%s cannot provide more fields, ignore it', crawler)
+                continue
+
             self.logger.info('crawling video %s by %s', number, crawler)
             for key, value in crawler.get_metadata(number).items():
                 metadata[key] = metadata.get(key) or value
 
-            missing_fields = {field for field in self.required_fields if not metadata.get(field)}
+            missing_fields = {field for field in missing_fields if not metadata.get(field)}
 
-            if missing_fields:
-                self.logger.info('missing %d field(s): %s', len(missing_fields), ', '.join(sorted(missing_fields)))
-                continue
+            if not missing_fields:
+                self.logger.info('all fields are crawled')
+                break
+            self.logger.info('missing %d field(s): %s', len(missing_fields), ', '.join(sorted(missing_fields)))
+        else:
+            self.logger.warning('%d field(s): %s are not crawled', len(missing_fields), ', '.join(sorted(missing_fields)))
 
-            self.logger.info('all required fields are ok')
-            if self.crawlers[index:]:
-                self.logger.info('there is no need to try rest of %d crawler(s)', len(self.crawlers) - index)
-            break
         return metadata

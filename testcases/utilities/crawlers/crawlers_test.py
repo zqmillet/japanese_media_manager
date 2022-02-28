@@ -51,21 +51,30 @@ def _logger():
 
 def test_crawlers_warning(logger, arzon, avsox, javbus):
     Crawlers([arzon], required_fields=['poster', 'stars', 'outline'], logger=logger)
-    assert logger[0] == ('warning', "cannot get fields 'poster' by the 1 crawler(s)")
-    assert logger[1] == ('info', 'crawlers grouped by <crawler ArzonCrawler> is ready')
+    assert logger == [
+        ('info', 'crawlers grouped by <crawler ArzonCrawler> is ready'),
+        ('info', '2 field(s): stars, outline can be crawled by this crawler group'),
+        ('warning', '1 field(s): poster cannot be crawled by this crawler group')
+    ]
     logger.clear()
 
     Crawlers([avsox, arzon], required_fields=['fanart', 'stars', 'outline'], logger=logger)
-    assert logger[0] == ('info', 'crawlers grouped by <crawler AvsoxCrawler>, <crawler ArzonCrawler> is ready')
+    assert logger == [
+        ('info', 'crawlers grouped by <crawler AvsoxCrawler>, <crawler ArzonCrawler> is ready'),
+        ('info', '3 field(s): fanart, stars, outline can be crawled by this crawler group')
+    ]
     logger.clear()
 
     Crawlers([avsox, arzon, javbus], required_fields=['fanart', 'stars', 'outline', 'poster'], logger=logger)
-    assert logger[0] == ('warning', "cannot get fields 'poster' by the 3 crawler(s)")
-    assert logger[1] == ('info', 'crawlers grouped by <crawler AvsoxCrawler>, <crawler ArzonCrawler>, <crawler JavBusCrawler> is ready')
+    assert logger == [
+        ('info', 'crawlers grouped by <crawler AvsoxCrawler>, <crawler ArzonCrawler>, <crawler JavBusCrawler> is ready'),
+        ('info', '3 field(s): fanart, stars, outline can be crawled by this crawler group'),
+        ('warning', '1 field(s): poster cannot be crawled by this crawler group')
+    ]
     logger.clear()
 
 @pytest.mark.parametrize(
-    'number, metatada', [
+    'number, metadata, messages', [
         (
             'star-325', {
                 'poster': None,
@@ -79,7 +88,17 @@ def test_crawlers_warning(logger, arzon, avsox, javbus):
                 'studio': 'SODクリエイト',
                 'stars': [{'avatar_url': 'https://www.javbus.com/pics/actress/6xv_a.jpg', 'name': '羽田あい'}],
                 'outline': '潛入黑暗組織的「羽田亞衣」，雖然登場很瀟灑，不過沒多久就被敵人抓住了！被鎖鍊綁住連續調教，潮吹就像爆炸班狂噴！不斷反覆的凌虐，反而讓她沈溺在當中…。'
-            }
+            },
+            [
+                ('info', 'crawlers grouped by <crawler JavBusCrawler>, <crawler JavdbCrawler>, <crawler AirAvCrawler> is ready'),
+                ('info', '2 field(s): stars, outline can be crawled by this crawler group'),
+                ('warning', '1 field(s): poster cannot be crawled by this crawler group'),
+                ('info', 'crawling video star-325 by <crawler JavBusCrawler>'),
+                ('info', 'missing 1 field(s): outline'),
+                ('info', '<crawler JavdbCrawler> cannot provide more fields, ignore it'),
+                ('info', 'crawling video star-325 by <crawler AirAvCrawler>'),
+                ('info', 'all fields are crawled'),
+            ]
         ),
         (
             'ssni-201', {
@@ -95,7 +114,17 @@ def test_crawlers_warning(logger, arzon, avsox, javbus):
                 'studio': 'エスワンナンバーワンスタイル',
                 'stars': [{'avatar_url': 'https://www.javbus.com/pics/actress/8yw_a.jpg', 'name': '鈴木心春'}],
                 'outline': '學生會長鈴木心春發現會計簿中有奇怪的收據，正義感很強的她與男教師談這件事卻遭背叛。這學校裡的教師、同學、朋友都是惡人，沒人願意幫她。讓她在癡漢、剃毛、口爆，凌辱性交中墜落性愛地獄。'
-            }
+            },
+            [
+                ('info', 'crawlers grouped by <crawler JavBusCrawler>, <crawler JavdbCrawler>, <crawler AirAvCrawler> is ready'),
+                ('info', '2 field(s): stars, outline can be crawled by this crawler group'),
+                ('warning', '1 field(s): poster cannot be crawled by this crawler group'),
+                ('info', 'crawling video ssni-201 by <crawler JavBusCrawler>'),
+                ('info', 'missing 1 field(s): outline'),
+                ('info', '<crawler JavdbCrawler> cannot provide more fields, ignore it'),
+                ('info', 'crawling video ssni-201 by <crawler AirAvCrawler>'),
+                ('info', 'all fields are crawled'),
+            ]
         ),
         (
             'hunta-007', {
@@ -117,7 +146,17 @@ def test_crawlers_warning(logger, arzon, avsox, javbus):
                     {'avatar_url': 'https://www.javbus.com/pics/actress/n00_a.jpg', 'name': '白石悠'}
                 ],
                 'outline': '學生妹首次帶了男友回家來。想說一定在房間幹起來了！但我看了一下發現男友技巧真是超爛！只好進去用肉體來個3P大指導！'
-            }
+            },
+            [
+                ('info', 'crawlers grouped by <crawler JavBusCrawler>, <crawler JavdbCrawler>, <crawler AirAvCrawler> is ready'),
+                ('info', '2 field(s): stars, outline can be crawled by this crawler group'),
+                ('warning', '1 field(s): poster cannot be crawled by this crawler group'),
+                ('info', 'crawling video hunta-007 by <crawler JavBusCrawler>'),
+                ('info', 'missing 1 field(s): outline'),
+                ('info', '<crawler JavdbCrawler> cannot provide more fields, ignore it'),
+                ('info', 'crawling video hunta-007 by <crawler AirAvCrawler>'),
+                ('info', 'all fields are crawled'),
+            ]
         ),
         (
             'rki-460', {
@@ -132,15 +171,86 @@ def test_crawlers_warning(logger, arzon, avsox, javbus):
                 'studio': 'ROOKIE',
                 'stars': [{'avatar_url': 'https://www.javbus.com/pics/actress/p84_a.jpg', 'name': '椎名そら'}],
                 'outline': '世界で一番エロく見えるライティングとアングルで見せる最高にカワイイ椎名そら！目の前で舐められているかのような臨場感MAXのフェラチオ！ピンク乳首で美乳の天使のおっぱい！プリッとした弾力のあるまん丸のお尻！キュッとしまった美マンコに思いっきり中出し！最高にきれいなフェラチオと最高に気持ちいいSEXでイッちゃう！'
-            }
+            },
+            [
+                ('info', 'crawlers grouped by <crawler JavBusCrawler>, <crawler JavdbCrawler>, <crawler AirAvCrawler> is ready'),
+                ('info', '2 field(s): stars, outline can be crawled by this crawler group'),
+                ('warning', '1 field(s): poster cannot be crawled by this crawler group'),
+                ('info', 'crawling video rki-460 by <crawler JavBusCrawler>'),
+                ('info', 'missing 1 field(s): outline'),
+                ('info', '<crawler JavdbCrawler> cannot provide more fields, ignore it'),
+                ('info', 'crawling video rki-460 by <crawler AirAvCrawler>'),
+                ('info', 'all fields are crawled'),
+            ]
         )
     ]
 )
-def test_get_metadata(number, metatada, javbus, javdb, airav, logger):
+def test_get_metadata(number, metadata, javbus, javdb, airav, logger, messages):
     crawlers = Crawlers([javbus, javdb, airav], required_fields=['poster', 'stars', 'outline'], logger=logger)
     _metatada = crawlers.get_metadata(number)
 
     assert isinstance(_metatada.pop('fanart'), PIL.JpegImagePlugin.JpegImageFile)
-    assert _metatada == metatada
-    for info in logger:
-        print(info)
+    assert _metatada == metadata
+    assert logger == messages
+
+@pytest.mark.parametrize(
+    'number, messages, metadata', [
+        (
+            'FC2-PPV-2608212',
+            [
+                ('info', 'crawlers grouped by <crawler JavBusCrawler>, <crawler AvsoxCrawler> is ready'),
+                ('info', '3 field(s): stars, series, title can be crawled by this crawler group'),
+                ('info', 'crawling video FC2-PPV-2608212 by <crawler JavBusCrawler>'),
+                ('info', 'missing 3 field(s): series, stars, title'),
+                ('info', 'crawling video FC2-PPV-2608212 by <crawler AvsoxCrawler>'),
+                ('info', 'missing 1 field(s): stars'),
+                ('warning', '1 field(s): stars are not crawled'),
+            ],
+            {
+                'poster': None,
+                'keywords': ['素人'],
+                'title': 'FC2-PPV-2608212 【個撮】都立チアダンス部② 色白剛毛な清楚美少女\u3000海外留学のために定期的に中出し',
+                'release_date': datetime.date(2022, 1, 20),
+                'length': 9,
+                'number': 'FC2-PPV-2608212',
+                'director': None,
+                'series': '資本主義',
+                'studio': 'FC2-PPV',
+                'stars': [],
+                'outline': None
+            }
+        ),
+        (
+            '012222_01',
+            [
+                ('info', 'crawlers grouped by <crawler JavBusCrawler>, <crawler AvsoxCrawler> is ready'),
+                ('info', '3 field(s): stars, series, title can be crawled by this crawler group'),
+                ('info', 'crawling video 012222_01 by <crawler JavBusCrawler>'),
+                ('info', 'missing 3 field(s): series, stars, title'),
+                ('info', 'crawling video 012222_01 by <crawler AvsoxCrawler>'),
+                ('info', 'missing 1 field(s): series'),
+                ('warning', '1 field(s): series are not crawled'),
+            ],
+            {
+                'poster': None,
+                'keywords': ['素人'],
+                'title': '012222_01 経験人数がギリ二桁の絶倫娘を紹介してもらいました',
+                'release_date': datetime.date(2022, 1, 22),
+                'length': 55,
+                'number': '012222_01',
+                'director': None,
+                'series': None,
+                'studio': '天然むすめ( 10musume )',
+                'stars': [{'avatar_url': 'https://us.netcdn.space/storage/heyzo/actorprofile/3000/1211/profile.jpg', 'name': '栗原梢'}],
+                'outline': None
+            }
+        )
+    ]
+)
+def test_get_imcompleted_metadata(number, metadata, messages, avsox, javbus, logger):
+    crawlers = Crawlers([javbus, avsox], required_fields=['stars', 'series', 'title'], logger=logger)
+    _metadata = crawlers.get_metadata(number)
+
+    assert isinstance(_metadata.pop('fanart'), PIL.JpegImagePlugin.JpegImageFile)
+    assert _metadata == metadata
+    assert logger == messages

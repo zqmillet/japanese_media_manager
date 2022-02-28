@@ -1,24 +1,30 @@
-from abc import abstractmethod
 from datetime import date
 from typing import List, Dict, Optional
+from typing import Any
 from bs4 import BeautifulSoup
 from PIL.Image import Image
 
 from japanese_media_manager.utilities.session import Session
-from japanese_media_manager.utilities.functions import do_nothing
 
-class Base(Session):
+ALL_FIELDS: List[str] = ['fanart', 'poster', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'outline', 'stars']
+
+class Meta(type):
+    def __init__(cls, *args: Any, **kwargs: Any):
+        super().__init__(*args, **kwargs)
+        _, (base_class,), *_ = args
+
+        if base_class is Session:
+            return
+
+        cls.fields = [field for field in ALL_FIELDS if getattr(base_class, f'get_{field}') is not getattr(cls, f'get_{field}')]
+
+class Base(Session, metaclass=Meta):
     """
     :py:class:`Base` 继承自 :py:class:`Session` 类, 是所有 Crawler 的父类, 并且是抽象类, 其所有子类, 需要实现 :py:meth:`get_page_soup`, :py:meth:`get_fanart` 等成员方法.
     :py:class:`Base` 类会自动控制这些成员方法的调用, 并获取影片的元数据, 通过 :py:meth:`get_metadata` 方法返回给调用方.
 
     如果你想写另一个新网站的爬虫, 请继承该类.
     """
-    all_fields = ['fanart', 'poster', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'outline', 'stars']
-
-    @classmethod
-    def get_fields(cls) -> List[str]:
-        return [field for field in cls.all_fields if not do_nothing(getattr(cls, f'get_{field}'))]
 
     def get_metadata(self, number: str) -> dict:
         """
@@ -52,104 +58,103 @@ class Base(Session):
         """
         return BeautifulSoup(html, 'html.parser')
 
-    @abstractmethod
-    def get_page_soup(self, number: str) -> BeautifulSoup:
+    def get_page_soup(self, number: str) -> BeautifulSoup:  # pylint: disable = unused-argument
         """
         该函数的作用是根据番号 :py:obj:`number` 获取影片页面的地址, 并获取 :py:obj:`BeautifulSoup` 格式的页面内容.
 
         :param number: 影片番号.
         """
+        return self.get_soup('')
 
-    @abstractmethod
-    def get_fanart(self, soup: BeautifulSoup) -> Optional[Image]:
+    def get_fanart(self, soup: BeautifulSoup) -> Optional[Image]:  # pylint: disable = unused-argument, no-self-use
         """
         从影片页面 :py:obj:`soup` 中获取 Fanart 地址, 并加载到内存中并返回图片.
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
+        return None
 
-    @abstractmethod
-    def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:
+    def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:  # pylint: disable = unused-argument, no-self-use
         """
         从影片页面 :py:obj:`soup` 中获取海报地址, 并加载到内存中并返回图片.
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
+        return None
 
-    @abstractmethod
-    def get_keywords(self, soup: BeautifulSoup) -> List[str]:
+    def get_keywords(self, soup: BeautifulSoup) -> List[str]:  # pylint: disable = unused-argument, no-self-use
         """
         从影片页面 :py:obj:`soup` 中获影片的关键字列表.
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
+        return []
 
-    @abstractmethod
-    def get_title(self, soup: BeautifulSoup) -> Optional[str]:
+    def get_title(self, soup: BeautifulSoup) -> Optional[str]:  # pylint: disable = unused-argument, no-self-use
         """
         从影片页面 :py:obj:`soup` 中获影片的标题.
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
+        return None
 
-    @abstractmethod
-    def get_release_date(self, soup: BeautifulSoup) -> Optional[date]:
+    def get_release_date(self, soup: BeautifulSoup) -> Optional[date]:  # pylint: disable = unused-argument, no-self-use
         """
         从影片页面 :py:obj:`soup` 中获影片的发售日期.
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
+        return None
 
-    @abstractmethod
-    def get_length(self, soup: BeautifulSoup) -> Optional[int]:
+    def get_length(self, soup: BeautifulSoup) -> Optional[int]:  # pylint: disable = unused-argument, no-self-use
         """
         从影片页面 :py:obj:`soup` 中获影片的时长, 单位(分钟).
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
+        return None
 
-    @abstractmethod
-    def get_number(self, soup: BeautifulSoup) -> Optional[str]:
+    def get_number(self, soup: BeautifulSoup) -> Optional[str]:  # pylint: disable = unused-argument, no-self-use
         """
         从影片页面 :py:obj:`soup` 中获影片的番号.
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
+        return None
 
-    @abstractmethod
-    def get_director(self, soup: BeautifulSoup) -> Optional[str]:
+    def get_director(self, soup: BeautifulSoup) -> Optional[str]:  # pylint: disable = unused-argument, no-self-use
         """
         从影片页面 :py:obj:`soup` 中获影片的导演.
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
+        return None
 
-    @abstractmethod
-    def get_series(self, soup: BeautifulSoup) -> Optional[str]:
+    def get_series(self, soup: BeautifulSoup) -> Optional[str]:  # pylint: disable = unused-argument, no-self-use
         """
         从影片页面 :py:obj:`soup` 中获影片的系列名称.
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
+        return None
 
-    @abstractmethod
-    def get_studio(self, soup: BeautifulSoup) -> Optional[str]:
+    def get_studio(self, soup: BeautifulSoup) -> Optional[str]:  # pylint: disable = unused-argument, no-self-use
         """
         从影片页面 :py:obj:`soup` 中获影片的工作室名称.
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
+        return None
 
-    @abstractmethod
-    def get_outline(self, soup: BeautifulSoup) -> Optional[str]:
+    def get_outline(self, soup: BeautifulSoup) -> Optional[str]:  # pylint: disable = unused-argument, no-self-use
         """
         从影片页面 :py:obj:`soup` 中获影片的故事梗概.
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
+        return None
 
-    @abstractmethod
-    def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:
+    def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:  # pylint: disable = unused-argument, no-self-use
         """
         从影片页面 :py:obj:`soup` 中获影片的演员列表.
 
@@ -160,6 +165,7 @@ class Base(Session):
 
         :param soup: :py:class:`BeautifulSoup` 格式页面内容.
         """
+        return []
 
     def __repr__(self) -> str:
         """

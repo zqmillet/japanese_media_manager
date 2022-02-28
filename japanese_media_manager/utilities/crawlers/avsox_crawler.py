@@ -39,9 +39,6 @@ class AvsoxCrawler(Base):
                     return self.get_soup(response.text)
         return self.get_soup('')
 
-    def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:
-        return None
-
     def get_fanart(self, soup: BeautifulSoup) -> Optional[Image]:
         for tag in soup.find_all('a', 'bigImage'):
             response = self.get(tag.attrs['href'])
@@ -105,10 +102,4 @@ class AvsoxCrawler(Base):
     def get_title(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('h3'):
             return tag.text
-        return None
-
-    def get_director(self, soup: BeautifulSoup) -> Optional[str]:
-        return None
-
-    def get_outline(self, soup: BeautifulSoup) -> Optional[str]:
         return None

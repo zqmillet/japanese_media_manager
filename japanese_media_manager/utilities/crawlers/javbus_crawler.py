@@ -42,9 +42,6 @@ class JavBusCrawler(Base):
             return open_image(BytesIO(response.content))
         return None
 
-    def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:
-        return None
-
     def get_keywords(self, soup: BeautifulSoup) -> List[str]:
         for tag in soup.find_all('meta', attrs={'name': 'keywords'}):
             if tag.attrs.get('content'):
@@ -107,6 +104,3 @@ class JavBusCrawler(Base):
                     }
                 )
         return stars
-
-    def get_outline(self, soup: BeautifulSoup) -> Optional[str]:
-        return None

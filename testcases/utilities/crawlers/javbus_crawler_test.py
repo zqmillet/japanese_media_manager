@@ -132,10 +132,10 @@ def test_metadata_with_nonexistent_number(number, proxies):
     metadata = crawler.get_metadata(number)
 
     assert metadata['title'] is None
-    assert metadata['keywords'] == []
+    assert not metadata['keywords']
     assert metadata['release_date'] is None
     assert metadata['length'] is None
-    assert metadata['stars'] == []
+    assert not metadata['stars']
     assert metadata['number'] == number
     assert metadata['director'] is None
     assert metadata['series'] is None

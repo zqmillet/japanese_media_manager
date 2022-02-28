@@ -1,7 +1,9 @@
 from re import match
 from datetime import datetime, date
 from io import BytesIO
-from typing import List, Any, Dict, Optional
+from typing import List
+from typing import Any
+from typing import Optional
 from bs4 import BeautifulSoup
 from PIL.Image import Image, open as open_image
 
@@ -36,9 +38,6 @@ class AirAvCrawler(Base):
                     return item.text.strip()
         return None
 
-    def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:
-        return None
-
     def get_title(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('p', 'mb-1'):
             return tag.text.strip()
@@ -50,18 +49,6 @@ class AirAvCrawler(Base):
             for link in tag.find_all('a'):
                 result.append(link.text.strip())
         return result
-
-    def get_length(self, soup: BeautifulSoup) -> Optional[int]:
-        return None
-
-    def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:
-        return []
-
-    def get_director(self, soup: BeautifulSoup) -> Optional[str]:
-        return None
-
-    def get_series(self, soup: BeautifulSoup) -> Optional[str]:
-        return None
 
     def get_studio(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('ul', 'list-unstyled pl-2'):

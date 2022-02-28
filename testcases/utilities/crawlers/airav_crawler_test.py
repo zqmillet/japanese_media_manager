@@ -75,7 +75,7 @@ def test_metadata(number, title, outline, keywords, studio, release_date, proxie
     assert metadata['title'] == title
     assert metadata['outline'] == outline
     assert metadata['keywords'] == keywords
-    assert metadata['stars'] == []
+    assert not metadata['stars']
     assert metadata['studio'] == studio
     assert metadata['release_date'] == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
     assert metadata['fanart'] is not None

@@ -93,9 +93,6 @@ class JavdbCrawler(Base):
                 return link.attrs['data-clipboard-text']
         return None
 
-    def get_poster(self, soup: BeautifulSoup) -> Optional[Image]:
-        return None
-
     def get_director(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('div', 'panel-block'):
             strong = tag.find_next('strong')
@@ -135,9 +132,6 @@ class JavdbCrawler(Base):
                 if star:
                     stars.append(star)
         return stars
-
-    def get_outline(self, soup: BeautifulSoup) -> Optional[str]:
-        pass
 
     def get_star(self, href: str) -> Optional[Dict[str, str]]:
         soup = self.get_soup(self.get(f'{self.base_url}{href}').text)
