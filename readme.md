@@ -33,6 +33,11 @@ Japanese Media Manager (jMM) is a CLI tool for management of Japanese xxx media.
 | online database | crawler name | unit test |
 | --- | --- | --- |
 | [JavBus](https://www.javbus.com/) | `JavBusCrawler` | ![javbus](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_javbus.yml/badge.svg) |
+| [JavBooks](https://jmvbt.com/) | `JavBooksCrawler` | ![javbooks](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_javbooks.yml/badge.svg) |
+| [JavDB](https://www.javdb36.com/) | `JavDBCrawler` | ![javdb](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_javdb.yml/badge.svg) |
+| [AirAV](https://cn.airav.wiki/) | `AirAVCrawler` | ![airav](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_airav.yml/badge.svg) |
+| [Arzon](https://www.arzon.jp/) | `ArzonCrawler` | ![arzon](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_arzon.yml/badge.svg) |
+| [Avsox](https://avsox.monster/) | `AvsoxCrawler` | ![avsox](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_avsox.yml/badge.svg) |
 
 ## Getting Started
 
