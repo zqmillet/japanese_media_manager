@@ -32,7 +32,7 @@ Japanese Media Manager (jMM) is a CLI tool for management of Japanese xxx media.
 
 | online database | crawler name | unit test |
 | --- | --- | --- |
-| ![JavBus](https://www.javbus.com/) | `JavBusCrawler` | ![javbus](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_javbus.yml/badge.svg) |
+| [JavBus](https://www.javbus.com/) | `JavBusCrawler` | ![javbus](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_javbus.yml/badge.svg) |
 
 ## Getting Started
 
