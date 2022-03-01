@@ -81,10 +81,8 @@ class JavdbCrawler(Base):
                 continue
 
             result = match(pattern=r'(?P<number>\d+).(?P<unit>\w+)', string=strong.find_next('span').text)
-            if not result:
-                continue
-
-            return int(result.groupdict()['number'])
+            if result:
+                return int(result.groupdict()['number'])
         return None
 
     def get_number(self, soup: BeautifulSoup) -> Optional[str]:
@@ -134,12 +132,13 @@ class JavdbCrawler(Base):
         return stars
 
     def get_star(self, href: str) -> Optional[Dict[str, str]]:
+        name = None
+        url = None
+
         soup = self.get_soup(self.get(f'{self.base_url}{href}').text)
         for tag in soup.find_all('span', 'actor-section-name'):
             name = tag.text
             break
-        else:
-            return None
 
         pattern = r'.+url\((?P<url>.+)\)'
         for tag in soup.find_all('div', 'column actor-avatar'):
@@ -147,7 +146,7 @@ class JavdbCrawler(Base):
             if result:
                 url = result.groupdict()['url']
                 break
-        else:
-            return None
 
+        if not name or not url:
+            return None
         return {'name': name, 'avatar_url': url}

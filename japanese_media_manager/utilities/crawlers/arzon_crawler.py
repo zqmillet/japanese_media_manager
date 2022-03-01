@@ -58,10 +58,8 @@ class ArzonCrawler(Base):
                 continue
 
             result = match(pattern=r'(?P<date>\d+/\d+/\d+)', string=tag.find_next('td').text.strip())
-            if not result:
-                continue
-
-            return datetime.strptime(result.groupdict()['date'], '%Y/%m/%d').date()
+            if result:
+                return datetime.strptime(result.groupdict()['date'], '%Y/%m/%d').date()
         return None
 
     def get_length(self, soup: BeautifulSoup) -> Optional[int]:
@@ -70,9 +68,8 @@ class ArzonCrawler(Base):
                 continue
 
             result = match(pattern=r'(?P<length>\d+)(?P<unit>\w+)', string=tag.find_next('td').text.strip())
-            if not result:
-                continue
-            return int(result.groupdict()['length'])
+            if result:
+                return int(result.groupdict()['length'])
         return None
 
     def get_director(self, soup: BeautifulSoup) -> Optional[str]:

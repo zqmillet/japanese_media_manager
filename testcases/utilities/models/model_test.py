@@ -63,6 +63,12 @@ def test_video_model(session, title, keywords, series, outline, director, length
     assert star_3.videos == []
     assert star_4.videos == []
 
+    assert repr(star_1) == '<star mario>'
+    assert repr(star_2) == '<star luigi>'
+    assert repr(star_3) == '<star kinopio>'
+    assert repr(star_4) == '<star kinopico>'
+    assert repr(video) == '<video HAHA-233>'
+
 @pytest.mark.parametrize('title', ['gouliguojiashengsiyi'])
 @pytest.mark.parametrize('keywords', [['haha', 'hoho'], []])
 @pytest.mark.parametrize('series', [None, 'xianggangjizhe'])
