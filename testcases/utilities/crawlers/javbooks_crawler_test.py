@@ -58,7 +58,7 @@ from japanese_media_manager.utilities.crawlers import JavBooksCrawler
             'AUKG-535',
             {
                 'poster': None,
-                'keywords':['故事集', '女同性恋', '恋腿癖', '姐姐', '0', 'DMM独家', '高画质'],
+                'keywords': ['故事集', '女同性恋', '恋腿癖', '姐姐', '0', 'DMM独家', '高画质'],
                 'title': 'ノーパンパンストレズビアン ～匂うつま先、テカる美脚のパンストマニアックス～',
                 'release_date': datetime.date(2022, 2, 26),
                 'length': 117,
