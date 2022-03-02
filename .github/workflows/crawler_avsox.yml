@@ -21,4 +21,4 @@ jobs:
     - name: Test with pytest
       run: |
         export PYTHONPATH='.'
-        pytest testcases/utilities/crawlers/avsox_crawler_test.py -vv --reruns 5
+        pytest testcases/crawlers/avsox_crawler_test.py -vv --reruns 5

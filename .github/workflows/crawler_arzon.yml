@@ -21,4 +21,4 @@ jobs:
     - name: Test with pytest
       run: |
         export PYTHONPATH='.'
-        pytest testcases/utilities/crawlers/arzon_crawler_test.py -vv --reruns 5
+        pytest testcases/crawlers/arzon_crawler_test.py -vv --reruns 5
