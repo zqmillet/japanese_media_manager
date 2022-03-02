@@ -2,12 +2,12 @@ import datetime
 import PIL.JpegImagePlugin
 import pytest
 
-from japanese_media_manager.utilities.crawlers import Crawlers
-from japanese_media_manager.utilities.crawlers import AirAvCrawler
-from japanese_media_manager.utilities.crawlers import ArzonCrawler
-from japanese_media_manager.utilities.crawlers import AvsoxCrawler
-from japanese_media_manager.utilities.crawlers import JavBusCrawler
-from japanese_media_manager.utilities.crawlers import JavdbCrawler
+from japanese_media_manager.crawlers import Crawlers
+from japanese_media_manager.crawlers import AirAvCrawler
+from japanese_media_manager.crawlers import ArzonCrawler
+from japanese_media_manager.crawlers import AvsoxCrawler
+from japanese_media_manager.crawlers import JavBusCrawler
+from japanese_media_manager.crawlers import JavdbCrawler
 
 @pytest.fixture(name='airav', scope='session')
 def _airav(proxies):

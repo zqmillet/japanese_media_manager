@@ -1,7 +1,7 @@
 import datetime
 import pytest
 
-from japanese_media_manager.utilities.crawlers import AirAvCrawler
+from japanese_media_manager.crawlers import AirAvCrawler
 
 @pytest.mark.parametrize(
     'number, title, outline, keywords, studio, release_date', [

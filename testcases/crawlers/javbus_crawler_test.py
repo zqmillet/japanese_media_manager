@@ -1,7 +1,7 @@
 import datetime
 import pytest
 
-from japanese_media_manager.utilities.crawlers import JavBusCrawler
+from japanese_media_manager.crawlers import JavBusCrawler
 
 @pytest.mark.parametrize(
     'number, title, keywords, release_date, stars, director, series, studio, length', [
