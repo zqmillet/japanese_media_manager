@@ -3,6 +3,8 @@ from typing import List, Dict, Optional
 from typing import Any
 from bs4 import BeautifulSoup
 from PIL.Image import Image
+from requests.models import Response
+from requests.exceptions import RequestException
 
 from japanese_media_manager.utilities.session import Session
 
@@ -172,3 +174,9 @@ class Base(Session, metaclass=MetaClass):
         重写函数, 便于调试.
         """
         return f'<crawler {self.__class__.__name__}>'
+
+    def request(self, *args: Any, **kwargs: Any) -> Response:
+        try:
+            return super().request(*args, **kwargs)
+        except RequestException:
+            return Response()
