@@ -2,7 +2,7 @@ import datetime
 import PIL.JpegImagePlugin
 import pytest
 
-from japanese_media_manager.utilities.crawlers import Crawlers
+from japanese_media_manager.utilities.crawler_group import CrawlerGroup
 from japanese_media_manager.crawlers import AirAvCrawler
 from japanese_media_manager.crawlers import ArzonCrawler
 from japanese_media_manager.crawlers import AvsoxCrawler
@@ -50,7 +50,7 @@ def _logger():
     return Logger()
 
 def test_crawlers_warning(logger, arzon, avsox, javbus):
-    Crawlers([arzon], required_fields=['poster', 'stars', 'outline'], logger=logger)
+    CrawlerGroup([arzon], required_fields=['poster', 'stars', 'outline'], logger=logger)
     assert logger == [
         ('info', 'crawlers grouped by <crawler ArzonCrawler> is ready'),
         ('info', '2 field(s): stars, outline can be crawled by this crawler group'),
@@ -58,14 +58,14 @@ def test_crawlers_warning(logger, arzon, avsox, javbus):
     ]
     logger.clear()
 
-    Crawlers([avsox, arzon], required_fields=['fanart', 'stars', 'outline'], logger=logger)
+    CrawlerGroup([avsox, arzon], required_fields=['fanart', 'stars', 'outline'], logger=logger)
     assert logger == [
         ('info', 'crawlers grouped by <crawler AvsoxCrawler>, <crawler ArzonCrawler> is ready'),
         ('info', '3 field(s): fanart, stars, outline can be crawled by this crawler group')
     ]
     logger.clear()
 
-    Crawlers([avsox, arzon, javbus], required_fields=['fanart', 'stars', 'outline', 'poster'], logger=logger)
+    CrawlerGroup([avsox, arzon, javbus], required_fields=['fanart', 'stars', 'outline', 'poster'], logger=logger)
     assert logger == [
         ('info', 'crawlers grouped by <crawler AvsoxCrawler>, <crawler ArzonCrawler>, <crawler JavBusCrawler> is ready'),
         ('info', '3 field(s): fanart, stars, outline can be crawled by this crawler group'),
@@ -186,7 +186,7 @@ def test_crawlers_warning(logger, arzon, avsox, javbus):
     ]
 )
 def test_get_metadata(number, metadata, javbus, javdb, airav, logger, messages):
-    crawlers = Crawlers([javbus, javdb, airav], required_fields=['poster', 'stars', 'outline'], logger=logger)
+    crawlers = CrawlerGroup([javbus, javdb, airav], required_fields=['poster', 'stars', 'outline'], logger=logger)
     _metatada = crawlers.get_metadata(number)
 
     assert isinstance(_metatada.pop('fanart'), PIL.JpegImagePlugin.JpegImageFile)
@@ -248,7 +248,7 @@ def test_get_metadata(number, metadata, javbus, javdb, airav, logger, messages):
     ]
 )
 def test_get_imcompleted_metadata(number, metadata, messages, avsox, javbus, logger):
-    crawlers = Crawlers([javbus, avsox], required_fields=['stars', 'series', 'title'], logger=logger)
+    crawlers = CrawlerGroup([javbus, avsox], required_fields=['stars', 'series', 'title'], logger=logger)
     _metadata = crawlers.get_metadata(number)
 
     assert isinstance(_metadata.pop('fanart'), PIL.JpegImagePlugin.JpegImageFile)

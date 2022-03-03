@@ -7,7 +7,7 @@ from typing import Any
 from japanese_media_manager.utilities.logger import dumb
 from japanese_media_manager.crawlers import Base
 
-class Crawlers:
+class CrawlerGroup:
     """
     爬虫组, 用于管理多个爬虫, 并提供统一的输入输出.
     """

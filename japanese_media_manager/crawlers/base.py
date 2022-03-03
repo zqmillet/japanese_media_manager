@@ -7,6 +7,7 @@ from requests.models import Response
 from requests.exceptions import RequestException
 
 from japanese_media_manager.utilities.session import Session
+from japanese_media_manager.utilities.functions import format_string
 
 ALL_FIELDS: List[str] = ['fanart', 'poster', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'outline', 'stars']
 
@@ -39,16 +40,16 @@ class Base(Session, metaclass=MetaClass):
         return {
             'fanart': self.get_fanart(soup),
             'poster': self.get_poster(soup),
-            'keywords': self.get_keywords(soup),
-            'title': self.get_title(soup),
+            'keywords': list(map(format_string, self.get_keywords(soup))),
+            'title': format_string(self.get_title(soup)),
             'release_date': self.get_release_date(soup),
             'length': self.get_length(soup),
-            'number': self.get_number(soup) or number,
-            'director': self.get_director(soup),
-            'series': self.get_series(soup),
-            'studio': self.get_studio(soup),
+            'number': format_string(self.get_number(soup) or number),
+            'director': format_string(self.get_director(soup)),
+            'series': format_string(self.get_series(soup)),
+            'studio': format_string(self.get_studio(soup)),
             'stars': self.get_stars(soup),
-            'outline': self.get_outline(soup)
+            'outline': format_string(self.get_outline(soup))
         }
 
     @staticmethod
