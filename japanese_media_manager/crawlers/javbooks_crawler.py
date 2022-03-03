@@ -64,9 +64,7 @@ class JavBooksCrawler(Base):
     def get_number(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('div', 'infobox'):
             if not tag.find_next('b').text.strip() == TAG.NUMBER:
-                continue
-
-            return tag.find_next('font').text
+                return tag.find_next('font').text
         return None
 
     def get_release_date(self, soup: BeautifulSoup) -> Optional[date]:
