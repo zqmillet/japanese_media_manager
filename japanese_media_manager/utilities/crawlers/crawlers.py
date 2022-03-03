@@ -5,8 +5,7 @@ from typing import Dict
 from typing import Any
 
 from japanese_media_manager.utilities.logger import dumb
-
-from .base import Base
+from japanese_media_manager.crawlers import Base
 
 class Crawlers:
     """

@@ -9,6 +9,5 @@ from .avsox_crawler import AvsoxCrawler
 from .arzon_crawler import ArzonCrawler
 from .javdb_crawler import JavdbCrawler
 from .javbooks_crawler import JavBooksCrawler
-from .crawlers import Crawlers
 
-__all__ = ['Base', 'JavBusCrawler', 'AirAvCrawler', 'AvsoxCrawler', 'ArzonCrawler', 'JavdbCrawler', 'JavBooksCrawler', 'Crawlers']
+__all__ = ['Base', 'JavBusCrawler', 'AirAvCrawler', 'AvsoxCrawler', 'ArzonCrawler', 'JavdbCrawler', 'JavBooksCrawler']
