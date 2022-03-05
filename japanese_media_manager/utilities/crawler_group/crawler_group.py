@@ -12,7 +12,7 @@ class CrawlerGroup:
     爬虫组, 用于管理多个爬虫, 并提供统一的输入输出.
     """
 
-    def __init__(self, crawlers: List[Base], required_fields: List[str], logger: Logger = dumb):
+    def __init__(self, crawlers: List[Base], required_fields: Optional[List[str]] = None, logger: Logger = dumb):
         """
         :param crawlers: 爬虫列表, 列表中的爬虫存在先后顺序.
         :param required_fields: :py:meth:`get_metadata` 方法返回元数据的必须字段.
@@ -21,7 +21,9 @@ class CrawlerGroup:
         self.crawlers = crawlers
         self.logger = logger
 
-        self.impossible_fields = set(required_fields) - set().union(*(crawler.fields for crawler in crawlers))
+        possible_fields = set().union(*(crawler.fields for crawler in crawlers))
+        required_fields = required_fields or sorted(possible_fields)
+        self.impossible_fields = set(required_fields) - possible_fields
         self.required_fields = [field for field in required_fields if field not in self.impossible_fields]
         self.logger.info('crawlers grouped by %s is ready', ', '.join(map(repr, crawlers)))
         self.logger.info('%d field(s): %s can be crawled by this crawler group', len(self.required_fields), ', '.join(self.required_fields))

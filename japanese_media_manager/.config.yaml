@@ -1,13 +1,13 @@
-metadata:
+crawlers:
   - name: javbus
-    class: japanese_media_manager.utilities.metadata.JavBusMetaData
-  - name: arzon
-    class: japanese_media_manager.utilities.metadata.ArzonMetaData
+    class: japanese_media_manager.utilities.metadata.JavBusCrawler
+  - name: javbooks
+    class: japanese_media_manager.utilities.metadata.JavBooksCrawler
 route:
   - pattern: "[a-zA-Z]{2,5}-\\d{3,5}"
     metadatas: [JavBusMetaData, AirAVMetaData]
   - pattern: ".+"
-    metadatas: [JavBusMetaData, AirAVMetaData, AvsoxMetaData]
+    metadatas: [javbus, aData, AvsoxMetaData]
 proxies:
     http: None
     https: None

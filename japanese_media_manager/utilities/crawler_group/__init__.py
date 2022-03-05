@@ -3,5 +3,7 @@
 """
 
 from .crawler_group import CrawlerGroup
+from .router import Router
+from .router import Rule
 
-__all__ = ['CrawlerGroup']
+__all__ = ['CrawlerGroup', 'Router', 'Rule']
