@@ -22,7 +22,7 @@ jobs:
     - name: Test with pytest
       run: |
         export PYTHONPATH='.'
-        pytest testcases/scripts testcases/utilities -vv --app-id ${{ secrets.APP_ID }} --app-key ${{ secrets.APP_KEY }} --session-test-threthold 0.5 --reruns 5 --cov=japanese_media_manager --cov-report=xml
+        pytest testcases -vv --app-id ${{ secrets.APP_ID }} --app-key ${{ secrets.APP_KEY }} --session-test-threthold 0.5 --reruns 5 --cov=japanese_media_manager --cov-report=xml
     - name: Update converage
       uses: codecov/codecov-action@v2
       with:
@@ -67,4 +67,4 @@ jobs:
     - name: Test with pytest
       run: |
         python -c "import site, os; file = open(os.path.join(site.getsitepackages()[0], 'path.pth'), 'w'); file.write('import sys; sys.path.append(\'.\')'); file.close()"
-        pytest testcases/scripts testcases/utilities -vv --app-id ${{ secrets.APP_ID }} --app-key ${{ secrets.APP_KEY }} --session-test-threthold 0.5 --reruns 5
+        pytest testcases -vv --app-id ${{ secrets.APP_ID }} --app-key ${{ secrets.APP_KEY }} --session-test-threthold 0.5 --reruns 5
