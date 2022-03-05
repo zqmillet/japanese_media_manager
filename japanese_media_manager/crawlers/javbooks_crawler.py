@@ -63,7 +63,7 @@ class JavBooksCrawler(Base):
 
     def get_number(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('div', 'infobox'):
-            if not tag.find_next('b').text.strip() == TAG.NUMBER:
+            if tag.find_next('b').text.strip() == TAG.NUMBER:
                 return tag.find_next('font').text
         return None
 
@@ -77,10 +77,8 @@ class JavBooksCrawler(Base):
 
     def get_director(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('div', 'infobox'):
-            if not tag.find_next('b').text.strip() == TAG.DIRECTOR:
-                continue
-
-            return tag.find_next('a').text
+            if tag.find_next('b').text.strip() == TAG.DIRECTOR:
+                return tag.find_next('a').text
         return None
 
     def get_series(self, soup: BeautifulSoup) -> Optional[str]:
