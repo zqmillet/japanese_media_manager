@@ -1,5 +1,6 @@
 import pytest
 
+from japanese_media_manager.crawlers import Base
 from japanese_media_manager.crawlers import AirAvCrawler
 from japanese_media_manager.crawlers import ArzonCrawler
 from japanese_media_manager.crawlers import AvsoxCrawler
@@ -17,3 +18,11 @@ from japanese_media_manager.crawlers import JavBusCrawler
 )
 def test_class_fields(crawler, fields):
     assert crawler.fields == fields
+
+def test_suspend_exception():
+    class TestCrawler(Base):
+        pass
+
+    crawler = TestCrawler()
+    response = crawler.get('http://gouliguojiashengsiyi.com')
+    assert response.status_code is None
