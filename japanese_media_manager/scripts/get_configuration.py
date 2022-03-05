@@ -1,12 +1,11 @@
 import os
-import pathlib
 import mergedeep
 import yaml
 
-def get_configuration() -> dict:
-    default_configuration_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.config.yaml')
-    custom_configuration_path = os.path.join(pathlib.Path.home(), '.jmm.cfg')
+from .constants import custom_configuration_path
+from .constants import default_configuration_path
 
+def get_configuration() -> dict:
     with open(default_configuration_path, 'r', encoding='utf8') as file:
         default_configuration = yaml.safe_load(file.read())
 

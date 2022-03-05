@@ -112,7 +112,7 @@ def _proxies(proxy_host, proxy_port, proxy_username, proxy_password):
 def _custom_config_file_path():
     return os.path.join(pathlib.Path.home(), '.jmm.cfg')
 
-@pytest.fixture(name='protect_custom_config_file', scope='session')
+@pytest.fixture(name='protect_custom_config_file', scope='function')
 def _protect_custom_config_file(custom_config_file_path):
     if not os.path.isfile(custom_config_file_path):
         yield
