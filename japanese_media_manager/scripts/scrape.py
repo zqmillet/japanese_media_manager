@@ -20,7 +20,7 @@ def get_crawlers(configuration: List[Dict]) -> Dict[str, Base]:
         crawlers[name] = clazz(**arguments)
     return crawlers
 
-def get_router(configuration) -> Router:
+def get_router(configuration: dict) -> Router:
     crawlers = get_crawlers(configuration['crawlers'])
     rules = []
     for rule_configuration in configuration['routing_rules']:

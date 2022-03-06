@@ -81,23 +81,39 @@ from japanese_media_manager.crawlers import JavBooksCrawler
 def test_javbooks_crawler_test(proxies, number, metadata):
     crawler = JavBooksCrawler(proxies=proxies)
     _metadata = crawler.get_metadata(number)
-    assert isinstance(_metadata.pop('fanart'), PIL.JpegImagePlugin.JpegImageFile)
-    assert _metadata == metadata
+    assert isinstance(_metadata.fanart, PIL.JpegImagePlugin.JpegImageFile)
+    assert {
+        'poster': _metadata.poster,
+        'keywords': _metadata.keywords,
+        'title': _metadata.title,
+        'release_date': _metadata.release_date,
+        'length': _metadata.length,
+        'number': _metadata.number,
+        'director': _metadata.director,
+        'series': _metadata.series,
+        'studio': _metadata.studio,
+        'stars': [{'avatar_url': star.avatar_url, 'name': star.name} for star in _metadata.stars],
+        'outline': _metadata.outline
+    } == metadata
+    for star in _metadata.stars:
+        print(star)
+    print(_metadata)
 
 @pytest.mark.parametrize('number', ['SB-250', 'gouliguojiashengsiyi'])
 def test_nonexistent_number(proxies, number):
     crawler = JavBooksCrawler(proxies=proxies)
     metadata = crawler.get_metadata(number)
 
-    assert metadata['title'] is None
-    assert not metadata['keywords']
-    assert metadata['release_date'] is None
-    assert metadata['length'] is None
-    assert not metadata['stars']
-    assert metadata['number'] == number
-    assert metadata['director'] is None
-    assert metadata['series'] is None
-    assert metadata['studio'] is None
-    assert metadata['fanart'] is None
-    assert metadata['poster'] is None
-    assert metadata['outline'] is None
+    assert not metadata.keywords
+    assert not metadata.stars
+    assert metadata.title is None
+    assert metadata.release_date is None
+    assert metadata.length is None
+    assert metadata.number == number
+    assert metadata.director is None
+    assert metadata.series is None
+    assert metadata.studio is None
+    assert metadata.fanart is None
+    assert metadata.poster is None
+    assert metadata.outline is None
+    print(metadata)

@@ -67,19 +67,19 @@ def test_metadata(number, title, outline, keywords, studio, release_date, proxie
     crawler = AirAvCrawler(proxies=proxies)
     metadata = crawler.get_metadata(number)
 
-    assert metadata['length'] is None
-    assert metadata['series'] is None
-    assert metadata['director'] is None
-
-    assert metadata['number'] == number
-    assert metadata['title'] == title
-    assert metadata['outline'] == outline
-    assert metadata['keywords'] == keywords
-    assert not metadata['stars']
-    assert metadata['studio'] == studio
-    assert metadata['release_date'] == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
-    assert metadata['fanart'] is not None
-    assert metadata['poster'] is None
+    assert metadata.length is None
+    assert metadata.series is None
+    assert metadata.director is None
+    assert metadata.number == number
+    assert metadata.title == title
+    assert metadata.outline == outline
+    assert metadata.keywords == keywords
+    assert metadata.studio == studio
+    assert metadata.release_date == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
+    assert metadata.fanart is not None
+    assert metadata.poster is None
+    assert not metadata.stars
+    print(metadata)
 
 @pytest.mark.parametrize(
     'number', ['100221_001', 'AVSW-061']
@@ -88,15 +88,16 @@ def test_metadata_with_nonexitant_number(number):
     crawler = AirAvCrawler()
     metadata = crawler.get_metadata(number)
 
-    assert not metadata['length']
-    assert not metadata['series']
-    assert not metadata['director']
-    assert not metadata['title']
-    assert not metadata['outline']
-    assert not metadata['keywords']
-    assert not metadata['stars']
-    assert not metadata['studio']
-    assert not metadata['release_date']
-    assert not metadata['fanart']
-    assert not metadata['poster']
-    assert metadata['number'] == number
+    assert not metadata.length
+    assert not metadata.series
+    assert not metadata.director
+    assert not metadata.title
+    assert not metadata.outline
+    assert not metadata.keywords
+    assert not metadata.stars
+    assert not metadata.studio
+    assert not metadata.release_date
+    assert not metadata.fanart
+    assert not metadata.poster
+    assert metadata.number == number
+    print(metadata)

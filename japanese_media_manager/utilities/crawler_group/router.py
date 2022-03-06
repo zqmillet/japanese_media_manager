@@ -2,6 +2,8 @@ from re import match
 from typing import List
 from typing import Optional
 
+from japanese_media_manager.utilities.metadata import Video
+
 from .crawler_group import CrawlerGroup
 
 class Rule:
@@ -13,7 +15,7 @@ class Router:
     def __init__(self, rules: List[Rule]):
         self.rules = rules
 
-    def get_metadata(self, number: str) -> Optional[dict]:
+    def get_metadata(self, number: str) -> Optional[Video]:
         for rule in self.rules:
             if not match(pattern=rule.pattern, string=number):
                 continue

@@ -48,5 +48,17 @@ def test_router(javbus, javdb, airav, avsox, logger, number, metadata):
     router = Router([rule_1, rule_2])
 
     _metadata = router.get_metadata(number)
-    assert isinstance(_metadata.pop('fanart'), PIL.JpegImagePlugin.JpegImageFile)
-    assert _metadata == metadata
+    assert isinstance(_metadata.fanart, PIL.JpegImagePlugin.JpegImageFile)
+    assert {
+        'poster': _metadata.poster,
+        'keywords': _metadata.keywords,
+        'title': _metadata.title,
+        'release_date': _metadata.release_date,
+        'length': _metadata.length,
+        'number': _metadata.number,
+        'director': _metadata.director,
+        'series': _metadata.series,
+        'studio': _metadata.studio,
+        'stars': [{'name': star.name, 'avatar_url': star.avatar_url} for star in _metadata.stars],
+        'outline': _metadata.outline,
+    } == metadata

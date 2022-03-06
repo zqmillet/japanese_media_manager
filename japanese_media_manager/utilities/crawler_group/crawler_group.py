@@ -1,10 +1,9 @@
 from logging import Logger
 from typing import List
 from typing import Optional
-from typing import Dict
-from typing import Any
 
 from japanese_media_manager.utilities.logger import dumb
+from japanese_media_manager.utilities.metadata import Video
 from japanese_media_manager.crawlers import Base
 
 class CrawlerGroup:
@@ -31,7 +30,7 @@ class CrawlerGroup:
             return
         self.logger.warning('%d field(s): %s cannot be crawled by this crawler group', len(self.impossible_fields), ', '.join(sorted(self.impossible_fields)))
 
-    def get_metadata(self, number: str) -> Optional[Dict]:
+    def get_metadata(self, number: str) -> Optional[Video]:
         """
         该函数会依次利用 :py:obj:`self.crawlers` 列表中的爬虫爬取影片元数据.
         当元数据满足 :py:obj:`self.required_fields` 则终止爬取, 并返回元数据.
@@ -40,7 +39,7 @@ class CrawlerGroup:
         :param number: 影片番号.
         """
 
-        metadata: Dict[str, Any] = {}
+        metadata = Video()
         missing_fields = set(self.required_fields)
 
         for crawler in self.crawlers:
@@ -49,10 +48,8 @@ class CrawlerGroup:
                 continue
 
             self.logger.info('crawling video %s by %s', number, crawler)
-            for key, value in crawler.get_metadata(number).items():
-                metadata[key] = metadata.get(key) or value
-
-            missing_fields = {field for field in missing_fields if not metadata.get(field)}
+            metadata += crawler.get_metadata(number)
+            missing_fields = {field for field in missing_fields if not getattr(metadata, field, None)}
 
             if not missing_fields:
                 self.logger.info('all fields are crawled')

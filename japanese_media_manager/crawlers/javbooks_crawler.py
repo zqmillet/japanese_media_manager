@@ -1,9 +1,11 @@
 from re import match
 from datetime import datetime, date
 from io import BytesIO
-from typing import List, Any, Dict, Optional
+from typing import List, Any, Optional
 from bs4 import BeautifulSoup
 from PIL.Image import Image, open as open_image
+
+from japanese_media_manager.utilities.metadata import Star
 
 from .base import Base
 
@@ -97,18 +99,20 @@ class JavBooksCrawler(Base):
             return tag.find_next('a').text
         return None
 
-    def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:
+    def get_stars(self, soup: BeautifulSoup) -> List[Star]:
         stars = []
         for tag in soup.find_all('div', 'infobox'):
             if not tag.find_next('b').text.strip() == TAG.STARS:
                 continue
 
             for item in tag.find_all('div', 'av_performer_cg_box'):
+                avatar_url = item.find_next('img').attrs['src']
                 stars.append(
-                    {
-                        'avatar_url': item.find_next('img').attrs['src'],
-                        'name': item.find_next('a').text
-                    }
+                    Star(
+                        avatar_url=avatar_url,
+                        name=item.find_next('a').text,
+                        avatar=open_image(BytesIO(self.get(avatar_url).content))
+                    )
                 )
         return stars
 

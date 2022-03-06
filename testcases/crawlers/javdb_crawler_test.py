@@ -88,18 +88,21 @@ def test_javdb_metadata(number, keywords, title, release_date, length, director,
     crawler = JavdbCrawler()
     metadata = crawler.get_metadata(number)
 
-    assert metadata['title'] == title
-    assert metadata['keywords'] == keywords
-    assert metadata['release_date'] == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
-    assert metadata['length'] == length
-    assert metadata['stars'] == stars
-    assert metadata['number'] == number.upper()
-    assert metadata['director'] == director
-    assert metadata['series'] == series
-    assert metadata['studio'] == studio
-    assert metadata['fanart'] is not None
-    assert metadata['poster'] is None
-    assert metadata['outline'] is None
+    assert metadata.title == title
+    assert metadata.keywords == keywords
+    assert metadata.release_date == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
+    assert metadata.length == length
+    assert metadata.number == number.upper()
+    assert metadata.director == director
+    assert metadata.series == series
+    assert metadata.studio == studio
+    assert metadata.fanart is not None
+    assert metadata.poster is None
+    assert metadata.outline is None
+    assert [{'name': star.name, 'avatar_url': star.avatar_url} for star in metadata.stars] == stars
+    for star in metadata.stars:
+        print(star)
+    print(metadata)
 
 @pytest.mark.skipif(sys.platform != 'darwin', reason='this testcase is passed only in macos')
 @pytest.mark.parametrize('number', ['SB-250', 'gouliguojiashengsiyi'])
@@ -107,15 +110,16 @@ def test_metadata_with_nonexistent_number(number):
     crawler = JavdbCrawler()
     metadata = crawler.get_metadata(number)
 
-    assert metadata['title'] is None
-    assert not metadata['keywords']
-    assert metadata['release_date'] is None
-    assert metadata['length'] is None
-    assert not metadata['stars']
-    assert metadata['number'] == number
-    assert metadata['director'] is None
-    assert metadata['series'] is None
-    assert metadata['studio'] is None
-    assert metadata['fanart'] is None
-    assert metadata['poster'] is None
-    assert metadata['outline'] is None
+    assert not metadata.keywords
+    assert not metadata.stars
+    assert metadata.title is None
+    assert metadata.release_date is None
+    assert metadata.director is None
+    assert metadata.length is None
+    assert metadata.number == number
+    assert metadata.series is None
+    assert metadata.studio is None
+    assert metadata.fanart is None
+    assert metadata.poster is None
+    assert metadata.outline is None
+    print(metadata)

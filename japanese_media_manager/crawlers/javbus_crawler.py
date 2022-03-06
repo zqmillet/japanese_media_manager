@@ -1,9 +1,11 @@
 from re import match
 from datetime import datetime, date
 from io import BytesIO
-from typing import List, Any, Dict, Optional
+from typing import List, Any, Optional
 from bs4 import BeautifulSoup
 from PIL.Image import Image, open as open_image
+
+from japanese_media_manager.utilities.metadata import Star
 
 from .base import Base
 
@@ -93,14 +95,16 @@ class JavBusCrawler(Base):
                 return link.text
         return None
 
-    def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:
+    def get_stars(self, soup: BeautifulSoup) -> List[Star]:
         stars = []
         for tag in soup.find_all('div', attrs={'id': 'avatar-waterfall'}):
             for img in tag.find_all('img'):
+                avatar_url = self.base_url + img.attrs['src']
                 stars.append(
-                    {
-                        'avatar_url': self.base_url + img.attrs['src'],
-                        'name': img.attrs['title']
-                    }
+                    Star(
+                        avatar_url=avatar_url,
+                        name=img.attrs['title'],
+                        avatar=open_image(BytesIO(self.get(avatar_url).content))
+                    )
                 )
         return stars

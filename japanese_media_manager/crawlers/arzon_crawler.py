@@ -2,9 +2,10 @@ from re import match
 from datetime import datetime, date
 from typing import List
 from typing import Any
-from typing import Dict
 from typing import Optional
 from bs4 import BeautifulSoup
+
+from japanese_media_manager.utilities.metadata import Star
 
 from .base import Base
 
@@ -96,26 +97,8 @@ class ArzonCrawler(Base):
             return tag.find_next('td').text.strip()
         return None
 
-    def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:
-        stars = []
-        for tag in soup.find_all('td'):
-            if not tag.text == TAG.STARTS:
-                continue
-
-            for link in tag.find_next('td').find_all('a'):
-                response = self.get(f'{self.base_url}{link.attrs["href"]}')
-                response.encoding = 'utf8'
-                soup = self.get_soup(response.text)
-
-                for item in soup.find_all('table', 'p_list1'):
-                    image = item.find_next('img')
-                    stars.append(
-                        {
-                            'name': image.attrs['alt'],
-                            'avatar_url': f'https:{image.attrs["src"]}'
-                        }
-                    )
-        return stars
+    def get_stars(self, soup: BeautifulSoup) -> List[Star]:
+        return []
 
     def get_outline(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('h2'):

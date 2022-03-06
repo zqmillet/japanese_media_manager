@@ -1,5 +1,6 @@
 from datetime import date
-from typing import List, Dict, Optional
+from typing import List
+from typing import Optional
 from typing import Any
 from bs4 import BeautifulSoup
 from PIL.Image import Image
@@ -8,6 +9,8 @@ from requests.exceptions import RequestException
 
 from japanese_media_manager.utilities.session import Session
 from japanese_media_manager.utilities.functions import format_string
+from japanese_media_manager.utilities.metadata import Video
+from japanese_media_manager.utilities.metadata import Star
 
 ALL_FIELDS: List[str] = ['fanart', 'poster', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'outline', 'stars']
 
@@ -29,7 +32,7 @@ class Base(Session, metaclass=MetaClass):
     如果你想写另一个新网站的爬虫, 请继承该类.
     """
 
-    def get_metadata(self, number: str) -> dict:
+    def get_metadata(self, number: str) -> Video:
         """
         根据番号 :py:obj:`number` 获取元数据.
 
@@ -37,20 +40,20 @@ class Base(Session, metaclass=MetaClass):
         """
         soup = self.get_page_soup(number)
 
-        return {
-            'fanart': self.get_fanart(soup),
-            'poster': self.get_poster(soup),
-            'keywords': list(map(format_string, self.get_keywords(soup))),
-            'title': format_string(self.get_title(soup)),
-            'release_date': self.get_release_date(soup),
-            'length': self.get_length(soup),
-            'number': format_string(self.get_number(soup) or number),
-            'director': format_string(self.get_director(soup)),
-            'series': format_string(self.get_series(soup)),
-            'studio': format_string(self.get_studio(soup)),
-            'stars': self.get_stars(soup),
-            'outline': format_string(self.get_outline(soup))
-        }
+        return Video(
+            fanart=self.get_fanart(soup),
+            poster=self.get_poster(soup),
+            keywords=list(map(format_string, self.get_keywords(soup))),
+            title=format_string(self.get_title(soup)),
+            release_date=self.get_release_date(soup),
+            length=self.get_length(soup),
+            number=format_string(self.get_number(soup) or number),
+            director=format_string(self.get_director(soup)),
+            series=format_string(self.get_series(soup)),
+            studio=format_string(self.get_studio(soup)),
+            stars=self.get_stars(soup),
+            outline=format_string(self.get_outline(soup))
+        )
 
     @staticmethod
     def get_soup(html: str) -> BeautifulSoup:
@@ -157,7 +160,7 @@ class Base(Session, metaclass=MetaClass):
         """
         return None  # pragma: no cover
 
-    def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:  # pylint: disable = unused-argument, no-self-use
+    def get_stars(self, soup: BeautifulSoup) -> List[Star]:  # pylint: disable = unused-argument, no-self-use
         """
         从影片页面 :py:obj:`soup` 中获影片的演员列表.
 

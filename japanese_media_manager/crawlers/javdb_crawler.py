@@ -1,9 +1,11 @@
 from re import match
 from datetime import datetime, date
 from io import BytesIO
-from typing import List, Any, Dict, Optional
+from typing import List, Any, Optional
 from bs4 import BeautifulSoup
 from PIL.Image import Image, open as open_image
+
+from japanese_media_manager.utilities.metadata import Star
 
 from .base import Base
 
@@ -118,7 +120,7 @@ class JavdbCrawler(Base):
             return tag.find_next('span').text
         return None
 
-    def get_stars(self, soup: BeautifulSoup) -> List[Dict[str, str]]:
+    def get_stars(self, soup: BeautifulSoup) -> List[Star]:
         stars = []
         for tag in soup.find_all('div', 'panel-block'):
             strong = tag.find_next('strong')
@@ -131,7 +133,7 @@ class JavdbCrawler(Base):
                     stars.append(star)
         return stars
 
-    def get_star(self, href: str) -> Optional[Dict[str, str]]:
+    def get_star(self, href: str) -> Optional[Star]:
         name = None
         url = None
 
@@ -149,4 +151,9 @@ class JavdbCrawler(Base):
 
         if not name or not url:
             return None
-        return {'name': name, 'avatar_url': url}
+
+        return Star(
+            name=name,
+            avatar_url=url,
+            avatar=open_image(BytesIO(self.get(url).content))
+        )

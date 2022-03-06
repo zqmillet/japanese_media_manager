@@ -142,10 +142,22 @@ def test_crawlers_warning(logger, arzon, avsox, javbus):
 )
 def test_get_metadata(number, metadata, javbus, javdb, airav, logger, messages):
     crawlers = CrawlerGroup([javbus, javdb, airav], required_fields=['poster', 'stars', 'outline'], logger=logger)
-    _metatada = crawlers.get_metadata(number)
+    _metadata = crawlers.get_metadata(number)
 
-    assert isinstance(_metatada.pop('fanart'), PIL.JpegImagePlugin.JpegImageFile)
-    assert _metatada == metadata
+    assert isinstance(_metadata.fanart, PIL.JpegImagePlugin.JpegImageFile)
+    assert {
+        'poster': _metadata.poster,
+        'keywords': _metadata.keywords,
+        'title': _metadata.title,
+        'release_date': _metadata.release_date,
+        'length': _metadata.length,
+        'number': _metadata.number,
+        'director': _metadata.director,
+        'series': _metadata.series,
+        'studio': _metadata.studio,
+        'stars': [{'avatar_url': star.avatar_url, 'name': star.name} for star in _metadata.stars],
+        'outline': _metadata.outline
+    } == metadata
     assert logger == messages
 
 @pytest.mark.parametrize(
@@ -206,6 +218,18 @@ def test_get_imcompleted_metadata(number, metadata, messages, avsox, javbus, log
     crawlers = CrawlerGroup([javbus, avsox], required_fields=['stars', 'series', 'title'], logger=logger)
     _metadata = crawlers.get_metadata(number)
 
-    assert isinstance(_metadata.pop('fanart'), PIL.JpegImagePlugin.JpegImageFile)
-    assert _metadata == metadata
+    assert isinstance(_metadata.fanart, PIL.JpegImagePlugin.JpegImageFile)
+    assert {
+        'poster': _metadata.poster,
+        'keywords': _metadata.keywords,
+        'title': _metadata.title,
+        'release_date': _metadata.release_date,
+        'length': _metadata.length,
+        'number': _metadata.number,
+        'director': _metadata.director,
+        'series': _metadata.series,
+        'studio': _metadata.studio,
+        'stars': [{'avatar_url': star.avatar_url, 'name': star.name} for star in _metadata.stars],
+        'outline': _metadata.outline
+    } == metadata
     assert logger == messages

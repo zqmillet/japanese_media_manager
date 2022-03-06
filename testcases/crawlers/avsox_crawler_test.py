@@ -81,29 +81,33 @@ def test_avsox_metadata(number, release_date, length, studio, title, keywords, s
     crawler = AvsoxCrawler(proxies=proxies, verify=False)
     metadata = crawler.get_metadata(number)
 
-    assert metadata['number'] == number
-    assert metadata['release_date'] == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
-    assert metadata['length'] == length
-    assert metadata['studio'] == studio
-    assert metadata['title'] == title
-    assert metadata['keywords'] == keywords
-    assert metadata['stars'] == stars
-    assert metadata['series'] == series
-    assert metadata['fanart'] is not None
-    assert metadata['poster'] is None
+    assert metadata.number == number
+    assert metadata.release_date == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
+    assert metadata.length == length
+    assert metadata.studio == studio
+    assert metadata.title == title
+    assert metadata.keywords == keywords
+    assert metadata.series == series
+    assert metadata.fanart is not None
+    assert metadata.poster is None
+    assert [{'name': star.name, 'avatar_url': star.avatar_url} for star in metadata.stars] == stars
+    print(metadata)
+    for star in metadata.stars:
+        print(star)
 
 @pytest.mark.parametrize('number', ['XXX-1234', 'yyy-2333', 'gouliguojiashengsiyi'])
 def test_avsox_metadata_with_nonexistent_number(number, proxies):
     crawler = AvsoxCrawler(proxies=proxies, verify=False)
     metadata = crawler.get_metadata(number)
 
-    assert metadata['number'] == number
-    assert metadata['release_date'] is None
-    assert metadata['length'] is None
-    assert metadata['studio'] is None
-    assert metadata['title'] is None
-    assert metadata['series'] is None
-    assert metadata['fanart'] is None
-    assert metadata['poster'] is None
-    assert not metadata['keywords']
-    assert not metadata['stars']
+    assert metadata.number == number
+    assert metadata.release_date is None
+    assert metadata.length is None
+    assert metadata.studio is None
+    assert metadata.title is None
+    assert metadata.series is None
+    assert metadata.fanart is None
+    assert metadata.poster is None
+    assert not metadata.keywords
+    assert not metadata.stars
+    print(metadata)
