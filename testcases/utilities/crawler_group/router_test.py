@@ -62,3 +62,10 @@ def test_router(javbus, javdb, airav, avsox, logger, number, metadata):
         'stars': [{'name': star.name, 'avatar_url': star.avatar_url} for star in _metadata.stars],
         'outline': _metadata.outline,
     } == metadata
+
+@pytest.mark.parametrize('number', ['star-250', 'FC-001'])
+def test_router_with_wrong_patterns(javbus, javdb, airav, avsox, logger, number):
+    rule_1 = Rule(r'\d+', CrawlerGroup([javbus, javdb, airav], logger=logger))
+    rule_2 = Rule(r'\d\d', CrawlerGroup([avsox, javdb], logger=logger))
+    router = Router([rule_1, rule_2])
+    assert router.get_metadata(number) is None
