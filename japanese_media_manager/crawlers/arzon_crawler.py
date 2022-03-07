@@ -1,11 +1,8 @@
 from re import match
 from datetime import datetime, date
-from typing import List
 from typing import Any
 from typing import Optional
 from bs4 import BeautifulSoup
-
-from japanese_media_manager.utilities.metadata import Star
 
 from .base import Base
 
@@ -96,9 +93,6 @@ class ArzonCrawler(Base):
 
             return tag.find_next('td').text.strip()
         return None
-
-    def get_stars(self, soup: BeautifulSoup) -> List[Star]:
-        return []
 
     def get_outline(self, soup: BeautifulSoup) -> Optional[str]:
         for tag in soup.find_all('h2'):

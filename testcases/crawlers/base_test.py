@@ -6,17 +6,20 @@ from japanese_media_manager.crawlers import ArzonCrawler
 from japanese_media_manager.crawlers import AvsoxCrawler
 from japanese_media_manager.crawlers import JavdbCrawler
 from japanese_media_manager.crawlers import JavBusCrawler
+from japanese_media_manager.crawlers import JavBooksCrawler
 
 @pytest.mark.parametrize(
     'crawler, fields', [
         (AirAvCrawler, ['fanart', 'keywords', 'title', 'release_date', 'number', 'studio', 'outline']),
-        (ArzonCrawler, ['title', 'release_date', 'length', 'director', 'series', 'studio', 'outline', 'stars']),
+        (ArzonCrawler, ['title', 'release_date', 'length', 'director', 'series', 'studio', 'outline']),
         (AvsoxCrawler, ['fanart', 'keywords', 'title', 'release_date', 'length', 'number', 'series', 'studio', 'stars']),
         (JavdbCrawler, ['fanart', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'stars']),
         (JavBusCrawler, ['fanart', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'stars']),
+        (JavBooksCrawler, ['fanart', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'stars']),
     ]
 )
 def test_class_fields(crawler, fields):
+    print(crawler.fields)
     assert crawler.fields == fields
 
 def test_suspend_exception():
