@@ -1,3 +1,4 @@
+import pydoc
 import yaml
 import pytest
 
@@ -14,7 +15,7 @@ def test_get_default_configurations():
 
     for index, crawler in enumerate(configuation.crawlers):
         assert crawler.name == data['crawlers'][index]['name']
-        assert crawler.clazz == data['crawlers'][index]['class']
+        assert crawler.clazz is pydoc.locate(data['crawlers'][index]['class'])
 
     for index, routing_rule in enumerate(configuation.routing_rules):
         assert routing_rule.crawlers == data['routing_rules'][index]['crawlers']
@@ -42,7 +43,7 @@ def test_get_custom_configurations():
     configuation = get_configuration()
     for index, crawler in enumerate(configuation.crawlers):
         assert crawler.name == default_configuration['crawlers'][index]['name']
-        assert crawler.clazz == default_configuration['crawlers'][index]['class']
+        assert crawler.clazz is pydoc.locate(default_configuration['crawlers'][index]['class'])
 
     assert configuation.routing_rules[0].pattern == r'\d+'
     assert configuation.routing_rules[0].crawlers == ['javbus']

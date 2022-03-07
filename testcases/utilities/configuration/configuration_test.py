@@ -2,6 +2,7 @@ import pytest
 from pydantic import ValidationError
 
 from japanese_media_manager.utilities.configuration import Configuration
+from japanese_media_manager.crawlers import Base
 
 def test_configuration():
     data = {
@@ -29,6 +30,8 @@ def test_configuration():
     configuration = Configuration(**data)
     assert configuration.crawlers[0].name == 'javbus'
     assert configuration.crawlers[1].name == 'javdb'
+    assert issubclass(configuration.crawlers[0].clazz, Base)
+    assert issubclass(configuration.crawlers[1].clazz, Base)
 
 @pytest.mark.parametrize(
     'data, message', [

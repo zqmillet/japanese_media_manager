@@ -1,6 +1,5 @@
 from argparse import Namespace
 from typing import Dict
-from pydoc import locate
 
 from japanese_media_manager.utilities.crawler_group import Router
 from japanese_media_manager.utilities.crawler_group import Rule
@@ -14,9 +13,8 @@ def get_crawlers(configuration: Configuration) -> Dict[str, Base]:
     crawlers = {}
     for crawler_configuration in configuration.crawlers:
         arguments = crawler_configuration.arguments or {}
-        clazz = locate(crawler_configuration.clazz)
         name = crawler_configuration.name
-        crawlers[name] = clazz(**arguments)
+        crawlers[name] = crawler_configuration.clazz(**arguments)
     return crawlers
 
 def get_router(configuration: Configuration) -> Router:
