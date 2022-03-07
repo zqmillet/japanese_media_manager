@@ -8,8 +8,8 @@ def test_crawlers_warning(logger, arzon, avsox, javbus):
     CrawlerGroup([arzon], required_fields=['poster', 'stars', 'outline'], logger=logger)
     assert logger == [
         ('info', 'crawlers grouped by <crawler ArzonCrawler> is ready'),
-        ('info', '2 field(s): stars, outline can be crawled by this crawler group'),
-        ('warning', '1 field(s): poster cannot be crawled by this crawler group')
+        ('info', '1 field(s): outline can be crawled by this crawler group'),
+        ('warning', '2 field(s): poster, stars cannot be crawled by this crawler group')
     ]
     logger.clear()
 
