@@ -125,16 +125,22 @@ Thanks to [AVDC](https://github.com/moyy996/AVDC) and [Movie_Data_Capture](https
 ## ToDo
 
 - [x] crawlers
-  - [x] javbus crawler
   - [x] javdb crawler
+  - [x] javbus crawler
+  - [x] javbooks crawler
   - [x] airav crawler
   - [x] arzon crawler
   - [x] avsox crawler
-- [x] translator
-- [x] models
-  - [x] video
-  - [x] star
-- [ ] cache
+- [ ] utilities
+  - [x] translator
+  - [x] metadata
+  - [x] cache
+  - [x] router
+  - [x] crawler_group
+  - [x] logger
+  - [x] configuration
+  - [x] session
+  - [x] timer
 - [ ] scripts
   - [x] generate configuration
   - [ ] scrape video
@@ -143,6 +149,7 @@ Thanks to [AVDC](https://github.com/moyy996/AVDC) and [Movie_Data_Capture](https
   - [x] introduction
   - [ ] usage
   - [ ] framework
+  - [x] source code
 
 [^1]: Theoretically, jMM can run on any OS, in which Python3 can be deployed. But, I just test jMM on these three OSs.
 [^2]: You need to regist Baidu account and request the service of translation, then you will get APP ID and APP Key.
