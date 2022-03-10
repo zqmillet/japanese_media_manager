@@ -32,3 +32,4 @@ Japanese Media Manager
    :numbered:
 
    chapters/source_code/utilities.rst
+   chapters/source_code/crawlers.rst

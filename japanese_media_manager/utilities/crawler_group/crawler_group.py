@@ -14,7 +14,7 @@ class CrawlerGroup:
     def __init__(self, crawlers: List[Base], required_fields: Optional[List[str]] = None, logger: Logger = dumb):
         """
         :param crawlers: 爬虫列表, 列表中的爬虫存在先后顺序.
-        :param required_fields: :py:meth:`get_metadata` 方法返回元数据的必须字段.
+        :param required_fields: 用于指定 :py:meth:`get_metadata` 方法返回元数据的必须字段. 如果不指定该参数, 则 :py:meth:`get_metadata` 方法会抓取元数据中的所有字段.
         :param logger: 日志器, 如果不指定该参数, 则不会输出日志.
         """
         self.crawlers = crawlers
@@ -34,7 +34,7 @@ class CrawlerGroup:
         """
         该函数会依次利用 :py:obj:`self.crawlers` 列表中的爬虫爬取影片元数据.
         当元数据满足 :py:obj:`self.required_fields` 则终止爬取, 并返回元数据.
-        如果多个爬虫的结果当中包含相同的字段, 则以优先爬虫的结果为准.
+        如果多个爬虫的结果当中包含相同的字段, 则以优先爬虫的结果为准. 即前面的字段会覆盖后面的字段.
 
         :param number: 影片番号.
         """
