@@ -1,4 +1,3 @@
-import PIL
 import datetime
 import pytest
 

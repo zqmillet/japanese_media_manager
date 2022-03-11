@@ -11,7 +11,7 @@ class Rule:
     爬虫路由规则.
     """
     def __init__(self, pattern: str, crawler_group: CrawlerGroup):
-        """
+        r"""
         :param pattern: 番号正则表达式, 比如 ``\w+-\d+``.
         :param crawler_group: 表示爬虫组.
         """
