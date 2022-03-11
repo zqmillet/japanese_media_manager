@@ -2,9 +2,9 @@ import pydoc
 import yaml
 import pytest
 
-from japanese_media_manager.scripts.get_configuration import get_configuration
-from japanese_media_manager.scripts.constants import custom_configuration_path
-from japanese_media_manager.scripts.constants import default_configuration_path
+from jmm.scripts.get_configuration import get_configuration
+from jmm.scripts.constants import custom_configuration_path
+from jmm.scripts.constants import default_configuration_path
 
 @pytest.mark.usefixtures('protect_custom_config_file')
 def test_get_default_configurations():

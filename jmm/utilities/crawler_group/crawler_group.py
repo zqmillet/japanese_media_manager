@@ -2,9 +2,9 @@ from logging import Logger
 from typing import List
 from typing import Optional
 
-from japanese_media_manager.utilities.logger import dumb
-from japanese_media_manager.utilities.metadata import Video
-from japanese_media_manager.crawlers import Base
+from jmm.utilities.logger import dumb
+from jmm.utilities.metadata import Video
+from jmm.crawlers import Base
 
 class CrawlerGroup:
     """

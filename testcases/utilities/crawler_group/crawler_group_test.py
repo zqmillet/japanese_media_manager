@@ -2,7 +2,7 @@ import datetime
 import PIL.JpegImagePlugin
 import pytest
 
-from japanese_media_manager.utilities.crawler_group import CrawlerGroup
+from jmm.utilities.crawler_group import CrawlerGroup
 
 def test_crawlers_warning(logger, arzon, avsox, javbus):
     CrawlerGroup([arzon], required_fields=['poster', 'stars', 'outline'], logger=logger)

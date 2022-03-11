@@ -5,7 +5,7 @@ from typing import List, Any, Optional
 from bs4 import BeautifulSoup
 from PIL.Image import Image, open as open_image
 
-from japanese_media_manager.utilities.metadata import Star
+from jmm.utilities.metadata import Star
 
 from .base import Base
 

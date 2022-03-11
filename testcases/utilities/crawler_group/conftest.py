@@ -1,10 +1,10 @@
 import pytest
 
-from japanese_media_manager.crawlers import AirAvCrawler
-from japanese_media_manager.crawlers import ArzonCrawler
-from japanese_media_manager.crawlers import AvsoxCrawler
-from japanese_media_manager.crawlers import JavBusCrawler
-from japanese_media_manager.crawlers import JavdbCrawler
+from jmm.crawlers import AirAvCrawler
+from jmm.crawlers import ArzonCrawler
+from jmm.crawlers import AvsoxCrawler
+from jmm.crawlers import JavBusCrawler
+from jmm.crawlers import JavdbCrawler
 
 class Logger(list):
     def debug(self, message, *args):

@@ -1,11 +1,11 @@
 from argparse import Namespace
 from typing import Dict
 
-from japanese_media_manager.utilities.crawler_group import Router
-from japanese_media_manager.utilities.crawler_group import Rule
-from japanese_media_manager.utilities.crawler_group import CrawlerGroup
-from japanese_media_manager.crawlers import Base
-from japanese_media_manager.utilities.configuration import Configuration
+from jmm.utilities.crawler_group import Router
+from jmm.utilities.crawler_group import Rule
+from jmm.utilities.crawler_group import CrawlerGroup
+from jmm.crawlers import Base
+from jmm.utilities.configuration import Configuration
 
 from .get_configuration import get_configuration
 

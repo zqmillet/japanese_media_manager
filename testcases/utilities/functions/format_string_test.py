@@ -1,6 +1,6 @@
 import pytest
 
-from japanese_media_manager.utilities.functions import format_string
+from jmm.utilities.functions import format_string
 
 @pytest.mark.parametrize(
     'string, formatted_string', [

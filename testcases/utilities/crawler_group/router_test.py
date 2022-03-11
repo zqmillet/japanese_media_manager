@@ -2,9 +2,9 @@ import datetime
 import PIL
 import pytest
 
-from japanese_media_manager.utilities.crawler_group import Router
-from japanese_media_manager.utilities.crawler_group import Rule
-from japanese_media_manager.utilities.crawler_group import CrawlerGroup
+from jmm.utilities.crawler_group import Router
+from jmm.utilities.crawler_group import Rule
+from jmm.utilities.crawler_group import CrawlerGroup
 
 @pytest.mark.parametrize(
     'number, metadata', [

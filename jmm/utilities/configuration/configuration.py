@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from pydantic import validator
 from pydantic import Field
 
-from japanese_media_manager.crawlers import Base
+from jmm.crawlers import Base
 
 class CrawlerConfiguration(BaseModel):
     name: str

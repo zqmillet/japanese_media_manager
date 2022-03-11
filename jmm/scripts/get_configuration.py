@@ -2,7 +2,7 @@ import os
 import mergedeep
 import yaml
 
-from japanese_media_manager.utilities.configuration import Configuration
+from jmm.utilities.configuration import Configuration
 
 from .constants import custom_configuration_path
 from .constants import default_configuration_path

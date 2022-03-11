@@ -7,10 +7,10 @@ from PIL.Image import Image
 from requests.models import Response
 from requests.exceptions import RequestException
 
-from japanese_media_manager.utilities.session import Session
-from japanese_media_manager.utilities.functions import format_string
-from japanese_media_manager.utilities.metadata import Video
-from japanese_media_manager.utilities.metadata import Star
+from jmm.utilities.session import Session
+from jmm.utilities.functions import format_string
+from jmm.utilities.metadata import Video
+from jmm.utilities.metadata import Star
 
 ALL_FIELDS: List[str] = ['fanart', 'poster', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'outline', 'stars']
 

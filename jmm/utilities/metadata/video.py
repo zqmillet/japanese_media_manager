@@ -4,7 +4,7 @@ from typing import List
 from datetime import date
 from PIL.JpegImagePlugin import JpegImageFile
 
-from japanese_media_manager.utilities.functions import image_to_ascii
+from jmm.utilities.functions import image_to_ascii
 
 from .star import Star
 

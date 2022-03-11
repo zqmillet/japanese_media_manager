@@ -1,71 +1,68 @@
+import PIL
 import datetime
 import pytest
 
-from japanese_media_manager.crawlers import ArzonCrawler
+from jmm.crawlers import ArzonCrawler
 
 @pytest.mark.parametrize(
-    'number, title, outline, series, studio, director, length, release_date', [
+    'number, metadata', [
         (
             'STAR-325',
-            '美人潜入捜査官 羽田あい',
-            '黒のラバースーツを身に纏い、闇の組織と立ち向かう潜入捜査官・あいが敵に捕らわれてしまった！鎖で繋がれた連続イカセで潮が爆噴射状態！脈打つ塊を淫汁であふれるマ○コにぶち込まれ大量の連続中出し！',
-            'ＳＯＤｓｔａｒ',
-            'ＳＯＤクリエイト（ソフトオンデマンド）',
-            '本田教仁',
-            120,
-            '2011-12-08',
+            {
+                'title': '美人潜入捜査官 羽田あい',
+                'outline': '黒のラバースーツを身に纏い、闇の組織と立ち向かう潜入捜査官・あいが敵に捕らわれてしまった！鎖で繋がれた連続イカセで潮が爆噴射状態！脈打つ塊を淫汁であふれるマ○コにぶち込まれ大量の連続中出し！',
+                'series': 'ＳＯＤｓｔａｒ',
+                'studio': 'ＳＯＤクリエイト（ソフトオンデマンド）',
+                'director': '本田教仁',
+                'length': 120,
+                'number': 'STAR-325',
+                'release_date': datetime.date(2011, 12, 8)
+            }
         ),
         (
-            'SSIS-274',
-            '【セクシースイーツ】今ここで喘ぎ声出したらイケナイでしょう？ お姉さんがベロキスでお口チャックしたままこっそりSEXシテあげる 星宮一花',
-            '計算高いエッチな嫁の姉・一花さんが泊まりにやって来た。ファミレスやガレージ、妻と性交するベッドなど、いつでもどこでもお構いなしに求めて来る。僕は困惑するものの、あまりにも気持ち良過ぎて…。',
-            'Ｓ１　ＮＯ．１　ＳＴＹＬＥ',
-            'Ｓ１（エスワン　ナンバーワンスタイル）',
-            '真咲南朋',
-            150,
-            '2021-12-28'
+            'ATKD-246',
+            {
+                'director': '',
+                'length': 480,
+                'number': 'ATKD-246',
+                'outline': '恥ずかしい尻穴を徹底的に犯され尽くす！日を追うごとに快楽に飲み込まれ、悦楽にひれ伏す哀しき女たち…。凌辱ドラマの殿堂アタッカーズがお届するアナルシーンのみ厳選した16タイトル8時間！被虐の肛門性交！',
+                'release_date': datetime.date(2016, 11, 19),
+                'series': 'ATTACKERS',
+                'studio': 'アタッカーズ',
+                'title': 'ATTACKERS 凌辱アナル480分総集編3'
+            },
         ),
         (
-            'IDBD-809',
-            '【セクシースイーツ】中年好きな文学美少女に身動きできない状態で8時間じっくりねっとり痴女られる総集編',
-            '文系作品最高峰！超人気シリーズその豪華8時間ベストが登場！清楚で知的な美少女の中に隠された歪んだ性癖。'
-            'そんな彼女達に辱められ服従し性奴隷にされる最高の悦び！目隠しされ拘束され身動きできない状態でねっちょり全身リップ。羞恥心を煽る囁き知的淫語！'
-            '尿道から顔面に目がけて放たれるオシッコ！四つん這いにされアナルをベロベロ舐められながら辱め手コキ！女の子みたいな可愛い声出してどうされたんですか？',
-            'アイデアポケットBEST',
-            'アイデアポケット',
-            '',
-            480,
-            '2019-11-13'
-        ),
-        (
-            'OFJE-220',
-            '【セクシースイーツ】星宮一花 初ベスト S1デビュー1周年 最新11タイトル8時間スペシャル',
-            '長身スレンダーBODYのお嬢様、星宮一花が奇跡のAV出演を果たしてから1年。今までに出演したすべての作品をまとめた初めてのベスト盤。'
-            '綺麗な顔に汚い精子を浴びせられたり、細い腰が折れそうなほどエビ反りイキしたり、チンポに跨り我を忘れて腰を振る！星宮一花の1年分のSEXがすべて見られる最高傑作をお楽しみください！',
-            'Ｓ１　ＮＯ．１　ＳＴＹＬＥ',
-            'Ｓ１（エスワン　ナンバーワンスタイル）',
-            '',
-            480,
-            '2019-11-07',
+            'WANZ-211',
+            {
+                'director': '',
+                'length': 120,
+                'number': 'WANZ-211',
+                'outline': 'お嬢様は、潜入捜査官。モデル顔負けの８頭身！女を薬漬けにし、人身売買をしている悪徳プロダクションへ潜入。'
+                'しかしその美しさは、所属しているアイドルの嫉妬をかってしまう。薬を盛られ下衆に犯される！正義を逆手に取られ屈辱のおしゃぶり喉奥射精！'
+                'スーパーボディの高級マンコが便所で拘束開放！そして恐怖のオマンコ握手会が開催される！嫉妬ブスからナジられ、タダ同然でオタク共に膣内射精される地獄が始まる',
+                'release_date': datetime.date(2014, 7, 1),
+                'series': 'WANZ',
+                'studio': 'ワンズファクトリー',
+                'title': '美人潜入捜査官 神波多一花'
+            }
         )
     ]
 )
-def test_arzon_metadata(number, title, outline, series, studio, director, length, release_date, proxies):
+def test_arzon_metadata(number, metadata, proxies):
     crawler = ArzonCrawler(proxies=proxies)
-    metadata = crawler.get_metadata(number)
+    _metadata = crawler.get_metadata(number)
 
-    assert metadata.fanart is None
-    assert metadata.poster is None
-    assert metadata.title == title
-    assert metadata.number == number
-    assert metadata.outline == outline
-    assert metadata.series == series
-    assert metadata.studio == studio
-    assert metadata.director == director
-    assert metadata.length == length
-    assert metadata.release_date == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
-    assert metadata.stars == []
-    print(metadata)
+    assert {
+        'title': _metadata.title,
+        'number': _metadata.number,
+        'outline': _metadata.outline,
+        'series': _metadata.series,
+        'studio': _metadata.studio,
+        'director': _metadata.director,
+        'length': _metadata.length,
+        'release_date': _metadata.release_date,
+    } == metadata
 
 @pytest.mark.parametrize('number', ['XXX-250', 'SB-250'])
 def test_arzon_metadata_with_nonexistent_number(number, proxies):
@@ -83,4 +80,3 @@ def test_arzon_metadata_with_nonexistent_number(number, proxies):
     assert metadata.length is None
     assert metadata.release_date is None
     assert not metadata.stars
-    print(metadata)

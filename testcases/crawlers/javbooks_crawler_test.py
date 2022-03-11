@@ -2,7 +2,7 @@ import datetime
 import PIL
 import pytest
 
-from japanese_media_manager.crawlers import JavBooksCrawler
+from jmm.crawlers import JavBooksCrawler
 
 @pytest.mark.parametrize(
     'number, metadata', [

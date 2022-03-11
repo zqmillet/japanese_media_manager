@@ -2,8 +2,8 @@ import sys
 import time
 import pytest
 
-from japanese_media_manager.utilities.translator import Translator
-from japanese_media_manager.utilities.translator import TranslationException
+from jmm.utilities.translator import Translator
+from jmm.utilities.translator import TranslationException
 
 @pytest.mark.parametrize(
     'text, expected_text', [

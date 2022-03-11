@@ -2,7 +2,7 @@ from re import match
 from typing import List
 from typing import Optional
 
-from japanese_media_manager.utilities.metadata import Video
+from jmm.utilities.metadata import Video
 
 from .crawler_group import CrawlerGroup
 

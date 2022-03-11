@@ -1,19 +1,19 @@
 import pytest
 from pydantic import ValidationError
 
-from japanese_media_manager.utilities.configuration import Configuration
-from japanese_media_manager.crawlers import Base
+from jmm.utilities.configuration import Configuration
+from jmm.crawlers import Base
 
 def test_configuration():
     data = {
         'crawlers': [
             {
                 'name': 'javbus',
-                'class': 'japanese_media_manager.crawlers.JavBusCrawler',
+                'class': 'jmm.crawlers.JavBusCrawler',
             },
             {
                 'name': 'javdb',
-                'class': 'japanese_media_manager.crawlers.JavdbCrawler',
+                'class': 'jmm.crawlers.JavdbCrawler',
             }
         ],
         'routing_rules': [
@@ -61,7 +61,7 @@ def test_configuration():
                 'crawlers': [{'name': 'javbus', 'class': 'pathlib.Path'}],
                 'routing_rules': [{'pattern': r'\d+', 'crawlers': ['javbus', 'javdb']}]
             },
-            "class 'Path' must be a subclass of class japanese_media_manager.crawlers.base.Base"
+            "class 'Path' must be a subclass of class jmm.crawlers.base.Base"
         ),
         (
             {
@@ -79,24 +79,24 @@ def test_configuration():
         ),
         (
             {
-                'crawlers': [{'name': 'javbus', 'class': 'japanese_media_manager.crawlers.JavBusCrawler'}],
+                'crawlers': [{'name': 'javbus', 'class': 'jmm.crawlers.JavBusCrawler'}],
                 'routing_rules': [],
             },
             "routing_rules is empty"
         ),
         (
             {
-                'crawlers': [{'name': 'javbus', 'class': 'japanese_media_manager.crawlers.JavBusCrawler'}],
+                'crawlers': [{'name': 'javbus', 'class': 'jmm.crawlers.JavBusCrawler'}],
                 'routing_rules': [{'pattern': r'\d+', 'crawlers': []}]
             },
             "crawlers is empty"
         ),
         (
             {
-                'crawlers': [{'name': 'javbus', 'class': 'japanese_media_manager.crawlers.Base'}],
+                'crawlers': [{'name': 'javbus', 'class': 'jmm.crawlers.Base'}],
                 'routing_rules': [{'pattern': r'\d+', 'crawlers': ['javbus']}]
             },
-            'class cannot be japanese_media_manager.crawlers.base.Base'
+            'class cannot be jmm.crawlers.base.Base'
         )
     ]
 )

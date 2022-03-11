@@ -1,7 +1,7 @@
 import datetime
 import pytest
 
-from japanese_media_manager.crawlers import AvsoxCrawler
+from jmm.crawlers import AvsoxCrawler
 
 @pytest.mark.parametrize(
     'number, release_date, length, studio, title, keywords, stars, series', [

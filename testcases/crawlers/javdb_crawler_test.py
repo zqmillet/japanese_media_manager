@@ -2,7 +2,7 @@ import datetime
 import sys
 import pytest
 
-from japanese_media_manager.crawlers import JavdbCrawler
+from jmm.crawlers import JavdbCrawler
 
 @pytest.mark.skipif(sys.platform != 'darwin', reason='this testcase is passed only in macos')
 @pytest.mark.parametrize(

@@ -2,7 +2,7 @@ import os
 import logging
 import pytest
 
-from japanese_media_manager.utilities.logger import Logger
+from jmm.utilities.logger import Logger
 
 def test_logger(capsys):
     logger = Logger()

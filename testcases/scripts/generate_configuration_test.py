@@ -1,7 +1,7 @@
 import io
 import pytest
 
-from japanese_media_manager.scripts.generate_configuration import generate_configuration
+from jmm.scripts.generate_configuration import generate_configuration
 
 @pytest.mark.usefixtures('protect_custom_config_file')
 def test_generate_configuration(monkeypatch, capsys, custom_config_file_path):

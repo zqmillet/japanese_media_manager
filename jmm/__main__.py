@@ -1,8 +1,8 @@
 import argparse
 
-from japanese_media_manager.scripts.generate_configuration import generate_configuration
-from japanese_media_manager.scripts.scrape import scrape
-import japanese_media_manager.scripts.command as COMMAND
+from jmm.scripts.generate_configuration import generate_configuration
+from jmm.scripts.scrape import scrape
+import jmm.scripts.command as COMMAND
 
 argument_parser = argparse.ArgumentParser(
     prog='jmm',

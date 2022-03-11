@@ -18,12 +18,12 @@ jobs:
         pip install pytest
         pip install pytest-cov
         pip install pytest-rerunfailures
-        pip install -r japanese_media_manager/requirements.txt
+        pip install -r jmm/requirements.txt
         pip install -r testcases/requirements.txt
     - name: Test with pytest
       run: |
         export PYTHONPATH='.'
-        pytest testcases -vv --app-id ${{ secrets.APP_ID }} --app-key ${{ secrets.APP_KEY }} --session-test-threthold 0.5 --reruns 5 --cov=japanese_media_manager --cov-report=xml
+        pytest testcases -vv --app-id ${{ secrets.APP_ID }} --app-key ${{ secrets.APP_KEY }} --session-test-threthold 0.5 --reruns 5 --cov=jmm --cov-report=xml
     - name: Update converage
       uses: codecov/codecov-action@v2
       with:
@@ -44,7 +44,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest
         pip install pytest-rerunfailures
-        pip install -r japanese_media_manager/requirements.txt
+        pip install -r jmm/requirements.txt
         pip install -r testcases/requirements.txt
     - name: Test with pytest
       run: |
@@ -66,7 +66,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest
         pip install pytest-rerunfailures
-        pip install -r japanese_media_manager/requirements.txt
+        pip install -r jmm/requirements.txt
         pip install -r testcases/requirements.txt
     - name: Test with pytest
       run: |

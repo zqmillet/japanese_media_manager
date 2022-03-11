@@ -10,8 +10,8 @@ import tornado.ioloop
 import requests
 import pytest
 
-from japanese_media_manager.utilities.session import Session
-from japanese_media_manager.utilities.timer import Timer
+from jmm.utilities.session import Session
+from jmm.utilities.timer import Timer
 
 def start_tornado(api_path, port, method, responses, wait, queue):
     logging.getLogger('tornado.access').disabled = True

@@ -17,9 +17,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
         pip install pylint-pydantic
-        pip install -r japanese_media_manager/requirements.txt
+        pip install -r jmm/requirements.txt
         pip install -r testcases/requirements.txt
     - name: run pylint
       run: |
         export PYTHONPATH='.'
-        pylint japanese_media_manager testcases
+        pylint jmm testcases

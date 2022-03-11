@@ -1,5 +1,6 @@
 from PIL.JpegImagePlugin import JpegImageFile
-from japanese_media_manager.utilities.functions import image_to_ascii
+
+from jmm.utilities.functions import image_to_ascii
 
 class Star:
     def __init__(self, avatar_url: JpegImageFile, avatar: str, name: str):

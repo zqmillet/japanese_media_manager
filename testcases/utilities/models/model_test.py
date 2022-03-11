@@ -6,9 +6,9 @@ import sqlalchemy.orm
 import sqlalchemy.exc
 import pytest
 
-from japanese_media_manager.utilities.models import Video
-from japanese_media_manager.utilities.models import Star
-from japanese_media_manager.utilities.models import Base
+from jmm.utilities.models import Video
+from jmm.utilities.models import Star
+from jmm.utilities.models import Base
 
 @pytest.fixture(name='file_path', scope='function')
 def _file_path():

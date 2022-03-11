@@ -1,10 +1,10 @@
 crawlers:
   - name: javbus
-    class: japanese_media_manager.crawlers.JavBusCrawler
+    class: jmm.crawlers.JavBusCrawler
   - name: javbooks
-    class: japanese_media_manager.crawlers.JavBooksCrawler
+    class: jmm.crawlers.JavBooksCrawler
   - name: javdb
-    class: japanese_media_manager.crawlers.JavdbCrawler
+    class: jmm.crawlers.JavdbCrawler
 routing_rules:
   - pattern: ".*"
     crawlers: [javbus, javbooks, javdb]
