@@ -1,2 +1,0 @@
-class ScriptException(Exception):
-    pass

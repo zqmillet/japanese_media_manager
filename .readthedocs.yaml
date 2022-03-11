@@ -12,4 +12,4 @@ sphinx:
 # Explicitly set the version of Python and its requirements
 python:
   install:
-    - requirements: japanese_media_manager/requirements.txt
+    - requirements: jmm/requirements.txt
