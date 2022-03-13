@@ -5,7 +5,7 @@ from jmm.scripts.scrape import scrape
 from jmm.scripts.constants import custom_configuration_path
 
 @pytest.fixture(name='write_configuration', scope='function')
-def _write_configuration(proxies):
+def _write_configuration(proxies, directory):
     configuration = {
         'crawlers': [
             {
@@ -24,7 +24,13 @@ def _write_configuration(proxies):
                 'pattern': '.+',
                 'crawlers': ['javbooks', 'javbus']
             }
-        ]
+        ],
+        'media_finder': {
+            'extensions': ['avi', 'mp4'],
+            'recursive': True,
+            'minimum_size': 1025,
+            'directories': [directory]
+        }
     }
 
     with open(custom_configuration_path, 'w', encoding='utf8') as file:
@@ -33,4 +39,4 @@ def _write_configuration(proxies):
 @pytest.mark.usefixtures('write_configuration')
 @pytest.mark.usefixtures('protect_custom_config_file')
 def test_scrape():
-    assert scrape(None) is None
+    assert scrape() is None

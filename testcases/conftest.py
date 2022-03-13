@@ -1,6 +1,7 @@
 import urllib
 import os
 import pathlib
+import shutil
 import pytest
 
 def pytest_addoption(parser):
@@ -126,3 +127,31 @@ def _protect_custom_config_file(custom_config_file_path):
         yield
         with open(custom_config_file_path, 'wb') as file:
             file.write(content)
+
+@pytest.fixture(name='directory', scope='function')
+def _directory():
+    directory = 'for_test'
+
+    if os.path.isdir(directory):
+        shutil.rmtree(directory)
+
+    yield directory
+
+    if os.path.isdir(directory):
+        shutil.rmtree(directory)
+
+@pytest.fixture(name='file_paths', scope='function')
+def _file_paths(directory):
+    file_paths = [
+        os.path.join(directory, 'star-325.mp4'),
+        os.path.join(directory, '松本菜奈実', 'SSNI-306', 'ssni-306.mkv'),
+        os.path.join(directory, '松本菜奈実', 'SSNI-306', 'ssni-306.jpg'),
+        os.path.join(directory, '松本菜奈実', 'SSNI-306', 'ssni-306.nfo'),
+        os.path.join(directory, '松本菜奈実', 'SSNI-306', 'ssni-306.srt'),
+    ]
+
+    for file_path in file_paths:
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        pathlib.Path(file_path).touch()
+
+    yield file_paths

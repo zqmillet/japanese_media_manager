@@ -19,7 +19,7 @@ def main() -> None:
     if arguments.command == COMMAND.GENERATE_CONFIG:
         generate_configuration()  # pragma: no cover
     elif arguments.command == COMMAND.SCRAPE:
-        scrape(arguments)  # pragma: no cover
+        scrape()  # pragma: no cover
     else:
         argument_parser.print_usage()
 

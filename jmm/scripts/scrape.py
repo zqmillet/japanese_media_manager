@@ -1,4 +1,3 @@
-from argparse import Namespace
 from typing import Dict
 
 from jmm.utilities.crawler_group import Router
@@ -24,8 +23,7 @@ def get_router(configuration: Configuration) -> Router:
         rules.append(Rule(pattern=rule_configuration.pattern, crawler_group=CrawlerGroup([crawlers[name] for name in rule_configuration.crawlers])))
     return Router(rules)
 
-def scrape(arguments: Namespace) -> None:
+def scrape() -> None:
     configuration = get_configuration()
     router = get_router(configuration)
-    print(arguments)
     print(router.get_metadata('star-325'))
