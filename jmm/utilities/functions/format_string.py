@@ -1,3 +1,5 @@
+from typing import Optional
+
 def is_printable(char: str) -> bool:
     """
     判断一个字符 :py:obj:`char` 在被打印时, 是否显示. 如果可以被打印, 那么返回 ``True``, 否则返回 ``False``.
@@ -6,7 +8,7 @@ def is_printable(char: str) -> bool:
         return True
     return char.isprintable()
 
-def format_string(string: str) -> str:
+def format_string(string: Optional[str]) -> Optional[str]:
     """
     格式化网页中的字符串, 并做如下处理:
 

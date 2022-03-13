@@ -1,5 +1,6 @@
 from typing import List
 from typing import Optional
+from typing import Type
 from pydoc import locate
 from pydantic import BaseModel
 from pydantic import validator
@@ -9,11 +10,11 @@ from jmm.crawlers import Base
 
 class CrawlerConfiguration(BaseModel):
     name: str
-    clazz: str = Field(alias='class')
+    clazz: Type[Base] = Field(alias='class')
     arguments: Optional[dict] = Field(alias='with')
 
-    @validator('clazz')
-    def _clazz(cls, value: str) -> Base:
+    @validator('clazz', always=True, pre=True)
+    def _clazz(cls, value: str) -> Type[Base]:
         clazz = locate(value)
         if not clazz:
             raise ValueError(f'cannot get class from {repr(value)}')
@@ -21,8 +22,9 @@ class CrawlerConfiguration(BaseModel):
             raise ValueError(f'class {repr(value)} must be a type')
         if clazz is Base:
             raise ValueError(f'class cannot be {Base.__module__}.{Base.__name__}')
+        class_name = clazz.__name__
         if not issubclass(clazz, Base):
-            raise ValueError(f'class {repr(clazz.__name__)} must be a subclass of class {Base.__module__}.{Base.__name__}')
+            raise ValueError(f'class {repr(class_name)} must be a subclass of class {Base.__module__}.{Base.__name__}')
         return clazz
 
 class RoutingRuleConfiguration(BaseModel):

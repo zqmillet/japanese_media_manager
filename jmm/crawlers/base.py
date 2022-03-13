@@ -31,6 +31,7 @@ class Base(Session, metaclass=MetaClass):
 
     如果你想写另一个新网站的爬虫, 请继承该类.
     """
+    fields: List[str]
 
     def get_metadata(self, number: str) -> Video:
         """
@@ -43,7 +44,7 @@ class Base(Session, metaclass=MetaClass):
         return Video(
             fanart=self.get_fanart(soup),
             poster=self.get_poster(soup),
-            keywords=list(map(format_string, self.get_keywords(soup))),
+            keywords=[item for item in (format_string(keyword) for keyword in self.get_keywords(soup)) if item is not None],
             title=format_string(self.get_title(soup)),
             release_date=self.get_release_date(soup),
             length=self.get_length(soup),
