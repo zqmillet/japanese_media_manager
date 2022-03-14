@@ -7,6 +7,9 @@ from pydantic import validator
 from pydantic import Field
 
 from jmm.crawlers import Base
+from jmm.utilities.crawler_group import Router
+from jmm.utilities.crawler_group import Rule
+from jmm.utilities.crawler_group import CrawlerGroup
 
 class CrawlerConfiguration(BaseModel):
     name: str
@@ -26,6 +29,10 @@ class CrawlerConfiguration(BaseModel):
         if not issubclass(clazz, Base):
             raise ValueError(f'class {repr(class_name)} must be a subclass of class {Base.__module__}.{Base.__name__}')
         return clazz
+
+    @validator('arguments', always=True, pre=True)
+    def _arguments(cls, value: Optional[dict]):
+        return value or {}
 
 class RoutingRuleConfiguration(BaseModel):
     pattern: str
@@ -52,3 +59,21 @@ class Configuration(BaseModel):
         if not value:
             raise ValueError('routing_rules is empty')
         return value
+
+    @property
+    def router(self) -> Router:
+        crawler_map = {}
+        for crawler_configuration in self.crawlers:
+            crawler_map[crawler_configuration.name] = crawler_configuration.clazz(**crawler_configuration.arguments)
+
+        rules = []
+        for routing_rule in self.routing_rules:
+            rules.append(
+                Rule(
+                    pattern=routing_rule.pattern,
+                    crawler_group=CrawlerGroup(
+                        crawlers=[crawler_map[crawler_name] for crawler_name in routing_rule.crawlers]
+                    )
+                )
+            )
+        return Router(rules)

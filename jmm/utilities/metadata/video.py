@@ -38,9 +38,7 @@ class Video:
         self.poster = poster
 
     def __repr__(self) -> str:
-        if not self.fanart:
-            return f'<video {self.number} {self.title}>'
-        return f'<video {self.number} {self.title}>\n{image_to_ascii(self.fanart)}'
+        return f'<video {self.number}>'
 
     def __add__(self, other: Video) -> Video:
         return Video(

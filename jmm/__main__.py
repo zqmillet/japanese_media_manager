@@ -2,6 +2,7 @@ import argparse
 
 from jmm.scripts.generate_configuration import generate_configuration
 from jmm.scripts.scrape import scrape
+from jmm.scripts.valid_configuration import valid_configuration 
 import jmm.scripts.command as COMMAND
 
 def main() -> None:
@@ -13,6 +14,13 @@ def main() -> None:
     subparsers = argument_parser.add_subparsers(dest='command')
     subparsers.add_parser(COMMAND.GENERATE_CONFIG)
     subparsers.add_parser(COMMAND.SCRAPE)
+    test_config_parser = subparsers.add_parser(COMMAND.VALID_CONFIG)
+    test_config_parser.add_argument(
+        '-n', '--numbers',
+        type=str,
+        nargs='+',
+        help='specify the numbers of media for testing config'
+    )
 
     arguments = argument_parser.parse_args()
 
@@ -20,6 +28,8 @@ def main() -> None:
         generate_configuration()  # pragma: no cover
     elif arguments.command == COMMAND.SCRAPE:
         scrape()  # pragma: no cover
+    elif arguments.command == COMMAND.VALID_CONFIG:
+        valid_configuration(numbers=arguments.numbers)
     else:
         argument_parser.print_usage()
 
