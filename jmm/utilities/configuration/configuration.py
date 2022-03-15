@@ -14,7 +14,7 @@ from jmm.utilities.crawler_group import CrawlerGroup
 class CrawlerConfiguration(BaseModel):
     name: str
     clazz: Type[Base] = Field(alias='class')
-    arguments: dict = Field(alias='with')
+    arguments: Optional[dict] = Field(alias='with')
 
     @validator('clazz', always=True, pre=True)
     def _clazz(cls, value: str) -> Type[Base]:
@@ -64,7 +64,7 @@ class Configuration(BaseModel):
     def router(self) -> Router:
         crawler_map = {}
         for crawler_configuration in self.crawlers:
-            crawler_map[crawler_configuration.name] = crawler_configuration.clazz(**crawler_configuration.arguments)
+            crawler_map[crawler_configuration.name] = crawler_configuration.clazz(**(crawler_configuration.arguments or {}))
 
         rules = []
         for routing_rule in self.routing_rules:
