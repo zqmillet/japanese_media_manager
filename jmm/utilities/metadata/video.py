@@ -7,6 +7,7 @@ from textwrap import dedent
 from rich.console import Console
 from rich.markdown import Markdown
 from PIL.JpegImagePlugin import JpegImageFile
+from colorama import Fore
 
 from jmm.utilities.functions import image_to_ascii
 
@@ -41,9 +42,6 @@ class Video:
         self.fanart = fanart
         self.poster = poster
 
-    def __repr__(self) -> str:
-        return f'<video {self.number}>'
-
     def __add__(self, other: Video) -> Video:
         return Video(
             number=self.number or other.number,
@@ -60,8 +58,13 @@ class Video:
             poster=self.poster or other.poster,
         )
 
-    @property
-    def ascii(self) -> str:
+    @staticmethod
+    def image_to_ascii(image: Optional[JpegImageFile], columns: int, line_indent: int, prefix: str = '\n') -> str:
+        if not image:
+            return ''
+        return prefix + indent(image_to_ascii(image, columns=columns), ' ' * line_indent)[:-1]
+
+    def __repr__(self) -> str:
         console = Console()
         text = dedent(
             f'''
@@ -70,8 +73,8 @@ class Video:
             - **fanart**:{{}}
             - **keywords**: {', '.join(self.keywords)}
             - **outlint**: {self.outline or ''}
-            - **release date**: {self.release_date.strftime('%Y-%m-%d') if self.release_date else 'unknown'}
-            - **length**: {self.length} min
+            - **release date**: {self.release_date.strftime('%Y-%m-%d') if self.release_date else ''}
+            - **length(min)**: {self.length or ''}
             - **studio**: {self.studio or ''}
             - **series**: {self.series or ''}
             - **stars**:
@@ -84,6 +87,6 @@ class Video:
             console.print(Markdown(text))
 
         return capture.get().format(
-            '\n' + indent(image_to_ascii(self.fanart, columns=console.width // 2)[:-1], ' ' * 3),
-            *('\n' + indent(image_to_ascii(star.avatar, columns=console.width // 4), ' ' * 6)[:-1] for star in self.stars)
+            Video.image_to_ascii(self.fanart, console.width // 2, 3),
+            *(Video.image_to_ascii(star.avatar, console.width // 4, 6) for star in self.stars)
         )

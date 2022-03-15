@@ -8,4 +8,4 @@ def valid_configuration(numbers: List[str]) -> None:
         metadata = configuration.router.get_metadata(number)
         if metadata is None:
             raise Exception
-        print(metadata.ascii)
+        print(metadata)
