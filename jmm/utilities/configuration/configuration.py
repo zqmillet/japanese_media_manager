@@ -30,10 +30,6 @@ class CrawlerConfiguration(BaseModel):
             raise ValueError(f'class {repr(class_name)} must be a subclass of class {Base.__module__}.{Base.__name__}')
         return clazz
 
-    @validator('arguments', always=True, pre=True)
-    def _arguments(cls, value: Optional[dict]) -> dict:
-        return value or {}
-
 class RoutingRuleConfiguration(BaseModel):
     pattern: str
     crawlers: List[str]
