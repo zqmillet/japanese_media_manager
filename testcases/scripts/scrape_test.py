@@ -9,15 +9,15 @@ def _write_configuration(proxies, directory):
     configuration = {
         'crawlers': [
             {
+                'name': 'javbooks',
+                'class': 'jmm.crawlers.JavBooksCrawler',
+                'with': {'proxies': proxies}
+            },
+            {
                 'name': 'javbus',
                 'class': 'jmm.crawlers.JavBusCrawler',
                 'with': {'proxies': proxies}
             },
-            {
-                'name': 'javbooks',
-                'class': 'jmm.crawlers.JavBooksCrawler',
-                'with': {'proxies': proxies}
-            }
         ],
         'routing_rules': [
             {

@@ -2,7 +2,7 @@ import argparse
 
 from jmm.scripts.generate_configuration import generate_configuration
 from jmm.scripts.scrape import scrape
-from jmm.scripts.valid_configuration import valid_configuration 
+from jmm.scripts.valid_configuration import valid_configuration
 import jmm.scripts.command as COMMAND
 
 def main() -> None:

@@ -14,7 +14,7 @@ from jmm.utilities.crawler_group import CrawlerGroup
 class CrawlerConfiguration(BaseModel):
     name: str
     clazz: Type[Base] = Field(alias='class')
-    arguments: Optional[dict] = Field(alias='with')
+    arguments: dict = Field(alias='with')
 
     @validator('clazz', always=True, pre=True)
     def _clazz(cls, value: str) -> Type[Base]:
@@ -31,7 +31,7 @@ class CrawlerConfiguration(BaseModel):
         return clazz
 
     @validator('arguments', always=True, pre=True)
-    def _arguments(cls, value: Optional[dict]):
+    def _arguments(cls, value: Optional[dict]) -> dict:
         return value or {}
 
 class RoutingRuleConfiguration(BaseModel):
