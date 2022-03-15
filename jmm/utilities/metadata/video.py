@@ -62,7 +62,7 @@ class Video:
     def image_to_ascii(image: Optional[JpegImageFile], columns: int, line_indent: int, prefix: str = '\n') -> str:
         if not image:
             return ''
-        return prefix + indent(image_to_ascii(image, columns=columns), ' ' * line_indent)[:-1]
+        return prefix + indent(image_to_ascii(image, columns=columns), ' ' * line_indent)
 
     def __repr__(self) -> str:
         console = Console()
@@ -87,6 +87,6 @@ class Video:
             console.print(Markdown(text))
 
         return capture.get().format(
-            Video.image_to_ascii(self.fanart, console.width // 2, 3),
-            *(Video.image_to_ascii(star.avatar, console.width // 4, 6) for star in self.stars)
+            Video.image_to_ascii(self.fanart, console.width // 2, line_indent=3),
+            *(Video.image_to_ascii(star.avatar, console.width // 4, line_indent=6) for star in self.stars)
         )
