@@ -40,5 +40,8 @@ def _write_configuration(proxies, directory):
 @pytest.mark.usefixtures('protect_custom_config_file')
 def test_test_configuration(capsys):
     valid_configuration(['star-325', 'ssis-334', 'atid-233'])
-    output, error = capsys.readouterr()
-    print(output)
+    output, _ = capsys.readouterr()
+
+    assert 'あいださく' in output
+    assert '神波多一花' in output
+    assert '家庭教師と生徒の秘め事' in output
