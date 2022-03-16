@@ -7,7 +7,6 @@ from textwrap import dedent
 from rich.console import Console
 from rich.markdown import Markdown
 from PIL.JpegImagePlugin import JpegImageFile
-from colorama import Fore
 
 from jmm.utilities.functions import image_to_ascii
 
