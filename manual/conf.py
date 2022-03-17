@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 
 working_directory = os.path.dirname(os.path.dirname(__file__))
 sys.path.append(working_directory)
@@ -21,3 +22,6 @@ autodoc_default_options = {
 }
 autodoc_typehints = 'both'
 autodoc_class_signature = 'separated'
+
+def setup(app):
+    subprocess.run([sys.executable, 'setup.py', 'develop'])

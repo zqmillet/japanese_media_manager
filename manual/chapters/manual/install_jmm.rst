@@ -6,11 +6,12 @@
 .. bash::
    :norun:
 
-    $ pip3 install jmm
+    pip3 install jmm
 
 安装好之后, 系统中会存在一个 ``jmm`` 命令, 可以利用 ``jmm -h`` 来查看 ``jmm`` 的命令手册.
 
-
 .. bash::
 
-    jmm valid-config -n star-325
+    jmm -h
+
+如果出现以上提示信息, 则说明 jMM 安装成功.
