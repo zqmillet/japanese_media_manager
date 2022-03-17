@@ -18,5 +18,6 @@
 如果出现以上提示信息, 则说明 jMM 安装成功.
 
 .. bash::
+   :real_cmd: {python} -m jmm valid-config -n star-325
 
-    ls -l ..
+    jmm valid-config -n star-325
