@@ -86,6 +86,6 @@ class Video:
             console.print(Markdown(text))
 
         return capture.get().format(
-            Video.image_to_ascii(self.fanart, console.width // 2, line_indent=3),
-            *(Video.image_to_ascii(star.avatar, console.width // 4, line_indent=6) for star in self.stars)
+            Video.image_to_ascii(self.fanart, max(console.width // 2, 80), line_indent=3),
+            *(Video.image_to_ascii(star.avatar, max(console.width // 4, 40), line_indent=6) for star in self.stars)
         )
