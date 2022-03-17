@@ -19,8 +19,4 @@
 
 .. bash::
 
-    pwd
-
-.. bash::
-
     ls -l ..
