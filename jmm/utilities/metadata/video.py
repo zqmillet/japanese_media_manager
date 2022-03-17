@@ -67,11 +67,11 @@ class Video:
         console = Console()
         text = dedent(
             f'''
-            - **number**: *{self.number}*
+            - **number**: {self.number}
             - **title**: {self.title or ''}
             - **fanart**:{{}}
             - **keywords**: {', '.join(self.keywords)}
-            - **outlint**: {self.outline or ''}
+            - **outline**: {self.outline or ''}
             - **release date**: {self.release_date.strftime('%Y-%m-%d') if self.release_date else ''}
             - **length(min)**: {self.length or ''}
             - **studio**: {self.studio or ''}
