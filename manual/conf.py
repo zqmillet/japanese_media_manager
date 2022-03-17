@@ -22,6 +22,3 @@ autodoc_default_options = {
 }
 autodoc_typehints = 'both'
 autodoc_class_signature = 'separated'
-
-def setup(app):
-    subprocess.run([sys.executable, 'setup.py', 'develop'])

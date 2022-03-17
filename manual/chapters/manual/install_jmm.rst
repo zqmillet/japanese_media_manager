@@ -11,6 +11,7 @@
 安装好之后, 系统中会存在一个 ``jmm`` 命令, 可以利用 ``jmm -h`` 来查看 ``jmm`` 的命令手册.
 
 .. bash::
+   :real_cmd: {python} -m jmm -h
 
     jmm -h
 
