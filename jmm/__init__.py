@@ -1,3 +1,3 @@
-from .main import main
+VERSION = '0.0.2beta'
 
-__all__ = ['main']
+__all__ = ['VERSION']

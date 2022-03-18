@@ -1,3 +1,3 @@
-from .main import main
+from jmm.main import main
 
 main()
