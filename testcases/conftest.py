@@ -4,6 +4,8 @@ import pathlib
 import shutil
 import pytest
 
+from jmm.utilities.session import Proxies
+
 def pytest_addoption(parser):
     parser.addoption(
         '--app-id',
@@ -92,22 +94,18 @@ def _session_test_threthold(request):
 @pytest.fixture(name='proxies', scope='session')
 def _proxies(proxy_host, proxy_port, proxy_username, proxy_password):
     if not proxy_host or not proxy_port:
-        return {
-            'http': None,
-            'https': None
-        }
+        return Proxies()
 
     if proxy_username and proxy_password:
-        return {
-            'http': f'http://{urllib.parse.quote(proxy_username)}:{urllib.parse.quote(proxy_password)}@{proxy_host}:{proxy_port}',
-            'https': f'http://{urllib.parse.quote(proxy_username)}:{urllib.parse.quote(proxy_password)}@{proxy_host}:{proxy_port}',
-        }
+        return Proxies(
+            http=f'http://{urllib.parse.quote(proxy_username)}:{urllib.parse.quote(proxy_password)}@{proxy_host}:{proxy_port}',
+            https=f'http://{urllib.parse.quote(proxy_username)}:{urllib.parse.quote(proxy_password)}@{proxy_host}:{proxy_port}',
+        )
 
-    return {
-        'http': f'http://{proxy_host}:{proxy_port}',
-        'https': f'http://{proxy_host}:{proxy_port}',
-    }
-
+    return Proxies(
+        http=f'http://{proxy_host}:{proxy_port}',
+        https=f'http://{proxy_host}:{proxy_port}',
+    )
 
 @pytest.fixture(name='custom_config_file_path', scope='session')
 def _custom_config_file_path():

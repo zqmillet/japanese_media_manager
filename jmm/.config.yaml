@@ -7,7 +7,7 @@ crawlers:
     class: jmm.crawlers.JavdbCrawler
 routing_rules:
   - pattern: ".*"
-    crawlers: [javbus, javbooks, javdb]
+    crawler_names: [javbus, javbooks, javdb]
 proxies:
     http: None
     https: None

@@ -39,7 +39,7 @@ def start_tornado(api_path, port, method, responses, wait, queue):
         tornado.ioloop.IOLoop.current().stop()
 
 @contextlib.contextmanager
-def mock_server_manager(api_path, responses, port=8001, method='get', wait=0):
+def mock_server_manager(api_path, responses, port=1926, method='get', wait=0):
     queue = multiprocessing.Queue()
 
     process = multiprocessing.Process(target=start_tornado, args=(api_path, port, method, responses, wait, queue), daemon=True)
@@ -55,7 +55,7 @@ def _api_path():
 
 @pytest.fixture(name='port', scope='session')
 def _port():
-    return 8001
+    return 1926
 
 @pytest.fixture(name='url', scope='session')
 def _url(port, api_path):

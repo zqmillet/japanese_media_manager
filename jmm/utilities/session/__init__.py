@@ -3,5 +3,6 @@
 """
 
 from .session import Session
+from .session import Proxies
 
-__all__ = ['Session']
+__all__ = ['Session', 'Proxies']

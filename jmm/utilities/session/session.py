@@ -1,30 +1,41 @@
 import time
 import http
-import typing
-import urllib3
-import requests
+from typing import Optional
+from typing import Any
+from requests import Session as _Session
+from requests import adapters
+from requests import models
+from urllib3 import disable_warnings
+from urllib3 import exceptions
+from urllib3 import util
+from urllib3 import response as _response
+from pydantic import BaseModel
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+disable_warnings(exceptions.InsecureRequestWarning)
+
+class Proxies(BaseModel):
+    http: Optional[str] = None
+    https: Optional[str] = None
 
 def get_retry_class(interval: float) -> type:
-    class Retry(urllib3.util.Retry):
-        def sleep(self, response: urllib3.response.HTTPResponse = None) -> None:
+    class Retry(util.Retry):
+        def sleep(self, response: _response.HTTPResponse = None) -> None:
             time.sleep(interval)
     return Retry
 
-class Session(requests.Session):
+class Session(_Session):
     """
     a request session of crawler.
     """
     def __init__(
         self,
-        *args: typing.Any,
+        *args: Any,
         interval: float = 0,
-        timeout: typing.Optional[float] = None,
-        proxies: typing.Optional[dict] = None,
+        timeout: Optional[float] = None,
+        proxies: Optional[Proxies] = None,
         retries: int = 3,
         verify: bool = False,
-        **kwargs: typing.Any
+        **kwargs: Any
     ):
         """
         :param interval: 该会话请求的最小间隔, 单位(秒), 对于某些网站, 需要设置此参数, 防止被封 IP 地址.
@@ -37,13 +48,13 @@ class Session(requests.Session):
         self.interval = interval
         self.timeout = timeout
         self.verify = verify
-        self.proxies.update(proxies or {'http': None, 'https': None})
+        self.proxies.update(proxies.dict() if proxies else {})
         self.last_access_time = 0.0
 
         for prefix in ['http://', 'https://']:
             self.mount(
                 prefix=prefix,
-                adapter=requests.adapters.HTTPAdapter(
+                adapter=adapters.HTTPAdapter(
                     max_retries=get_retry_class(interval)(
                         total=retries,
                         allowed_methods=["HEAD", "GET", "POST", "PUT", "DELETE", "OPTIONS", "TRACE"],
@@ -57,7 +68,7 @@ class Session(requests.Session):
                 )
             )
 
-    def request(self, *args: typing.Any, **kwargs: typing.Any) -> requests.models.Response:
+    def request(self, *args: Any, **kwargs: Any) -> models.Response:
         time.sleep(max(0, self.interval - time.time() + self.last_access_time))
         self.last_access_time = time.time()
         kwargs['timeout'] = kwargs.get('timeout') or self.timeout

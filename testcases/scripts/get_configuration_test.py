@@ -13,12 +13,12 @@ def test_get_default_configurations():
 
     configuation = get_configuration()
 
-    for index, crawler in enumerate(configuation.crawlers):
-        assert crawler.name == data['crawlers'][index]['name']
-        assert crawler.clazz is pydoc.locate(data['crawlers'][index]['class'])
+    for index, crawler_configuration in enumerate(configuation.crawler_configurations):
+        assert crawler_configuration.name == data['crawlers'][index]['name']
+        assert crawler_configuration.clazz is pydoc.locate(data['crawlers'][index]['class'])
 
     for index, routing_rule in enumerate(configuation.routing_rules):
-        assert routing_rule.crawlers == data['routing_rules'][index]['crawlers']
+        assert routing_rule.crawler_names == data['routing_rules'][index]['crawler_names']
         assert routing_rule.pattern == data['routing_rules'][index]['pattern']
 
 @pytest.mark.usefixtures('protect_custom_config_file')
@@ -30,7 +30,7 @@ def test_get_custom_configurations():
                     'routing_rules': [
                         {
                             'pattern': r'\d+',
-                            'crawlers': ['javbus']
+                            'crawler_names': ['javbus']
                         }
                     ]
                 }
@@ -41,9 +41,9 @@ def test_get_custom_configurations():
         default_configuration = yaml.safe_load(file.read())
 
     configuation = get_configuration()
-    for index, crawler in enumerate(configuation.crawlers):
-        assert crawler.name == default_configuration['crawlers'][index]['name']
-        assert crawler.clazz is pydoc.locate(default_configuration['crawlers'][index]['class'])
+    for index, crawler_configuration in enumerate(configuation.crawler_configurations):
+        assert crawler_configuration.name == default_configuration['crawlers'][index]['name']
+        assert crawler_configuration.clazz is pydoc.locate(default_configuration['crawlers'][index]['class'])
 
     assert configuation.routing_rules[0].pattern == r'\d+'
-    assert configuation.routing_rules[0].crawlers == ['javbus']
+    assert configuation.routing_rules[0].crawler_names == ['javbus']

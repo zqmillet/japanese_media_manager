@@ -11,18 +11,18 @@ def _write_configuration(proxies, directory):
             {
                 'name': 'javbus',
                 'class': 'jmm.crawlers.JavBusCrawler',
-                'with': {'proxies': proxies}
+                'with': {'proxies': proxies.dict()}
             },
             {
                 'name': 'javbooks',
                 'class': 'jmm.crawlers.JavBooksCrawler',
-                'with': {'proxies': proxies}
+                'with': {'proxies': proxies.dict()}
             }
         ],
         'routing_rules': [
             {
                 'pattern': '.+',
-                'crawlers': ['javbooks', 'javbus']
+                'crawler_names': ['javbooks', 'javbus']
             }
         ],
         'media_finder': {

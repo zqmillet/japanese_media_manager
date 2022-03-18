@@ -1,6 +1,8 @@
 from typing import List
 from typing import Optional
 from typing import Type
+from typing import Dict
+from typing import Any
 from pydoc import locate
 from pydantic import BaseModel
 from pydantic import validator
@@ -11,10 +13,25 @@ from jmm.utilities.crawler_group import Router
 from jmm.utilities.crawler_group import Rule
 from jmm.utilities.crawler_group import CrawlerGroup
 
+class Proxies(BaseModel):
+    http: Optional[str]
+    https: Optional[str]
+
+class CrawlerArguments(BaseModel):
+    base_url: Optional[str] = None
+    interval: float = 0
+    timeout: Optional[float] = None
+    proxies: Optional[Proxies] = None
+    retries: int = 3
+    verify: bool = False
+
+    def dict(self, *args: Any, **kwargs: Any) -> Dict[str, Any]:  # pylint: disable=unused-argument
+        return {key: value for key, value in self._iter() if value is not None}
+
 class CrawlerConfiguration(BaseModel):
     name: str
     clazz: Type[Base] = Field(alias='class')
-    arguments: Optional[dict] = Field(alias='with')
+    arguments: CrawlerArguments = Field(alias='with', default=CrawlerArguments())
 
     @validator('clazz', always=True, pre=True)
     def _clazz(cls, value: str) -> Type[Base]:
@@ -32,20 +49,20 @@ class CrawlerConfiguration(BaseModel):
 
 class RoutingRuleConfiguration(BaseModel):
     pattern: str
-    crawlers: List[str]
+    crawler_names: List[str]
 
-    @validator('crawlers')
+    @validator('crawler_names')
     def _crawlers(cls, value: List[str]) -> List[str]:
         if not value:
-            raise ValueError('crawlers is empty')
+            raise ValueError('crawler_names is empty')
         return value
 
 class Configuration(BaseModel):
-    crawlers: List[CrawlerConfiguration]
+    crawler_configurations: List[CrawlerConfiguration] = Field(alias='crawlers')
     routing_rules: List[RoutingRuleConfiguration]
 
-    @validator('crawlers')
-    def _crawlers(cls, value: List[CrawlerConfiguration]) -> List[CrawlerConfiguration]:
+    @validator('crawler_configurations')
+    def _crawler_configurations(cls, value: List[CrawlerConfiguration]) -> List[CrawlerConfiguration]:
         if not value:
             raise ValueError('crawlers is empty')
         return value
@@ -59,8 +76,8 @@ class Configuration(BaseModel):
     @property
     def router(self) -> Router:
         crawler_map = {}
-        for crawler_configuration in self.crawlers:
-            crawler_map[crawler_configuration.name] = crawler_configuration.clazz(**(crawler_configuration.arguments or {}))
+        for crawler_configuration in self.crawler_configurations:
+            crawler_map[crawler_configuration.name] = crawler_configuration.clazz(**crawler_configuration.arguments.dict())
 
         rules = []
         for routing_rule in self.routing_rules:
@@ -68,7 +85,7 @@ class Configuration(BaseModel):
                 Rule(
                     pattern=routing_rule.pattern,
                     crawler_group=CrawlerGroup(
-                        crawlers=[crawler_map[crawler_name] for crawler_name in routing_rule.crawlers]
+                        crawlers=[crawler_map[crawler_name] for crawler_name in routing_rule.crawler_names]
                     )
                 )
             )
