@@ -7,9 +7,11 @@ sys.path.append(working_directory)
 
 author = 'kinopico'
 project = 'the manual of jMM'
+html_favicon = './statics/logo.png'
 extensions = [
     'sphinx.ext.autodoc',
-    'manual.extensions.bash'
+    'manual.extensions.bash',
+    'sphinxcontrib.tikz',
 ]
 
 html_theme = 'sphinx_rtd_theme'
@@ -22,6 +24,32 @@ autodoc_default_options = {
 }
 autodoc_typehints = 'both'
 autodoc_class_signature = 'separated'
+
+autodoc_pydantic_model_show_json = False
+autodoc_pydantic_settings_show_json = False
+
+tikz_latex_preamble = r'''
+\usepackage{{ctex}}
+\setmainfont[Path={current_directory}/manual/fonts/pingfang/, UprightFont=*_regular, BoldFont=*_bold]{{pingfang}}
+\setCJKmainfont[Path={current_directory}/manual/fonts/pingfang/, UprightFont=*_regular, BoldFont=*_bold]{{pingfang}}
+\setmonofont[Path={current_directory}/manual/fonts/sfmono/, UprightFont=*_regular, BoldFont=*_bold]{{sfmono}}
+'''.format(current_directory=working_directory)
+
+tikz_latex_preamble += r'''
+\definecolor{reference}{rgb}{0.63, 0.79, 0.95}
+\definecolor{object}{rgb}{0.66, 0.89, 0.63}
+\tikzset{
+    reference/.style = {fill=reference, rectangle, line width=1pt, minimum width=0.9cm, minimum height=0.9cm, font=\tt\footnotesize},
+    object/.style = {fill=object, rectangle, line width=1pt, minimum width=0.9cm, minimum height=0.9cm, font=\tt\footnotesize},
+    code/.style = {font=\tt\footnotesize, anchor=west},
+    plaintext/.style = {font=\footnotesize\bf, anchor=base},
+    ref/.style = {line width=1pt, ->}
+}
+'''
+
+tikz_tikzlibraries='positioning'
+
+latex_engine = 'xelatex'
 
 def setup(app):
     os.chdir(os.path.dirname(os.path.dirname(__file__)))

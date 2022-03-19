@@ -1,6 +1,8 @@
 from typing import Optional
 from pydantic import BaseModel
+from pydantic import Extra
+from pydantic import StrictStr
 
-class Proxies(BaseModel):
-    http: Optional[str]
-    https: Optional[str]
+class Proxies(BaseModel, extra=Extra.forbid):
+    http: Optional[StrictStr] = None
+    https: Optional[StrictStr] = None

@@ -11,6 +11,10 @@ from .crawler_configuration import CrawlerConfiguration
 from .routing_rule_configuration import RoutingRuleConfiguration
 
 class Configuration(BaseModel):
+    """
+    jmm 的配置信息.
+    """
+
     crawlers: List[CrawlerConfiguration] = Field(alias='crawlers')
     routing_rules: List[RoutingRuleConfiguration]
 

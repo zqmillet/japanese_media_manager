@@ -1,3 +1,3 @@
-from jmm.main import main
+from jmm.scripts.entry_point import main
 
 main()
