@@ -52,17 +52,17 @@ class RoutingRuleConfiguration(BaseModel):
     crawler_names: List[str]
 
     @validator('crawler_names')
-    def _crawlers(cls, value: List[str]) -> List[str]:
+    def _crawler_names(cls, value: List[str]) -> List[str]:
         if not value:
             raise ValueError('crawler_names is empty')
         return value
 
 class Configuration(BaseModel):
-    crawler_configurations: List[CrawlerConfiguration] = Field(alias='crawlers')
+    crawlers: List[CrawlerConfiguration] = Field(alias='crawlers')
     routing_rules: List[RoutingRuleConfiguration]
 
-    @validator('crawler_configurations')
-    def _crawler_configurations(cls, value: List[CrawlerConfiguration]) -> List[CrawlerConfiguration]:
+    @validator('crawlers')
+    def _crawlers(cls, value: List[CrawlerConfiguration]) -> List[CrawlerConfiguration]:
         if not value:
             raise ValueError('crawlers is empty')
         return value
@@ -76,7 +76,7 @@ class Configuration(BaseModel):
     @property
     def router(self) -> Router:
         crawler_map = {}
-        for crawler_configuration in self.crawler_configurations:
+        for crawler_configuration in self.crawlers:
             crawler_map[crawler_configuration.name] = crawler_configuration.clazz(**crawler_configuration.arguments.dict())
 
         rules = []

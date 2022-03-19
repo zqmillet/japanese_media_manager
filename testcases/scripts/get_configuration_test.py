@@ -11,13 +11,13 @@ def test_get_default_configurations():
     with open(default_configuration_path, 'r', encoding='utf8') as file:
         data = yaml.safe_load(file.read())
 
-    configuation = get_configuration()
+    configuration = get_configuration()
 
-    for index, crawler_configuration in enumerate(configuation.crawler_configurations):
+    for index, crawler_configuration in enumerate(configuration.crawlers):
         assert crawler_configuration.name == data['crawlers'][index]['name']
         assert crawler_configuration.clazz is pydoc.locate(data['crawlers'][index]['class'])
 
-    for index, routing_rule in enumerate(configuation.routing_rules):
+    for index, routing_rule in enumerate(configuration.routing_rules):
         assert routing_rule.crawler_names == data['routing_rules'][index]['crawler_names']
         assert routing_rule.pattern == data['routing_rules'][index]['pattern']
 
@@ -40,10 +40,10 @@ def test_get_custom_configurations():
     with open(default_configuration_path, 'r', encoding='utf8') as file:
         default_configuration = yaml.safe_load(file.read())
 
-    configuation = get_configuration()
-    for index, crawler_configuration in enumerate(configuation.crawler_configurations):
+    configuration = get_configuration()
+    for index, crawler_configuration in enumerate(configuration.crawlers):
         assert crawler_configuration.name == default_configuration['crawlers'][index]['name']
         assert crawler_configuration.clazz is pydoc.locate(default_configuration['crawlers'][index]['class'])
 
-    assert configuation.routing_rules[0].pattern == r'\d+'
-    assert configuation.routing_rules[0].crawler_names == ['javbus']
+    assert configuration.routing_rules[0].pattern == r'\d+'
+    assert configuration.routing_rules[0].crawler_names == ['javbus']

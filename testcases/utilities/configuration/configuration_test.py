@@ -29,10 +29,10 @@ def test_configuration():
         ]
     }
     configuration = Configuration(**data)
-    assert configuration.crawler_configurations[0].name == 'javbus'
-    assert configuration.crawler_configurations[1].name == 'javdb'
-    assert issubclass(configuration.crawler_configurations[0].clazz, Base)
-    assert issubclass(configuration.crawler_configurations[1].clazz, Base)
+    assert configuration.crawlers[0].name == 'javbus'
+    assert configuration.crawlers[1].name == 'javdb'
+    assert issubclass(configuration.crawlers[0].clazz, Base)
+    assert issubclass(configuration.crawlers[1].clazz, Base)
 
 @pytest.mark.parametrize(
     'data, message', [

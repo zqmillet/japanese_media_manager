@@ -11,7 +11,7 @@ from .get_configuration import get_configuration
 
 def get_crawlers(configuration: Configuration) -> Dict[str, Base]:
     crawlers = {}
-    for crawler_configuration in configuration.crawler_configurations:
+    for crawler_configuration in configuration.crawlers:
         arguments: CrawlerArguments = crawler_configuration.arguments
         name = crawler_configuration.name
         crawlers[name] = crawler_configuration.clazz(**arguments.dict())
