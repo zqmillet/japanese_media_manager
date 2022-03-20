@@ -24,7 +24,7 @@ class Bash(Raw):
         norun = 'norun' in self.options
         display_command = '\n'.join(self.content).format(**self.variables).strip()
         real_command = (self.options.get('real_cmd') or display_command).format(**self.variables)
-        convertor = Ansi2HTMLConverter(font_size='8pt', dark_bg=True)
+        convertor = Ansi2HTMLConverter(dark_bg=True)
 
         if not norun:
             output = spawn(real_command).read()

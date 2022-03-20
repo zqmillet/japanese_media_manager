@@ -32,4 +32,6 @@ Japanese Media Manager
    :caption: 系统设计
 
    chapters/design/framework.rst
+   chapters/design/code_check.rst
+   chapters/design/testcases.rst
    chapters/design/source_code.rst

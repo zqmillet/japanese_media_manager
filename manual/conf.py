@@ -36,8 +36,9 @@ tikz_latex_preamble = r'''
 '''.format(current_directory=working_directory)
 
 tikz_latex_preamble += r'''
-\definecolor{reference}{rgb}{0.63, 0.79, 0.95}
-\definecolor{object}{rgb}{0.66, 0.89, 0.63}
+\definecolor{crawler}{rgb}{0.5, 0.5, 0.5}
+\definecolor{block}{rgb}{0.8, 0.8, 0.8}
+
 \tikzset{
     reference/.style = {fill=reference, rectangle, line width=1pt, minimum width=0.9cm, minimum height=0.9cm, font=\tt\footnotesize},
     object/.style = {fill=object, rectangle, line width=1pt, minimum width=0.9cm, minimum height=0.9cm, font=\tt\footnotesize},
