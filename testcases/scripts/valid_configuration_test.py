@@ -21,7 +21,7 @@ def _write_configuration(proxies, directory):
         ],
         'routing_rules': [
             {
-                'pattern': '.+',
+                'pattern': r'\w+-\d+',
                 'crawler_names': ['javbooks', 'javbus']
             }
         ],
@@ -45,3 +45,11 @@ def test_test_configuration(capsys):
     assert 'あいださく' in output
     assert '神波多一花' in output
     assert '家庭教師と生徒の秘め事' in output
+
+@pytest.mark.usefixtures('write_configuration')
+@pytest.mark.usefixtures('protect_custom_config_file')
+def test_test_configuration_with_invalid_number():
+    with pytest.raises(Exception) as information:
+        valid_configuration(['gouliguojiashengsiyi', 'qiyinhuofubiquzhi'])
+
+    assert str(information.value) == "there is no routing rule matches this type of number 'gouliguojiashengsiyi'"

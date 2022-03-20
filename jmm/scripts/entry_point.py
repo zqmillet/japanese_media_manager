@@ -38,11 +38,11 @@ def main() -> None:
     elif arguments.command == COMMAND.SCRAPE:
         scrape()  # pragma: no cover
     elif arguments.command == COMMAND.VALID_CONFIG:
-        valid_configuration(numbers=arguments.numbers)
+        valid_configuration(numbers=arguments.numbers)  # pragma: no cover
     elif arguments.command == COMMAND.SHOW_VERSION:
-        show_version()
+        show_version()  # pragma: no cover
     else:
         argument_parser.print_usage()
 
 if __name__ == '__main__':
-    main()
+    main()  # pragma: no cover

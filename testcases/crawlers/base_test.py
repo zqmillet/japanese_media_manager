@@ -19,7 +19,6 @@ from jmm.crawlers import JavBooksCrawler
     ]
 )
 def test_class_fields(crawler, fields):
-    print(crawler.fields)
     assert crawler.fields == fields
 
 def test_suspend_exception():

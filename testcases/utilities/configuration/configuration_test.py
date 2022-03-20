@@ -105,7 +105,3 @@ def test_configuration_with_error(data, message):
     with pytest.raises(ValidationError) as information:
         Configuration(**data)
     assert information.value.errors()[0]['msg'] == message
-
-def test_crawler_arguments():
-    arguments = CrawlerArguments()
-    print(arguments.dict())
