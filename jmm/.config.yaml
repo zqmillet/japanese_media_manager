@@ -15,3 +15,8 @@ suffixes: [.mp4, .mkv, .wmv]
 translator:
     app_id: None
     app_key: None
+media_finder:
+    directories: []
+    recursively: true
+    minimum_size: 0
+    extensions: ['.mp4', '.mkv']

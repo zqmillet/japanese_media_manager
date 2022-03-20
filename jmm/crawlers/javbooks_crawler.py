@@ -38,6 +38,7 @@ class JavBooksCrawler(Base):
         for tag in self.get_soup(response.text).find_all('div', 'Po_topic'):
             if number.lower() in tag.find_next('font').text.lower():
                 response = self.get(tag.find_next('a').attrs['href'])
+
                 return self.get_soup(response.text)
         return self.get_soup('')
 
@@ -45,7 +46,10 @@ class JavBooksCrawler(Base):
         for tag in soup.find_all('div', 'info_cg'):
             url = tag.find_next('img').attrs['src']
             response = self.get(url)
-            return open_image(BytesIO(response.content))
+            try:
+                return open_image(BytesIO(response.content))
+            except OSError:
+                return None
         return None
 
     def get_keywords(self, soup: BeautifulSoup) -> List[str]:
@@ -107,11 +111,13 @@ class JavBooksCrawler(Base):
 
             for item in tag.find_all('div', 'av_performer_cg_box'):
                 avatar_url = item.find_next('img').attrs['src']
+                avatar = open_image(BytesIO(self.get(avatar_url).content))
+
                 stars.append(
                     Star(
                         avatar_url=avatar_url,
                         name=item.find_next('a').text,
-                        avatar=open_image(BytesIO(self.get(avatar_url).content))
+                        avatar=avatar
                     )
                 )
         return stars

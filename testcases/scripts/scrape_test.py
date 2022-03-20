@@ -26,9 +26,10 @@ def _write_configuration(proxies, directory):
             }
         ],
         'media_finder': {
-            'extensions': ['avi', 'mp4'],
+            'extensions': ['.avi', '.mp4', '.mkv'],
             'recursive': True,
-            'minimum_size': 1025,
+            'minimum_size': 0,
+            # 'directories': ['/Volumes/Public/downloads/av']
             'directories': [directory]
         }
     }
@@ -39,4 +40,4 @@ def _write_configuration(proxies, directory):
 @pytest.mark.usefixtures('write_configuration')
 @pytest.mark.usefixtures('protect_custom_config_file')
 def test_scrape():
-    assert scrape() is None
+    scrape()

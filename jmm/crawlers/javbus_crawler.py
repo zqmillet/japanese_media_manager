@@ -4,6 +4,8 @@ from io import BytesIO
 from typing import List, Any, Optional
 from bs4 import BeautifulSoup
 from PIL.Image import Image, open as open_image
+from validators import url
+from validators import ValidationFailure
 
 from jmm.utilities.metadata import Star
 
@@ -99,12 +101,14 @@ class JavBusCrawler(Base):
         stars = []
         for tag in soup.find_all('div', attrs={'id': 'avatar-waterfall'}):
             for img in tag.find_all('img'):
-                avatar_url = self.base_url + img.attrs['src']
+                avatar_url = img.attrs['src'] if not isinstance(url(img.attrs['src']), ValidationFailure) else self.base_url + img.attrs['src']
+                avatar = open_image(BytesIO(self.get(avatar_url).content))
+
                 stars.append(
                     Star(
                         avatar_url=avatar_url,
                         name=img.attrs['title'],
-                        avatar=open_image(BytesIO(self.get(avatar_url).content))
+                        avatar=avatar
                     )
                 )
         return stars

@@ -3,6 +3,7 @@ from typing import Dict
 from jmm.utilities.crawler_group import Router
 from jmm.utilities.crawler_group import Rule
 from jmm.utilities.crawler_group import CrawlerGroup
+from jmm.utilities.media_finder import MediaFinder
 from jmm.crawlers import Base
 from jmm.utilities.configuration import Configuration
 from jmm.utilities.configuration import CrawlerArguments
@@ -27,4 +28,9 @@ def get_router(configuration: Configuration) -> Router:
 def scrape() -> None:
     configuration = get_configuration()
     router = get_router(configuration)
-    print(router.get_metadata('star-325'))
+    media_finder = MediaFinder(**configuration.media_finder.dict())
+    for file_information in media_finder:
+        number = file_information.number
+        if not number:
+            continue
+        print(router.get_metadata(number))
