@@ -1,11 +1,10 @@
 from re import match
 from datetime import datetime, date
-from io import BytesIO
 from typing import List
 from typing import Any
 from typing import Optional
 from bs4 import BeautifulSoup
-from PIL.Image import Image, open as open_image
+from PIL.Image import Image
 
 from .base import Base
 
@@ -73,8 +72,7 @@ class AirAvCrawler(Base):
             url = tag.attrs.get('content')
             if not url or url in ignore_fanart_urls:
                 continue
-            response = self.get(url)
-            return open_image(BytesIO(response.content))
+            return self.get_image(url)
         return None
 
     def get_number(self, soup: BeautifulSoup) -> Optional[str]:

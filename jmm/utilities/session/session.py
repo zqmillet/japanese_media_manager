@@ -2,14 +2,18 @@ import time
 import http
 from typing import Optional
 from typing import Any
+from io import BytesIO
 from requests import Session as _Session
 from requests import adapters
 from requests import models
+from requests import RequestException
 from urllib3 import disable_warnings
 from urllib3 import exceptions
 from urllib3 import util
 from urllib3 import response as _response
 from pydantic import BaseModel
+from PIL.Image import Image
+from PIL.Image import open as open_image
 
 disable_warnings(exceptions.InsecureRequestWarning)
 
@@ -74,3 +78,14 @@ class Session(_Session):
         kwargs['timeout'] = kwargs.get('timeout') or self.timeout
         kwargs['verify'] = kwargs.get('verify') or self.verify
         return super().request(*args, **kwargs)
+
+    def get_image(self, url: str) -> Optional[Image]:
+        try:
+            response = self.get(url)
+        except RequestException:
+            return None
+
+        try:
+            return open_image(BytesIO(response.content))
+        except OSError:
+            return None

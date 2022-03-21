@@ -1,13 +1,11 @@
 from re import match
 from datetime import datetime, date
-from io import BytesIO
 from typing import List, Any, Optional
 from bs4 import BeautifulSoup
-from PIL.Image import Image, open as open_image
-from validators import url
-from validators import ValidationFailure
+from PIL.Image import Image
 
 from jmm.utilities.metadata import Star
+from jmm.utilities.functions import is_url
 
 from .base import Base
 
@@ -42,8 +40,7 @@ class JavBusCrawler(Base):
         for tag in soup.find_all('a', 'bigImage'):
             uri = tag.attrs["href"]
             url = f'{self.base_url}{uri}' if uri.startswith('/') else uri
-            response = self.get(url)
-            return open_image(BytesIO(response.content))
+            return self.get_image(url)
         return None
 
     def get_keywords(self, soup: BeautifulSoup) -> List[str]:
@@ -101,14 +98,12 @@ class JavBusCrawler(Base):
         stars = []
         for tag in soup.find_all('div', attrs={'id': 'avatar-waterfall'}):
             for img in tag.find_all('img'):
-                avatar_url = img.attrs['src'] if not isinstance(url(img.attrs['src']), ValidationFailure) else self.base_url + img.attrs['src']
-                avatar = open_image(BytesIO(self.get(avatar_url).content))
-
+                avatar_url = img.attrs['src'] if is_url(img.attrs['src']) else self.base_url + img.attrs['src']
                 stars.append(
                     Star(
                         avatar_url=avatar_url,
                         name=img.attrs['title'],
-                        avatar=avatar
+                        avatar=self.get_image(avatar_url)
                     )
                 )
-        return stars
+        return [star for star in stars if star.avatar]

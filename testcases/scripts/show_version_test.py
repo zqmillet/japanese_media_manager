@@ -1,4 +1,4 @@
-from jmm import  VERSION
+from jmm import VERSION
 
 from jmm.scripts.show_version import show_version
 

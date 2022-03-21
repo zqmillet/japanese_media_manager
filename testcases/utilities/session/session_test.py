@@ -9,6 +9,7 @@ import tornado.web
 import tornado.ioloop
 import requests
 import pytest
+import PIL.Image
 
 from jmm.utilities.session import Session
 from jmm.utilities.timer import Timer
@@ -160,3 +161,25 @@ def test_session_with_proxies(proxies):
     session = Session(proxies=proxies)
     response = session.get('https://www.baidu.com')
     assert response.status_code == http.HTTPStatus.OK
+
+@pytest.mark.parametrize(
+    'url', [
+        'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png',
+        'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
+    ]
+)
+def test_get_image(proxies, url):
+    session = Session(proxies=proxies)
+    assert isinstance(session.get_image(url), PIL.Image.Image)
+
+@pytest.mark.parametrize(
+    'url', [
+        'https://www.baidu.com',
+        'https://www.google.com',
+        'https://gouliguojiashengsiyi.qiyinhuofubiquzhi',
+        '23333'
+    ]
+)
+def test_get_image_with_exception(proxies, url):
+    session = Session(proxies=proxies)
+    assert session.get_image(url) is None

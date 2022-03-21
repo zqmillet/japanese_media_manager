@@ -1,9 +1,8 @@
 from re import match
 from datetime import datetime, date
-from io import BytesIO
 from typing import List, Any, Optional
 from bs4 import BeautifulSoup
-from PIL.Image import Image, open as open_image
+from PIL.Image import Image
 
 from jmm.utilities.metadata import Star
 
@@ -44,12 +43,7 @@ class JavBooksCrawler(Base):
 
     def get_fanart(self, soup: BeautifulSoup) -> Optional[Image]:
         for tag in soup.find_all('div', 'info_cg'):
-            url = tag.find_next('img').attrs['src']
-            response = self.get(url)
-            try:
-                return open_image(BytesIO(response.content))
-            except OSError:
-                return None
+            return self.get_image(tag.find_next('img').attrs['src'])
         return None
 
     def get_keywords(self, soup: BeautifulSoup) -> List[str]:
@@ -111,16 +105,15 @@ class JavBooksCrawler(Base):
 
             for item in tag.find_all('div', 'av_performer_cg_box'):
                 avatar_url = item.find_next('img').attrs['src']
-                avatar = open_image(BytesIO(self.get(avatar_url).content))
 
                 stars.append(
                     Star(
                         avatar_url=avatar_url,
                         name=item.find_next('a').text,
-                        avatar=avatar
+                        avatar=self.get_image(avatar_url)
                     )
                 )
-        return stars
+        return [star for star in stars if star.avatar]
 
     def get_length(self, soup: BeautifulSoup) -> Optional[int]:
         for tag in soup.find_all('div', 'infobox'):

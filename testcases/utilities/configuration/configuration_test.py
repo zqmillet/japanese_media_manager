@@ -2,7 +2,6 @@ import pytest
 from pydantic import ValidationError
 
 from jmm.utilities.configuration import Configuration
-from jmm.utilities.configuration import CrawlerArguments
 from jmm.crawlers import Base
 
 def test_configuration():
@@ -26,7 +25,13 @@ def test_configuration():
                 'pattern': r'\w+',
                 'crawler_names': ['javdb', 'javbus']
             }
-        ]
+        ],
+        'media_finder': {
+            'directories': [],
+            'recursively': True,
+            'minimum_size': 0,
+            'extensions': ['.mp4', '.mkv'],
+        }
     }
     configuration = Configuration(**data)
     assert configuration.crawlers[0].name == 'javbus'
