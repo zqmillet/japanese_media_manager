@@ -22,7 +22,12 @@ def get_router(configuration: Configuration) -> Router:
     crawlers = get_crawlers(configuration)
     rules = []
     for rule_configuration in configuration.routing_rules:
-        rules.append(Rule(pattern=rule_configuration.pattern, crawler_group=CrawlerGroup([crawlers[name] for name in rule_configuration.crawler_names])))
+        rules.append(
+            Rule(
+                pattern=rule_configuration.pattern,
+                crawler_group=CrawlerGroup([crawlers[name] for name in rule_configuration.crawler_names])
+            )
+        )
     return Router(rules)
 
 def scrape() -> None:

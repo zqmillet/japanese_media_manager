@@ -38,6 +38,7 @@ def _write_configuration(proxies, directory):
         file.write(yaml.safe_dump(configuration))
 
 @pytest.mark.usefixtures('write_configuration')
+@pytest.mark.usefixtures('file_paths')
 @pytest.mark.usefixtures('protect_custom_config_file')
 def test_scrape():
     scrape()
