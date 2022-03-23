@@ -1,4 +1,6 @@
+from typing import Optional
 from typing import Dict
+from typing import List
 
 from jmm.utilities.crawler_group import Router
 from jmm.utilities.crawler_group import Rule
@@ -30,10 +32,11 @@ def get_router(configuration: Configuration) -> Router:
         )
     return Router(rules)
 
-def scrape() -> None:
+def scrape(input_directories: Optional[List[str]] = None, output_directory: Optional[str] = None) -> None:
     configuration = get_configuration()
     router = get_router(configuration)
     media_finder = MediaFinder(**configuration.media_finder.dict())
+    media_finder.directories = input_directories or media_finder.directories
     for file_information in media_finder:
         number = file_information.number
         if not number:
