@@ -28,24 +28,28 @@ class MediaFinder:
     def __init__(self, directories: List[str], recursively: bool = True, minimum_size: int = 0, extensions: Optional[List[str]] = None, logger: Logger = dumb):
         logger.info('scanning media files')
         self.media_paths: List[Path] = []
-        extensions = list(map(lambda x: x.lower(), extensions or []))
+        self.extensions: List[str] = list(map(lambda x: x.lower(), extensions or []))
+        self.directories: List[str] = directories
+        self.recursively: bool = recursively
+        self.progress_bar = tqdm(total=len(self.media_paths))
+        self.minimum_size = minimum_size
 
-        for directory in directories:
-            file_paths = Path(directory).rglob('*') if recursively else Path(directory).glob('*')
+    def __iter__(self) -> MediaFinder:
+        for directory in self.directories:
+            file_paths = Path(directory).rglob('*') if self.recursively else Path(directory).glob('*')
             for file_path in file_paths:
                 if not file_path.is_file():
                     continue
-                if file_path.suffix.lower() not in extensions:
+                if file_path.suffix.lower() not in self.extensions:
                     continue
-                if file_path.stat().st_size < minimum_size:
+                if file_path.stat().st_size < self.minimum_size:
                     continue
                 self.media_paths.append(file_path)
 
         self.media_paths = sorted(set(self.media_paths))
         self.progress_bar = tqdm(total=len(self.media_paths))
-
-    def __iter__(self) -> MediaFinder:
         self.progress_bar.reset()
+
         return self
 
     def __next__(self) -> FileInformation:
