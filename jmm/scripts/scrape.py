@@ -6,6 +6,7 @@ from jmm.utilities.crawler_group import Router
 from jmm.utilities.crawler_group import Rule
 from jmm.utilities.crawler_group import CrawlerGroup
 from jmm.utilities.media_finder import MediaFinder
+from jmm.utilities.logger import Logger
 from jmm.crawlers import Base
 from jmm.utilities.configuration import Configuration
 from jmm.utilities.configuration import CrawlerArguments
@@ -32,13 +33,24 @@ def get_router(configuration: Configuration) -> Router:
         )
     return Router(rules)
 
+def get_logger(configuration: Configuration) -> Logger:
+    return Logger(**configuration.logger_arguments.dict())
+
+def get_media_finder(configuration: Configuration, input_directories: Optional[List[str]]) -> MediaFinder:
+    media_finder = MediaFinder(**configuration.media_finder.dict())
+    media_finder.directories = input_directories or media_finder.directories
+    return media_finder
+
 def scrape(input_directories: Optional[List[str]] = None, output_directory: Optional[str] = None) -> None:
     configuration = get_configuration()
     router = get_router(configuration)
-    media_finder = MediaFinder(**configuration.media_finder.dict())
-    media_finder.directories = input_directories or media_finder.directories
+    logger = get_logger(configuration)
+    media_finder = get_media_finder(configuration, input_directories)
+
     for file_information in media_finder:
         number = file_information.number
         if not number:
+            logger.warning('cannot find number from file name %s', file_information.file_path)
             continue
         print(router.get_metadata(number))
+        print(output_directory)

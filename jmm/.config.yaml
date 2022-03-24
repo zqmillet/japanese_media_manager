@@ -20,3 +20,6 @@ media_finder:
     recursively: true
     minimum_size: 0
     extensions: ['.mp4', '.mkv']
+logger:
+    name: jmm
+    level: 0

@@ -10,6 +10,7 @@ from jmm.utilities.crawler_group import CrawlerGroup
 from .crawler_configuration import CrawlerConfiguration
 from .routing_rule_configuration import RoutingRuleConfiguration
 from .media_finder_arguments import MediaFinderArguments
+from .logger_arguments import LoggerArguments
 
 class Configuration(BaseModel):
     """
@@ -19,6 +20,7 @@ class Configuration(BaseModel):
     crawlers: List[CrawlerConfiguration] = Field(alias='crawlers')
     routing_rules: List[RoutingRuleConfiguration]
     media_finder: MediaFinderArguments
+    logger_arguments: LoggerArguments
 
     @validator('crawlers')
     def _crawlers(cls, value: List[CrawlerConfiguration]) -> List[CrawlerConfiguration]:
