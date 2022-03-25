@@ -28,13 +28,15 @@ def get_router(configuration: Configuration) -> Router:
         rules.append(
             Rule(
                 pattern=rule_configuration.pattern,
-                crawler_group=CrawlerGroup([crawlers[name] for name in rule_configuration.crawler_names])
+                crawler_group=CrawlerGroup(
+                    [crawlers[name] for name in rule_configuration.crawler_names]
+                )
             )
         )
     return Router(rules)
 
 def get_logger(configuration: Configuration) -> Logger:
-    return Logger(**configuration.logger_arguments.dict())
+    return Logger(**configuration.logger.dict())
 
 def get_media_finder(configuration: Configuration, input_directories: Optional[List[str]]) -> MediaFinder:
     media_finder = MediaFinder(**configuration.media_finder.dict())

@@ -20,7 +20,7 @@ class Configuration(BaseModel):
     crawlers: List[CrawlerConfiguration] = Field(alias='crawlers')
     routing_rules: List[RoutingRuleConfiguration]
     media_finder: MediaFinderArguments
-    logger_arguments: LoggerArguments
+    logger: LoggerArguments
 
     @validator('crawlers')
     def _crawlers(cls, value: List[CrawlerConfiguration]) -> List[CrawlerConfiguration]:

@@ -29,8 +29,10 @@ def _write_configuration(proxies, directory):
             'extensions': ['.avi', '.mp4', '.mkv'],
             'recursive': True,
             'minimum_size': 0,
-            # 'directories': ['/Volumes/Public/downloads/av']
             'directories': [directory]
+        },
+        'logger': {
+            'name': 'jmm'
         }
     }
 
