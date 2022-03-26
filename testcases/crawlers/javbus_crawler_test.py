@@ -4,7 +4,7 @@ import pytest
 from jmm.crawlers import JavBusCrawler
 
 @pytest.mark.parametrize(
-    'number, title, keywords, release_date, stars, director, series, studio, length', [
+    'number, title, keywords, release_date, stars, director, series, studio, runtime', [
         (
             'STAR-325',
             'STAR-325 美人潜入捜査官 羽田あい',
@@ -109,14 +109,14 @@ from jmm.crawlers import JavBusCrawler
         )
     ]
 )
-def test_metadata(number, title, keywords, release_date, stars, director, series, studio, length, proxies):
+def test_metadata(number, title, keywords, release_date, stars, director, series, studio, runtime, proxies):
     crawler = JavBusCrawler(proxies=proxies)
     metadata = crawler.get_metadata(number)
 
     assert metadata.title == title
     assert metadata.keywords == keywords
     assert metadata.release_date == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
-    assert metadata.length == length
+    assert metadata.runtime == runtime
     assert [{'avatar_url': star.avatar_url, 'name': star.name} for star in metadata.stars] == stars
     assert metadata.number == number.upper()
     assert metadata.director == director
@@ -138,7 +138,7 @@ def test_metadata_with_nonexistent_number(number, proxies):
     assert not metadata.stars
     assert metadata.title is None
     assert metadata.release_date is None
-    assert metadata.length is None
+    assert metadata.runtime is None
     assert metadata.number == number
     assert metadata.director is None
     assert metadata.series is None

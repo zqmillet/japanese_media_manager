@@ -30,14 +30,14 @@ def _session(file_path):
 @pytest.mark.parametrize('series', [None, 'xianggangjizhe'])
 @pytest.mark.parametrize('outline', [None, 'weixiaodegongxian'])
 @pytest.mark.parametrize('director', [None, 'zhangzhe'])
-@pytest.mark.parametrize('length', [233, None])
-def test_video_model(session, title, keywords, series, outline, director, length):
+@pytest.mark.parametrize('runtime', [233, None])
+def test_video_model(session, title, keywords, series, outline, director, runtime):
     video = Video(
         number='HAHA-233',
         title=title,
         keywords=keywords,
         release_date=datetime.datetime.today().date(),
-        length=length,
+        runtime=runtime,
         series=series,
         outline=outline,
         director=director,
@@ -74,8 +74,8 @@ def test_video_model(session, title, keywords, series, outline, director, length
 @pytest.mark.parametrize('series', [None, 'xianggangjizhe'])
 @pytest.mark.parametrize('outline', [None, 'weixiaodegongxian'])
 @pytest.mark.parametrize('director', [None, 'zhangzhe'])
-@pytest.mark.parametrize('length', [233, None])
-def test_video_star_model(session, title, keywords, series, outline, director, length):
+@pytest.mark.parametrize('runtime', [233, None])
+def test_video_star_model(session, title, keywords, series, outline, director, runtime):
     name = str(uuid.uuid1())
     star = Star(name=name, avatar=None)
     video = Video(
@@ -83,7 +83,7 @@ def test_video_star_model(session, title, keywords, series, outline, director, l
         title=title,
         keywords=keywords,
         release_date=datetime.datetime.today().date(),
-        length=length,
+        runtime=runtime,
         series=series,
         outline=outline,
         director=director,

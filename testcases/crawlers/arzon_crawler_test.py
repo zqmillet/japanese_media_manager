@@ -13,7 +13,7 @@ from jmm.crawlers import ArzonCrawler
                 'series': 'ＳＯＤｓｔａｒ',
                 'studio': 'ＳＯＤクリエイト（ソフトオンデマンド）',
                 'director': '本田教仁',
-                'length': 120,
+                'runtime': 120,
                 'number': 'STAR-325',
                 'release_date': datetime.date(2011, 12, 8)
             }
@@ -22,7 +22,7 @@ from jmm.crawlers import ArzonCrawler
             'ATKD-246',
             {
                 'director': '',
-                'length': 480,
+                'runtime': 480,
                 'number': 'ATKD-246',
                 'outline': '恥ずかしい尻穴を徹底的に犯され尽くす！日を追うごとに快楽に飲み込まれ、悦楽にひれ伏す哀しき女たち…。凌辱ドラマの殿堂アタッカーズがお届するアナルシーンのみ厳選した16タイトル8時間！被虐の肛門性交！',
                 'release_date': datetime.date(2016, 11, 19),
@@ -35,7 +35,7 @@ from jmm.crawlers import ArzonCrawler
             'WANZ-211',
             {
                 'director': '',
-                'length': 120,
+                'runtime': 120,
                 'number': 'WANZ-211',
                 'outline': 'お嬢様は、潜入捜査官。モデル顔負けの８頭身！女を薬漬けにし、人身売買をしている悪徳プロダクションへ潜入。'
                 'しかしその美しさは、所属しているアイドルの嫉妬をかってしまう。薬を盛られ下衆に犯される！正義を逆手に取られ屈辱のおしゃぶり喉奥射精！'
@@ -59,7 +59,7 @@ def test_arzon_metadata(number, metadata, proxies):
         'series': _metadata.series,
         'studio': _metadata.studio,
         'director': _metadata.director,
-        'length': _metadata.length,
+        'runtime': _metadata.runtime,
         'release_date': _metadata.release_date,
     } == metadata
 
@@ -76,6 +76,6 @@ def test_arzon_metadata_with_nonexistent_number(number, proxies):
     assert metadata.series is None
     assert metadata.studio is None
     assert metadata.director is None
-    assert metadata.length is None
+    assert metadata.runtime is None
     assert metadata.release_date is None
     assert not metadata.stars

@@ -19,7 +19,7 @@ class Video:
         title: Optional[str] = None,
         outline: Optional[str] = None,
         keywords: List[str] = None,
-        length: Optional[int] = None,
+        runtime: Optional[int] = None,
         release_date: Optional[date] = None,
         series: Optional[str] = None,
         director: Optional[str] = None,
@@ -32,7 +32,7 @@ class Video:
         self.title = title
         self.outline = outline
         self.keywords = keywords or []
-        self.length = length
+        self.runtime = runtime
         self.release_date = release_date
         self.series = series
         self.director = director
@@ -47,7 +47,7 @@ class Video:
             title=self.title or other.title,
             outline=self.outline or other.outline,
             keywords=self.keywords or other.keywords,
-            length=self.length or other.length,
+            runtime=self.runtime or other.runtime,
             release_date=self.release_date or other.release_date,
             series=self.series or other.series,
             director=self.director or other.director,
@@ -73,7 +73,7 @@ class Video:
             - **keywords**: {', '.join(self.keywords)}
             - **outline**: {self.outline or ''}
             - **release date**: {self.release_date.strftime('%Y-%m-%d') if self.release_date else ''}
-            - **length(min)**: {self.length or ''}
+            - **runtime(min)**: {self.runtime or ''}
             - **studio**: {self.studio or ''}
             - **series**: {self.series or ''}
             - **stars**:

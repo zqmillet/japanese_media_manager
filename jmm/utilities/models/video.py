@@ -16,7 +16,7 @@ class Video(Base):
     title = Column(Text)
     keywords = Column(JSON)
     release_date = Column(Date)
-    length = Column(Integer)
+    runtime = Column(Integer)
     series = Column(Text)
     outline = Column(Text)
     director = Column(Text)

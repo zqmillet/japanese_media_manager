@@ -67,7 +67,7 @@ def test_metadata(number, title, outline, keywords, studio, release_date, proxie
     crawler = AirAvCrawler(proxies=proxies)
     metadata = crawler.get_metadata(number)
 
-    assert metadata.length is None
+    assert metadata.runtime is None
     assert metadata.series is None
     assert metadata.director is None
     assert metadata.number == number
@@ -88,7 +88,7 @@ def test_metadata_with_nonexitant_number(number):
     crawler = AirAvCrawler()
     metadata = crawler.get_metadata(number)
 
-    assert not metadata.length
+    assert not metadata.runtime
     assert not metadata.series
     assert not metadata.director
     assert not metadata.title

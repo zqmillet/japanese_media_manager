@@ -12,7 +12,7 @@ from .base import Base
 class TAG:
     NUMBER = '識別碼:'
     RELASE_DATE = '發行日期:'
-    LENGTH = '長度:'
+    RUNTIME = '長度:'
     DIRECTOR = '導演:'
     STUDIO = '製作商:'
     LABEL = '發行商:'
@@ -60,11 +60,11 @@ class JavBusCrawler(Base):
             return datetime.strptime(date_string.strip(), '%Y-%m-%d').date()
         return None
 
-    def get_length(self, soup: BeautifulSoup) -> Optional[int]:
+    def get_runtime(self, soup: BeautifulSoup) -> Optional[int]:
         pattern = r'(?P<minutes>\d+)(?P<unit>.+)'
-        for tag in soup.find_all('span', 'header', text=TAG.LENGTH):
-            *_, length = tag.parent.contents
-            result = match(pattern, length.strip())
+        for tag in soup.find_all('span', 'header', text=TAG.RUNTIME):
+            *_, runtime = tag.parent.contents
+            result = match(pattern, runtime.strip())
             if result:
                 return int(result.groupdict()['minutes'])
         return None

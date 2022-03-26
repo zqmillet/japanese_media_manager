@@ -11,11 +11,11 @@ from jmm.crawlers import JavBooksCrawler
 @pytest.mark.parametrize(
     'crawler, fields', [
         (AirAvCrawler, ['fanart', 'keywords', 'title', 'release_date', 'number', 'studio', 'outline']),
-        (ArzonCrawler, ['title', 'release_date', 'length', 'director', 'series', 'studio', 'outline']),
-        (AvsoxCrawler, ['fanart', 'keywords', 'title', 'release_date', 'length', 'number', 'series', 'studio', 'stars']),
-        (JavdbCrawler, ['fanart', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'stars']),
-        (JavBusCrawler, ['fanart', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'stars']),
-        (JavBooksCrawler, ['fanart', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'stars']),
+        (ArzonCrawler, ['title', 'release_date', 'runtime', 'director', 'series', 'studio', 'outline']),
+        (AvsoxCrawler, ['fanart', 'keywords', 'title', 'release_date', 'runtime', 'number', 'series', 'studio', 'stars']),
+        (JavdbCrawler, ['fanart', 'keywords', 'title', 'release_date', 'runtime', 'number', 'director', 'series', 'studio', 'stars']),
+        (JavBusCrawler, ['fanart', 'keywords', 'title', 'release_date', 'runtime', 'number', 'director', 'series', 'studio', 'stars']),
+        (JavBooksCrawler, ['fanart', 'keywords', 'title', 'release_date', 'runtime', 'number', 'director', 'series', 'studio', 'stars']),
     ]
 )
 def test_class_fields(crawler, fields):

@@ -8,7 +8,7 @@ from .base import Base
 
 class TAG:
     RELEASE_DATE = '発売日：'
-    LENGHT = '収録時間：'
+    RUNTIME = '収録時間：'
     NUMBER = '品番：'
     DIRECTOR = '監督：'
     SERIES = 'AVレーベル：'
@@ -60,14 +60,14 @@ class ArzonCrawler(Base):
                 return datetime.strptime(result.groupdict()['date'], '%Y/%m/%d').date()
         return None
 
-    def get_length(self, soup: BeautifulSoup) -> Optional[int]:
+    def get_runtime(self, soup: BeautifulSoup) -> Optional[int]:
         for tag in soup.find_all('td'):
-            if not tag.text == TAG.LENGHT:
+            if not tag.text == TAG.RUNTIME:
                 continue
 
-            result = match(pattern=r'(?P<length>\d+)(?P<unit>\w+)', string=tag.find_next('td').text.strip())
+            result = match(pattern=r'(?P<runtime>\d+)(?P<unit>\w+)', string=tag.find_next('td').text.strip())
             if result:
-                return int(result.groupdict()['length'])
+                return int(result.groupdict()['runtime'])
         return None
 
     def get_director(self, soup: BeautifulSoup) -> Optional[str]:

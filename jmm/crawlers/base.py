@@ -12,7 +12,7 @@ from jmm.utilities.functions import format_string
 from jmm.utilities.metadata import Video
 from jmm.utilities.metadata import Star
 
-ALL_FIELDS: List[str] = ['fanart', 'poster', 'keywords', 'title', 'release_date', 'length', 'number', 'director', 'series', 'studio', 'outline', 'stars']
+ALL_FIELDS: List[str] = ['fanart', 'poster', 'keywords', 'title', 'release_date', 'runtime', 'number', 'director', 'series', 'studio', 'outline', 'stars']
 
 class MetaClass(type):
     def __init__(cls, *args: Any, **kwargs: Any):
@@ -47,7 +47,7 @@ class Base(Session, metaclass=MetaClass):
             keywords=[item for item in (format_string(keyword) for keyword in self.get_keywords(soup)) if item is not None],
             title=format_string(self.get_title(soup)),
             release_date=self.get_release_date(soup),
-            length=self.get_length(soup),
+            runtime=self.get_runtime(soup),
             number=format_string(self.get_number(soup) or number),
             director=format_string(self.get_director(soup)),
             series=format_string(self.get_series(soup)),
@@ -113,7 +113,7 @@ class Base(Session, metaclass=MetaClass):
         """
         return None  # pragma: no cover
 
-    def get_length(self, soup: BeautifulSoup) -> Optional[int]:  # pylint: disable = unused-argument, no-self-use
+    def get_runtime(self, soup: BeautifulSoup) -> Optional[int]:  # pylint: disable = unused-argument, no-self-use
         """
         从影片页面 :py:obj:`soup` 中获影片的时长, 单位(分钟).
 

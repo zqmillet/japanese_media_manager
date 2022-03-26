@@ -6,7 +6,7 @@ from jmm.crawlers import JavdbCrawler
 
 @pytest.mark.skipif(sys.platform != 'darwin', reason='this testcase is passed only in macos')
 @pytest.mark.parametrize(
-    'number, keywords, title, release_date, length, director, series, studio, stars', [
+    'number, keywords, title, release_date, runtime, director, series, studio, stars', [
         (
             'star-325',
             ['中出', '單體作品', '潮吹', '藝人', '女檢察官'],
@@ -84,14 +84,14 @@ from jmm.crawlers import JavdbCrawler
         )
     ]
 )
-def test_javdb_metadata(number, keywords, title, release_date, length, director, series, studio, stars):
+def test_javdb_metadata(number, keywords, title, release_date, runtime, director, series, studio, stars):
     crawler = JavdbCrawler()
     metadata = crawler.get_metadata(number)
 
     assert metadata.title == title
     assert metadata.keywords == keywords
     assert metadata.release_date == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
-    assert metadata.length == length
+    assert metadata.runtime == runtime
     assert metadata.number == number.upper()
     assert metadata.director == director
     assert metadata.series == series
@@ -115,7 +115,7 @@ def test_metadata_with_nonexistent_number(number):
     assert metadata.title is None
     assert metadata.release_date is None
     assert metadata.director is None
-    assert metadata.length is None
+    assert metadata.runtime is None
     assert metadata.number == number
     assert metadata.series is None
     assert metadata.studio is None

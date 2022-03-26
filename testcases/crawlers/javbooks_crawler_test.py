@@ -13,7 +13,7 @@ from jmm.crawlers import JavBooksCrawler
                 'keywords': ['潮吹', '偶像艺人', '中出', '女检察官', '单体作品'],
                 'title': '美人潜入捜査官 羽田あい',
                 'release_date': datetime.date(2012, 1, 8),
-                'length': 120,
+                'runtime': 120,
                 'number': 'STAR-325',
                 'director': '本田教仁',
                 'series': '美人潜入捜査官',
@@ -29,7 +29,7 @@ from jmm.crawlers import JavBooksCrawler
                 'keywords': ['薄马赛克', '单体作品', '美少女', 'デカチン・巨根', '潮吹', '花痴', 'DMM独家', '高画质', 'キス・接吻'],
                 'title': '絶頂ポルチオ開発 巨根×膣中イキオーガズム 坂道みる',
                 'release_date': datetime.date(2018, 12, 29),
-                'length': 180,
+                'runtime': 180,
                 'number': 'SSNI-385',
                 'director': 'X',
                 'series': '絶頂ポルチオ開発 巨根×膣中イキオーガズム',
@@ -45,7 +45,7 @@ from jmm.crawlers import JavBooksCrawler
                 'keywords': ['高画质', '单体作品', '新娘、年轻妻子', '巨乳', 'DMM独家', '薄马赛克', '偶像艺人'],
                 'title': '義父に初めて犯されたあの日から… 三上悠亜',
                 'release_date': datetime.date(2018, 11, 17),
-                'length': 149,
+                'runtime': 149,
                 'number': 'SSNI-344',
                 'director': '紋℃',
                 'series': '高画质',
@@ -61,7 +61,7 @@ from jmm.crawlers import JavBooksCrawler
                 'keywords': ['故事集', '女同性恋', '恋腿癖', '姐姐', '0', 'DMM独家', '高画质'],
                 'title': 'ノーパンパンストレズビアン ～匂うつま先、テカる美脚のパンストマニアックス～',
                 'release_date': datetime.date(2022, 2, 26),
-                'length': 117,
+                'runtime': 117,
                 'number': 'AUKG-535',
                 'director': 'U＆K',
                 'series': '故事集',
@@ -87,7 +87,7 @@ def test_javbooks_crawler_test(proxies, number, metadata):
         'keywords': _metadata.keywords,
         'title': _metadata.title,
         'release_date': _metadata.release_date,
-        'length': _metadata.length,
+        'runtime': _metadata.runtime,
         'number': _metadata.number,
         'director': _metadata.director,
         'series': _metadata.series,
@@ -108,7 +108,7 @@ def test_nonexistent_number(proxies, number):
     assert not metadata.stars
     assert metadata.title is None
     assert metadata.release_date is None
-    assert metadata.length is None
+    assert metadata.runtime is None
     assert metadata.number == number
     assert metadata.director is None
     assert metadata.series is None

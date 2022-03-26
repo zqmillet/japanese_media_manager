@@ -11,7 +11,7 @@ from .base import Base
 class TAG:
     NUMBER = '识别码:'
     RELEASE_DATE = '发行时间:'
-    LENGTH = '长度:'
+    RUNTIME = '长度:'
     STUDIO = '制作商:'
     KEYWORDS = '类别:'
     SERIES = '系列:'
@@ -73,9 +73,9 @@ class AvsoxCrawler(Base):
                 return datetime.strptime(tag.next.next.strip(), '%Y-%m-%d').date()
         return None
 
-    def get_length(self, soup: BeautifulSoup) -> Optional[int]:
+    def get_runtime(self, soup: BeautifulSoup) -> Optional[int]:
         for tag in soup.find_all('span', 'header'):
-            if tag.text == TAG.LENGTH:
+            if tag.text == TAG.RUNTIME:
                 result = match(pattern=r'(?P<number>\d+)(?P<unit>\w+)', string=tag.next.next.strip())
                 if result:
                     return int(result.groupdict()['number'])

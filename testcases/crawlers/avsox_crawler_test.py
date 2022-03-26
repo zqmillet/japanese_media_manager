@@ -4,7 +4,7 @@ import pytest
 from jmm.crawlers import AvsoxCrawler
 
 @pytest.mark.parametrize(
-    'number, release_date, length, studio, title, keywords, stars, series', [
+    'number, release_date, runtime, studio, title, keywords, stars, series', [
         (
             'Jukujo2474',
             '2022-02-05',
@@ -77,13 +77,13 @@ from jmm.crawlers import AvsoxCrawler
         ),
     ]
 )
-def test_avsox_metadata(number, release_date, length, studio, title, keywords, stars, series, proxies):
+def test_avsox_metadata(number, release_date, runtime, studio, title, keywords, stars, series, proxies):
     crawler = AvsoxCrawler(proxies=proxies, verify=False)
     metadata = crawler.get_metadata(number)
 
     assert metadata.number == number
     assert metadata.release_date == datetime.datetime.strptime(release_date, '%Y-%m-%d').date()
-    assert metadata.length == length
+    assert metadata.runtime == runtime
     assert metadata.studio == studio
     assert metadata.title == title
     assert metadata.keywords == keywords
@@ -102,7 +102,7 @@ def test_avsox_metadata_with_nonexistent_number(number, proxies):
 
     assert metadata.number == number
     assert metadata.release_date is None
-    assert metadata.length is None
+    assert metadata.runtime is None
     assert metadata.studio is None
     assert metadata.title is None
     assert metadata.series is None

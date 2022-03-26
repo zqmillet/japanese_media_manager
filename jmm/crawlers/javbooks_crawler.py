@@ -11,7 +11,7 @@ from .base import Base
 class TAG:
     KEYWORDS = '影片類別：'
     RELEASE_DATE = '發行時間：'
-    LENGTH = '影片時長：'
+    RUNTIME = '影片時長：'
     DIRECTOR = '導演：'
     STUDIO = '製作商：'
     SERIES = '系列：'
@@ -115,12 +115,12 @@ class JavBooksCrawler(Base):
                 )
         return [star for star in stars if star.avatar]
 
-    def get_length(self, soup: BeautifulSoup) -> Optional[int]:
+    def get_runtime(self, soup: BeautifulSoup) -> Optional[int]:
         for tag in soup.find_all('div', 'infobox'):
-            if not tag.find_next('b').text.strip() == TAG.LENGTH:
+            if not tag.find_next('b').text.strip() == TAG.RUNTIME:
                 continue
 
-            result = match(r'\D*(?P<number>\d+)\D+', tag.text)
+            result = match(r'\D*(?P<runtime>\d+)\D+', tag.text)
             if result:
-                return int(result.groupdict()['number'])
+                return int(result.groupdict()['runtime'])
         return None
