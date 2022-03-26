@@ -6,6 +6,7 @@ from jmm.utilities.crawler_group import Router
 from jmm.utilities.crawler_group import Rule
 from jmm.utilities.crawler_group import CrawlerGroup
 from jmm.utilities.media_finder import MediaFinder
+from jmm.utilities.file_manager import FileManager
 from jmm.utilities.logger import Logger
 from jmm.crawlers import Base
 from jmm.utilities.configuration import Configuration
@@ -43,16 +44,27 @@ def get_media_finder(configuration: Configuration, input_directories: Optional[L
     media_finder.directories = input_directories or media_finder.directories
     return media_finder
 
-def scrape(input_directories: Optional[List[str]] = None, output_directory: Optional[str] = None) -> None:
+def get_file_manager(configuration: Configuration, destination_directory: Optional[str]) -> FileManager:
+    destination_directory = destination_directory or configuration.file_manager.destination_directory
+    mode = configuration.file_manager.mode
+    return FileManager(mode=mode, destination_directory=destination_directory)
+
+def scrape(input_directories: Optional[List[str]] = None, destination_directory: Optional[str] = None) -> None:
     configuration = get_configuration()
     router = get_router(configuration)
     logger = get_logger(configuration)
     media_finder = get_media_finder(configuration, input_directories)
+    file_manager = get_file_manager(configuration, destination_directory)
 
     for file_information in media_finder:
         number = file_information.number
         if not number:
             logger.warning('cannot find number from file name %s', file_information.file_path)
             continue
-        print(router.get_metadata(number))
-        print(output_directory)
+        video = router.get_metadata(number)
+        if not video:
+            logger.warning('cannot find metadata of the number %s', number)
+            continue
+
+        print(video)
+        file_manager.manager(file_information, video)

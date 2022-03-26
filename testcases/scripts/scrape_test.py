@@ -1,11 +1,20 @@
+import os
+import shutil
 import yaml
 import pytest
 
 from jmm.scripts.scrape import scrape
 from jmm.scripts.constants import custom_configuration_path
 
+@pytest.fixture(name='destination_directory', scope='function')
+def _output_directory():
+    destination_directory = 'destination_directory'
+    os.makedirs(destination_directory, exist_ok=True)
+    yield destination_directory
+    shutil.rmtree(destination_directory)
+
 @pytest.fixture(name='write_configuration', scope='function')
-def _write_configuration(proxies, directory):
+def _write_configuration(proxies, directory, destination_directory):
     configuration = {
         'crawlers': [
             {
@@ -33,6 +42,10 @@ def _write_configuration(proxies, directory):
         },
         'logger': {
             'name': 'jmm'
+        },
+        'file_manager': {
+            'destination_directory': destination_directory,
+            'mode': 'infuse'
         }
     }
 

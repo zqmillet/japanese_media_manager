@@ -11,6 +11,7 @@ from .crawler_configuration import CrawlerConfiguration
 from .routing_rule_configuration import RoutingRuleConfiguration
 from .media_finder_arguments import MediaFinderArguments
 from .logger_arguments import LoggerArguments
+from .file_manager_arguments import FileManagerArguments
 
 class Configuration(BaseModel):
     """
@@ -21,6 +22,7 @@ class Configuration(BaseModel):
     routing_rules: List[RoutingRuleConfiguration]
     media_finder: MediaFinderArguments
     logger: LoggerArguments
+    file_manager: FileManagerArguments
 
     @validator('crawlers')
     def _crawlers(cls, value: List[CrawlerConfiguration]) -> List[CrawlerConfiguration]:

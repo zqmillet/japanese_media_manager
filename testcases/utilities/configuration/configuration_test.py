@@ -31,8 +31,16 @@ def test_configuration():
             'recursively': True,
             'minimum_size': 0,
             'extensions': ['.mp4', '.mkv'],
+        },
+        'file_manager': {
+            'mode': 'infuse',
+            'destination_directory': 'output',
+        },
+        'logger': {
+            'name': 'jmm'
         }
     }
+
     configuration = Configuration(**data)
     assert configuration.crawlers[0].name == 'javbus'
     assert configuration.crawlers[1].name == 'javdb'

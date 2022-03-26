@@ -8,13 +8,6 @@ crawlers:
 routing_rules:
   - pattern: ".*"
     crawler_names: [javbus, javbooks, javdb]
-proxies:
-    http: None
-    https: None
-suffixes: [.mp4, .mkv, .wmv]
-translator:
-    app_id: None
-    app_key: None
 media_finder:
     directories: []
     recursively: true
@@ -23,3 +16,6 @@ media_finder:
 logger:
     name: jmm
     level: 0
+file_manager:
+    mode: infuse
+    destination_directory: output

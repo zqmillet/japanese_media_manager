@@ -22,7 +22,7 @@ class FileInformation:
         return self.file_path.name.lower().endswith('-c')
 
     def __repr__(self) -> str:
-        return f'<file {str(self.file_path)}, self.number, {self.has_chinese_subtitle}>'
+        return f'<file {str(self.file_path)}, {self.number}, {"with" if self.has_chinese_subtitle else "without"} subtitle>'
 
 class MediaFinder:
     def __init__(self, directories: List[str], recursively: bool = True, minimum_size: int = 0, extensions: Optional[List[str]] = None, logger: Logger = dumb):
