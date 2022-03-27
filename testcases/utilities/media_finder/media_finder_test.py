@@ -22,3 +22,6 @@ def test_media_finder(directory, file_paths):
 
     media_finder = MediaFinder(directories=[directory], recursively=False, extensions=['.mkv', '.mp4'], minimum_size=1)
     assert not list(media_finder)
+
+    for file_information in media_finder:
+        print(file_information)

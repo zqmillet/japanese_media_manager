@@ -12,6 +12,9 @@ from jmm.utilities.functions import is_url
         ('www.baidu.com', False),
         ('/www.baidu.com', False),
         ('/api/path', False),
+        ('None', False),
+        ('', False),
+        (1234, False),
     ]
 )
 def test_is_url(url, expected_output):
