@@ -8,13 +8,13 @@ from jmm.scripts.constants import custom_configuration_path
 
 @pytest.fixture(name='destination_directory', scope='function')
 def _output_directory():
-    destination_directory = 'destination_directory'
+    destination_directory = '/Volumes/Public/downloads/test'
     os.makedirs(destination_directory, exist_ok=True)
     yield destination_directory
     shutil.rmtree(destination_directory)
 
 @pytest.fixture(name='write_configuration', scope='function')
-def _write_configuration(proxies, directory, destination_directory):
+def _write_configuration(proxies, directory, destination_directory, app_id, app_key):
     configuration = {
         'crawlers': [
             {
@@ -27,11 +27,17 @@ def _write_configuration(proxies, directory, destination_directory):
                 'class': 'jmm.crawlers.JavBusCrawler',
                 'with': {'proxies': proxies.dict()}
             },
+            {
+                'name': 'airav',
+                'class': 'jmm.crawlers.AirAvCrawler',
+                'with': {'proxies': proxies.dict()}
+            },
+
         ],
         'routing_rules': [
             {
                 'pattern': '.+',
-                'crawler_names': ['javbooks', 'javbus']
+                'crawler_names': ['javbooks', 'javbus', 'airav']
             }
         ],
         'media_finder': {
@@ -46,6 +52,10 @@ def _write_configuration(proxies, directory, destination_directory):
         'file_manager': {
             'destination_directory': destination_directory,
             'mode': 'infuse'
+        },
+        'translator': {
+            'app_id': app_id,
+            'app_key': app_key
         }
     }
 
@@ -57,3 +67,4 @@ def _write_configuration(proxies, directory, destination_directory):
 @pytest.mark.usefixtures('protect_custom_config_file')
 def test_scrape():
     scrape()
+    import pdb; pdb.set_trace()

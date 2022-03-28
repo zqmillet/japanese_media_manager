@@ -19,3 +19,6 @@ logger:
 file_manager:
     mode: infuse
     destination_directory: output
+translator:
+    app_id: None
+    app_key: None

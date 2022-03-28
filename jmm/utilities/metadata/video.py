@@ -39,7 +39,7 @@ class Video:
         self.studio = studio
         self.stars = stars or []
         self.fanart = fanart
-        self.poster = poster
+        self.poster = poster or self.get_poster_from_fanart(fanart)
 
     def __add__(self, other: Video) -> Video:
         return Video(
@@ -56,6 +56,13 @@ class Video:
             fanart=self.fanart or other.fanart,
             poster=self.poster or other.poster,
         )
+
+    @staticmethod
+    def get_poster_from_fanart(fanart: Optional[JpegImageFile]) -> Optional[JpegImageFile]:
+        if not fanart:
+            return None
+        width, height = fanart.size
+        return fanart.crop((width - height // 1.42, 0, width, height))
 
     @staticmethod
     def image_to_ascii(image: Optional[JpegImageFile], columns: int, line_indent: int, prefix: str = '\n') -> str:
