@@ -64,6 +64,7 @@ def scrape(input_directories: Optional[List[str]] = None, destination_directory:
     file_manager = get_file_manager(configuration, destination_directory, translator)
 
     for file_information in media_finder:
+        import pdb; pdb.set_trace()
         logger.info('processing the media %s', file_information.file_path)
         number = file_information.number
         if not number:

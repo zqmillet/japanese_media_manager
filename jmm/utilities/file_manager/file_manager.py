@@ -49,32 +49,47 @@ class FileManager:
             return text
 
     def get_xml_string(self, video: Video) -> str:
+        # movie = Element('media', attrib={'type': 'movie'})
+        # SubElement(movie, 'title').text = video.title
+        # SubElement(movie, 'description').text = self.translate(video.outline)
+        # SubElement(movie, 'published').text = video.release_date.strftime('%Y-%m-%d') if video.release_date else None
+        # genres = SubElement(movie, 'genres')
+        # for keyword in video.keywords:
+        #     SubElement(genres, 'genre').text = keyword
+
+        # cast = SubElement(movie, 'cast')
+        # for star in video.stars:
+        #     SubElement(cast, 'name').text = star.name
+
+        # SubElement(SubElement(movie, 'producers'), 'name').text = video.studio
+        # SubElement(SubElement(movie, 'directors'), 'name').text = video.director
+
+
         movie = Element('movie')
         SubElement(movie, 'title').text = self.translate(video.title)
-        SubElement(movie, 'originaltitle').text = video.title
+        SubElement(movie, 'set').text = None
+        SubElement(movie, 'rating').text = str(0)
+        SubElement(movie, 'studio').text = video.studio
         SubElement(movie, 'year').text = str(video.release_date.year) if video.release_date else None
-        if video.outline:
-            print('>>>'*30, video.number)
-        SubElement(movie, 'plot').text = video.outline
+        # SubElement(movie, 'originaltitle').text = video.title
         SubElement(movie, 'outline').text = video.outline
+        SubElement(movie, 'plot').text = video.outline
         SubElement(movie, 'runtime').text = str(video.runtime) if video.runtime else None
         SubElement(movie, 'premiered').text = video.release_date.strftime('%Y-%m-%d') if video.release_date else None
         SubElement(movie, 'release').text = video.release_date.strftime('%Y-%m-%d') if video.release_date else None
-        SubElement(movie, 'studio').text = video.studio
         SubElement(movie, 'maker').text = video.studio
         SubElement(movie, 'director').text = video.director
         SubElement(movie, 'num').text = video.number
 
         for keyword in video.keywords:
             SubElement(movie, 'tag').text = keyword
-            SubElement(movie, 'genre').text = keyword
 
         for star in video.stars:
             actor = SubElement(movie, 'actor')
             SubElement(actor, 'name').text = star.name
             SubElement(actor, 'role').text = star.name
-            SubElement(actor, 'thumb').text = star.avatar_url
-            SubElement(actor, 'profile').text = star.avatar_url
-            SubElement(actor, 'tmdbid').text = star.avatar_url
+            SubElement(actor, 'thumb').text = 'https://image.tmdb.org/t/p/h632/6ci3wf6oecjz875QRwryOsapW0Y.jpg'
+            SubElement(actor, 'profile').text = 'https://www.themoviedb.org/person/24047'
+            SubElement(actor, 'tmdbid').text = str(24047)
 
         return minidom.parseString(tostring(movie, 'UTF-8')).toprettyxml(indent=' '*2)
