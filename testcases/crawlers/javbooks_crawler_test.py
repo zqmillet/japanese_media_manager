@@ -9,7 +9,6 @@ from jmm.crawlers import JavBooksCrawler
         (
             'star-325',
             {
-                'poster': None,
                 'keywords': ['潮吹', '偶像艺人', '中出', '女检察官', '单体作品'],
                 'title': '美人潜入捜査官 羽田あい',
                 'release_date': datetime.date(2012, 1, 8),
@@ -25,7 +24,6 @@ from jmm.crawlers import JavBooksCrawler
         (
             'SSNI-385',
             {
-                'poster': None,
                 'keywords': ['薄马赛克', '单体作品', '美少女', 'デカチン・巨根', '潮吹', '花痴', 'DMM独家', '高画质', 'キス・接吻'],
                 'title': '絶頂ポルチオ開発 巨根×膣中イキオーガズム 坂道みる',
                 'release_date': datetime.date(2018, 12, 29),
@@ -41,7 +39,6 @@ from jmm.crawlers import JavBooksCrawler
         (
             'SSNI-344',
             {
-                'poster': None,
                 'keywords': ['高画质', '单体作品', '新娘、年轻妻子', '巨乳', 'DMM独家', '薄马赛克', '偶像艺人'],
                 'title': '義父に初めて犯されたあの日から… 三上悠亜',
                 'release_date': datetime.date(2018, 11, 17),
@@ -57,7 +54,6 @@ from jmm.crawlers import JavBooksCrawler
         (
             'AUKG-535',
             {
-                'poster': None,
                 'keywords': ['故事集', '女同性恋', '恋腿癖', '姐姐', '0', 'DMM独家', '高画质'],
                 'title': 'ノーパンパンストレズビアン ～匂うつま先、テカる美脚のパンストマニアックス～',
                 'release_date': datetime.date(2022, 2, 26),
@@ -84,7 +80,6 @@ def test_javbooks_crawler_test(proxies, number, metadata):
     assert isinstance(_metadata.fanart, PIL.JpegImagePlugin.JpegImageFile)
     assert isinstance(_metadata.poster, PIL.Image.Image)
     assert {
-        'poster': _metadata.poster,
         'keywords': _metadata.keywords,
         'title': _metadata.title,
         'release_date': _metadata.release_date,
