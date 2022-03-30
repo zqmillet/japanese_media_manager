@@ -50,7 +50,7 @@ def get_file_manager(configuration: Configuration, destination_directory: Option
     mode = configuration.file_manager.mode
     return FileManager(mode=mode, destination_directory=destination_directory, translator=translator)
 
-def get_translator(configuration: Configuration):
+def get_translator(configuration: Configuration) -> Optional[Translator]:
     if configuration.translator.app_id and configuration.translator.app_key:
         return Translator(**configuration.translator.dict())
     return None
@@ -64,7 +64,6 @@ def scrape(input_directories: Optional[List[str]] = None, destination_directory:
     file_manager = get_file_manager(configuration, destination_directory, translator)
 
     for file_information in media_finder:
-        import pdb; pdb.set_trace()
         logger.info('processing the media %s', file_information.file_path)
         number = file_information.number
         if not number:

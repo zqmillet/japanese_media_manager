@@ -15,7 +15,7 @@ from .star import Star
 class Video:
     def __init__(
         self,
-        number: Optional[str] = None,
+        number: str = '',
         title: Optional[str] = None,
         outline: Optional[str] = None,
         keywords: List[str] = None,

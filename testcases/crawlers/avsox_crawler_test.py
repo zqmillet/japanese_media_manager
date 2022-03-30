@@ -89,7 +89,7 @@ def test_avsox_metadata(number, release_date, runtime, studio, title, keywords, 
     assert metadata.keywords == keywords
     assert metadata.series == series
     assert metadata.fanart is not None
-    assert metadata.poster is None
+    assert metadata.poster is not None
     assert [{'name': star.name, 'avatar_url': star.avatar_url} for star in metadata.stars] == stars
     print(metadata)
     for star in metadata.stars:

@@ -97,7 +97,7 @@ def test_javdb_metadata(number, keywords, title, release_date, runtime, director
     assert metadata.series == series
     assert metadata.studio == studio
     assert metadata.fanart is not None
-    assert metadata.poster is None
+    assert metadata.poster is not None
     assert metadata.outline is None
     assert [{'name': star.name, 'avatar_url': star.avatar_url} for star in metadata.stars] == stars
     for star in metadata.stars:

@@ -67,4 +67,3 @@ def _write_configuration(proxies, directory, destination_directory, app_id, app_
 @pytest.mark.usefixtures('protect_custom_config_file')
 def test_scrape():
     scrape()
-    import pdb; pdb.set_trace()
