@@ -82,7 +82,7 @@ def test_javbooks_crawler_test(proxies, number, metadata):
     crawler = JavBooksCrawler(proxies=proxies)
     _metadata = crawler.get_metadata(number)
     assert isinstance(_metadata.fanart, PIL.JpegImagePlugin.JpegImageFile)
-    assert isinstance(_metadata.poster, PIL.JpegImagePlugin.JpegImageFile)
+    assert isinstance(_metadata.poster, PIL.Image.Image)
     assert {
         'poster': _metadata.poster,
         'keywords': _metadata.keywords,
