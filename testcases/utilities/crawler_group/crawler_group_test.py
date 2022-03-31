@@ -32,7 +32,6 @@ def test_crawlers_warning(logger, arzon, avsox, javbus):
     'number, metadata, messages', [
         (
             'star-325', {
-                'poster': None,
                 'keywords': ['STAR-325', 'SODクリエイト', '美人潜入捜査官', 'DVD多士爐', '女檢察官', '潮吹', '偶像藝人', '單體作品', '中出'],
                 'title': 'STAR-325 美人潜入捜査官 羽田あい',
                 'release_date': datetime.date(2012, 1, 8),
@@ -57,7 +56,6 @@ def test_crawlers_warning(logger, arzon, avsox, javbus):
         ),
         (
             'ssni-201', {
-                'poster': None,
                 'keywords': ['SSNI-201', 'S1NO.1STYLE', '校服', '巨乳', '單體作品', 'DMM獨家', '深喉', '凌辱', '薄馬賽克', '高畫質'],
                 'title': 'SSNI-201 全員悪人レ○プ学園 鈴木心春 「もう誰も信じられない…」純粋で真面目な生徒会長は同級生に犯され男性教師に凌辱レ○プされ女性教師にまで折檻責めされて-',
                 'release_date': datetime.date(2018, 5, 3),
@@ -83,7 +81,6 @@ def test_crawlers_warning(logger, arzon, avsox, javbus):
         ),
         (
             'hunta-007', {
-                'poster': None,
                 'keywords': ['HUNTA-007', 'Hunter（ソフトオンデマンド）', '多P', '企畫', '姐妹', '高畫質'],
                 'title': 'HUNTA-007 ヘタ過ぎる妹の彼氏に姉の私が直接SEX指導！私の可愛い妹（JK）が初めて家に彼氏を連れて来た。彼氏が真面目そうな子で安心したけど…思春期だし、部屋で2人きりになったらHな事をするに決まっている…。心配',
                 'release_date': datetime.date(2015, 5, 21),
@@ -115,7 +112,6 @@ def test_crawlers_warning(logger, arzon, avsox, javbus):
         ),
         (
             'rki-460', {
-                'poster': None,
                 'keywords': ['RKI-460', 'ROOKIE', '中出', '單體作品', 'DMM獨家', '口交', '美少女', '乳房', '女上位', '高畫質'],
                 'title': 'RKI-460 世界で一番エロく見える椎名そらの生々しいフェラチオと気持ち良すぎるSEX',
                 'release_date': datetime.date(2018, 3, 3),
@@ -146,7 +142,6 @@ def test_get_metadata(number, metadata, javbus, javdb, airav, logger, messages):
 
     assert isinstance(_metadata.fanart, PIL.JpegImagePlugin.JpegImageFile)
     assert {
-        'poster': _metadata.poster,
         'keywords': _metadata.keywords,
         'title': _metadata.title,
         'release_date': _metadata.release_date,
@@ -174,7 +169,6 @@ def test_get_metadata(number, metadata, javbus, javdb, airav, logger, messages):
                 ('warning', '1 field(s): stars are not crawled'),
             ],
             {
-                'poster': None,
                 'keywords': ['素人'],
                 'title': 'FC2-PPV-2608212 【個撮】都立チアダンス部② 色白剛毛な清楚美少女\u3000海外留学のために定期的に中出し',
                 'release_date': datetime.date(2022, 1, 20),
@@ -199,7 +193,6 @@ def test_get_metadata(number, metadata, javbus, javdb, airav, logger, messages):
                 ('warning', '1 field(s): series are not crawled'),
             ],
             {
-                'poster': None,
                 'keywords': ['素人'],
                 'title': '012222_01 経験人数がギリ二桁の絶倫娘を紹介してもらいました',
                 'release_date': datetime.date(2022, 1, 22),
@@ -220,7 +213,6 @@ def test_get_imcompleted_metadata(number, metadata, messages, avsox, javbus, log
 
     assert isinstance(_metadata.fanart, PIL.JpegImagePlugin.JpegImageFile)
     assert {
-        'poster': _metadata.poster,
         'keywords': _metadata.keywords,
         'title': _metadata.title,
         'release_date': _metadata.release_date,

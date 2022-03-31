@@ -11,7 +11,6 @@ from jmm.utilities.crawler_group import CrawlerGroup
         (
             'STAR-325',
             {
-                'poster': None,
                 'keywords': ['STAR-325', 'SODクリエイト', '美人潜入捜査官', 'DVD多士爐', '女檢察官', '潮吹', '偶像藝人', '單體作品', '中出'],
                 'title': 'STAR-325 美人潜入捜査官 羽田あい',
                 'release_date': datetime.date(2012, 1, 8),
@@ -27,7 +26,6 @@ from jmm.utilities.crawler_group import CrawlerGroup
         (
             'FC2-PPV-2698221',
             {
-                'poster': None,
                 'keywords': ['巨乳'],
                 'title': 'FC2-PPV-2698221 独占販売1本のおまけ動画あり【無修正ｘ個人撮影】巨乳タレ乳、ビラビラ乳首マンコに経産婦のだらしない体が激エロ過ぎる美人妻再び！流出してしまった動画をネタにホテルに連れ込んで、巨乳もみほぐし♪',
                 'release_date': datetime.date(2022, 3, 4),
@@ -50,7 +48,6 @@ def test_router(javbus, javdb, airav, avsox, logger, number, metadata):
     _metadata = router.get_metadata(number)
     assert isinstance(_metadata.fanart, PIL.JpegImagePlugin.JpegImageFile)
     assert {
-        'poster': _metadata.poster,
         'keywords': _metadata.keywords,
         'title': _metadata.title,
         'release_date': _metadata.release_date,

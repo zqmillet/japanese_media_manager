@@ -38,6 +38,10 @@ def test_configuration():
         },
         'logger': {
             'name': 'jmm'
+        },
+        'translator': {
+            'app_id': None,
+            'app_key': None
         }
     }
 
