@@ -29,7 +29,7 @@ class FileManager:
         move(file_information.file_path, join(directory, media_file_name))
 
         with open(join(directory, nfo_file_name), 'w', encoding='utf8') as file:
-            file.write(self.get_xml_string(video))
+            file.write(self.get_xml_string(file_information, video))
 
         if video.fanart:
             video.fanart.save(join(directory, fanart_file_name))
@@ -51,7 +51,7 @@ class FileManager:
         except TranslationException:
             return text
 
-    def get_xml_string(self, video: Video) -> str:
+    def get_xml_string(self, file_information: FileInformation, video: Video) -> str:
         movie = Element('movie')
         SubElement(movie, 'title').text = self.translate(video.title)
         SubElement(movie, 'set').text = None
