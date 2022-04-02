@@ -46,10 +46,11 @@ def main() -> None:
         help='specify directories which contain media, if this argument is not specified, scraper will read it from config file.'
     )
     scrape_parser.add_argument(
-        '-o', '--destination-directories',
+        '-o', '--destination-directory',
         action='store',
         type=str,
-        help='specify the destination directory'
+        help='specify the destination directory',
+        default=None
     )
 
     test_config_parser.add_argument(
