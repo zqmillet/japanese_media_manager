@@ -31,8 +31,8 @@ class MediaFinder:
         self.extensions: List[str] = list(map(lambda x: x.lower(), extensions or []))
         self.directories: List[str] = directories
         self.recursively: bool = recursively
-        self.progress_bar = tqdm(total=len(self.media_paths))
         self.minimum_size = minimum_size
+        self.progress_bar = tqdm()
 
     def __iter__(self) -> MediaFinder:
         for directory in self.directories:

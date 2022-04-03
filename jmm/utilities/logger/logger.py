@@ -1,9 +1,19 @@
 from logging import Logger as BaseLogger
 from logging import DEBUG
-from logging import StreamHandler
+from logging import Handler
 from logging import FileHandler
 from logging import Formatter
 from typing import Optional
+from tqdm import tqdm
+
+class StreamHandler(Handler):
+    def emit(self, record):
+        try:
+            message = self.format(record)
+            tqdm.write(message)
+            self.flush()
+        except:
+            self.handleError(record)
 
 class Logger(BaseLogger):
     """
