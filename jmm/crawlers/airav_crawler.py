@@ -64,7 +64,10 @@ class AirAvCrawler(Base):
                 result = match(r'發片日期\：(?P<release_date>.+)', item.text)
                 if not result:
                     continue
-                return datetime.strptime(result.groupdict()['release_date'], '%Y-%m-%d').date()
+                try:
+                    return datetime.strptime(result.groupdict()['release_date'], '%Y-%m-%d').date()
+                except ValueError:
+                    continue
         return None
 
     def get_fanart(self, soup: BeautifulSoup) -> Optional[Image]:

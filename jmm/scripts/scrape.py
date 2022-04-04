@@ -1,17 +1,19 @@
 from typing import Optional
 from typing import Dict
 from typing import List
+from rich.progress import track
 
 from jmm.utilities.crawler_group import Router
 from jmm.utilities.crawler_group import Rule
 from jmm.utilities.crawler_group import CrawlerGroup
-from jmm.utilities.media_finder import MediaFinder
 from jmm.utilities.file_manager import FileManager
 from jmm.utilities.translator import Translator
 from jmm.utilities.logger import Logger
 from jmm.crawlers import Base
 from jmm.utilities.configuration import Configuration
 from jmm.utilities.configuration import CrawlerArguments
+from jmm.utilities.functions import get_file_paths
+from jmm.utilities.file_information import FileInformation
 
 from .get_configuration import get_configuration
 
@@ -40,10 +42,10 @@ def get_router(configuration: Configuration) -> Router:
 def get_logger(configuration: Configuration) -> Logger:
     return Logger(**configuration.logger.dict())
 
-def get_media_finder(configuration: Configuration, input_directories: Optional[List[str]]) -> MediaFinder:
-    media_finder = MediaFinder(**configuration.media_finder.dict())
-    media_finder.directories = input_directories or media_finder.directories
-    return media_finder
+def get_file_informations(configuration: Configuration, input_directories: Optional[List[str]]) -> List[FileInformation]:
+    arguments = configuration.media_finder.dict()
+    arguments['directories'] = input_directories or arguments['directories']
+    return list(map(FileInformation, get_file_paths(**arguments)))
 
 def get_file_manager(configuration: Configuration, destination_directory: Optional[str], translator: Optional[Translator]) -> FileManager:
     destination_directory = destination_directory or configuration.file_manager.destination_directory
@@ -59,11 +61,11 @@ def scrape(input_directories: Optional[List[str]] = None, destination_directory:
     configuration = get_configuration()
     router = get_router(configuration)
     logger = get_logger(configuration)
-    media_finder = get_media_finder(configuration, input_directories)
     translator = get_translator(configuration)
     file_manager = get_file_manager(configuration, destination_directory, translator)
+    file_informations = get_file_informations(configuration, input_directories)
 
-    for file_information in media_finder.get_file_informations():
+    for file_information in track(file_informations):
         logger.info('processing the media %s', file_information.file_path)
         number = file_information.number
         if not number:

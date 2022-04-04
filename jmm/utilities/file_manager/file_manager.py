@@ -8,7 +8,7 @@ from xml.etree.ElementTree import SubElement
 from xml.dom import minidom
 
 from jmm.utilities.metadata import Video
-from jmm.utilities.media_finder import FileInformation
+from jmm.utilities.file_information import FileInformation
 from jmm.utilities.translator import Translator
 from jmm.utilities.translator import TranslationException
 
