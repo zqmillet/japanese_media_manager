@@ -63,7 +63,7 @@ def scrape(input_directories: Optional[List[str]] = None, destination_directory:
     translator = get_translator(configuration)
     file_manager = get_file_manager(configuration, destination_directory, translator)
 
-    for file_information in media_finder:
+    for file_information in media_finder.get_file_informations():
         logger.info('processing the media %s', file_information.file_path)
         number = file_information.number
         if not number:
