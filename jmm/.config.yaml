@@ -18,7 +18,7 @@ logger:
     level: 0
 file_manager:
     mode: infuse
-    destination_directory: output
+    file_path_pattern: './{number}/{number}{subtitle}{suffix}'
 translator:
     app_id: None
     app_key: None

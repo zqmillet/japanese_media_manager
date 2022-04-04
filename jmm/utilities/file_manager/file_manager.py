@@ -1,7 +1,6 @@
-from os.path import join
-from os import makedirs
 from shutil import move
 from typing import Optional
+from pathlib import Path
 from xml.etree.ElementTree import tostring
 from xml.etree.ElementTree import Element
 from xml.etree.ElementTree import SubElement
@@ -13,31 +12,39 @@ from jmm.utilities.translator import Translator
 from jmm.utilities.translator import TranslationException
 
 class FileManager:
-    def __init__(self, destination_directory: str, mode: str, translator: Optional[Translator] = None):
+    def __init__(self, file_path_pattern: str, mode: str, translator: Optional[Translator] = None):
         self.mode = mode
-        self.destination_directory = destination_directory
+        self.file_path_pattern = file_path_pattern
         self.translator = translator
 
-    def manager(self, file_information: FileInformation, video: Video) -> str:
-        directory = join(self.destination_directory, video.number)
-        media_file_name = f'{video.number}{file_information.file_path.suffix}'
-        nfo_file_name = f'{video.number}.nfo'
-        fanart_file_name = f'{video.number}-fanart.jpg'
-        poster_file_name = f'{video.number}-poster.jpg'
+    def manager(self, file_information: FileInformation, video: Video) -> Path:
+        format_arguments = {
+            'suffix': file_information.file_path.suffix,
+            'number': video.number.upper(),
+            'star': video.stars[0].name if video.stars else 'unknown',
+            'subtitle': '-C' if file_information.has_chinese_subtitle else '',
+            'series': video.series or 'unknown',
+            'studio': video.studio or 'unknown'
+        }
 
-        makedirs(directory, exist_ok=True)
-        move(file_information.file_path, join(directory, media_file_name))
+        media_file_path = Path(self.file_path_pattern.format(**format_arguments))
+        fanart_file_path = media_file_path.with_name(media_file_path.stem + '-fanart').with_suffix('.jpg')
+        poster_file_path = media_file_path.with_name(media_file_path.stem + '-poster').with_suffix('.jpg')
+        nfo_file_path = media_file_path.with_suffix('.nfo')
 
-        with open(join(directory, nfo_file_name), 'w', encoding='utf8') as file:
-            file.write(self.get_xml_string(file_information, video))
+        media_file_path.parent.mkdir(exist_ok=True, parents=True)
+        move(file_information.file_path, media_file_path)
+
+        with open(nfo_file_path, 'w', encoding='utf8') as file:
+            file.write(self.get_xml_string(video))
 
         if video.fanart:
-            video.fanart.save(join(directory, fanart_file_name))
+            video.fanart.save(fanart_file_path)
 
         if video.poster:
-            video.poster.save(join(directory, poster_file_name))
+            video.poster.save(poster_file_path)
 
-        return directory
+        return media_file_path
 
     def translate(self, text: Optional[str]) -> str:
         if text is None:
@@ -51,7 +58,7 @@ class FileManager:
         except TranslationException:
             return text
 
-    def get_xml_string(self, file_information: FileInformation, video: Video) -> str:
+    def get_xml_string(self, video: Video) -> str:
         movie = Element('movie')
         SubElement(movie, 'title').text = self.translate(video.title)
         SubElement(movie, 'set').text = None

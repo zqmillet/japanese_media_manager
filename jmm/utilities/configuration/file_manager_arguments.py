@@ -3,4 +3,4 @@ from pydantic import StrictStr
 
 class FileManagerArguments(BaseModel):
     mode: StrictStr
-    destination_directory: StrictStr
+    file_path_pattern: StrictStr

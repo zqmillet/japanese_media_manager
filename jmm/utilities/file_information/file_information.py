@@ -13,7 +13,11 @@ class FileInformation:
 
     @property
     def has_chinese_subtitle(self) -> bool:
-        return self.file_path.name.lower().endswith('-c')
+        if self.file_path.stem.lower().endswith('-c'):
+            return True
+        if self.file_path.stem.lower().endswith('_c'):
+            return True
+        return False
 
     def __repr__(self) -> str:
         return f'<file {str(self.file_path)}, {self.number}, {"with" if self.has_chinese_subtitle else "without"} subtitle>'

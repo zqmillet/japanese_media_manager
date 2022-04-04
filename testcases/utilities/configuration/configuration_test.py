@@ -34,7 +34,7 @@ def test_configuration():
         },
         'file_manager': {
             'mode': 'infuse',
-            'destination_directory': 'output',
+            'file_path_pattern': 'output',
         },
         'logger': {
             'name': 'jmm'

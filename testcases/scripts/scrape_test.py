@@ -50,7 +50,7 @@ def _write_configuration(proxies, directory, destination_directory, app_id, app_
             'name': 'jmm'
         },
         'file_manager': {
-            'destination_directory': destination_directory,
+            'file_path_pattern': destination_directory + '/{star}/{number}/{number}{subtitle}{suffix}',
             'mode': 'infuse'
         },
         'translator': {

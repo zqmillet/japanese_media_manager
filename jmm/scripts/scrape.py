@@ -47,10 +47,10 @@ def get_file_informations(configuration: Configuration, input_directories: Optio
     arguments['directories'] = input_directories or arguments['directories']
     return list(map(FileInformation, get_file_paths(**arguments)))
 
-def get_file_manager(configuration: Configuration, destination_directory: Optional[str], translator: Optional[Translator]) -> FileManager:
-    destination_directory = destination_directory or configuration.file_manager.destination_directory
+def get_file_manager(configuration: Configuration, file_path_pattern: Optional[str], translator: Optional[Translator]) -> FileManager:
+    file_path_pattern = file_path_pattern or configuration.file_manager.file_path_pattern
     mode = configuration.file_manager.mode
-    return FileManager(mode=mode, destination_directory=destination_directory, translator=translator)
+    return FileManager(mode=mode, file_path_pattern=file_path_pattern, translator=translator)
 
 def get_translator(configuration: Configuration) -> Optional[Translator]:
     if configuration.translator.app_id and configuration.translator.app_key:
