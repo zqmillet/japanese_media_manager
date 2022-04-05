@@ -16,5 +16,5 @@ class CrawlerArguments(BaseModel, extra=Extra.forbid):
     retries: int = Field(default=3, ge=0)
     verify: bool = False
 
-    def dict(self, *args: Any, **kwargs: Any) -> Dict[str, Any]:  # pylint: disable=unused-argument
+    def dict(self, *_: Any, **__: Any) -> Dict[str, Any]:
         return {key: value for key, value in self._iter() if value is not None}

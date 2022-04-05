@@ -5,6 +5,8 @@ import pytest
 @pytest.fixture(name='file_paths', scope='function')
 def _file_paths(directory):
     data = [
+        ['IPX.mp4'],
+        ['gouliguojiashengsiyi-1926.mp4'],
         ['IPX-486_C.mp4'],
         ['IPX-643_C.mp4'],
         ['MIDE-876.mp4'],

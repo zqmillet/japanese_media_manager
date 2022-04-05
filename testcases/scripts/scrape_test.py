@@ -13,9 +13,9 @@ def _output_directory():
     yield destination_directory
     shutil.rmtree(destination_directory)
 
-@pytest.fixture(name='write_configuration', scope='function')
-def _write_configuration(proxies, directory, destination_directory, app_id, app_key):
-    configuration = {
+@pytest.fixture(name='configuration', scope='function')
+def _configuration(proxies, directory, destination_directory, app_id, app_key):
+    return {
         'crawlers': [
             {
                 'name': 'javbooks',
@@ -59,11 +59,31 @@ def _write_configuration(proxies, directory, destination_directory, app_id, app_
         }
     }
 
+@pytest.fixture(name='configuration_without_translator', scope='function')
+def _configuration_without_translator(configuration):
+    return {**configuration, 'translator': {'app_id': None, 'app_key': None}}
+
+@pytest.fixture(name='write_configuration', scope='function')
+def _write_configuration(configuration):
     with open(custom_configuration_path, 'w', encoding='utf8') as file:
         file.write(yaml.safe_dump(configuration))
+
+@pytest.fixture(name='write_configuration_without_translator', scope='function')
+def _write_configuration_without_translator(configuration_without_translator):
+    with open(custom_configuration_path, 'w', encoding='utf8') as file:
+        file.write(yaml.safe_dump(configuration_without_translator))
 
 @pytest.mark.usefixtures('write_configuration')
 @pytest.mark.usefixtures('file_paths')
 @pytest.mark.usefixtures('protect_custom_config_file')
 def test_scrape():
+    scrape()
+
+@pytest.mark.usefixtures('write_configuration_without_translator')
+@pytest.mark.usefixtures('protect_custom_config_file')
+def test_scrape_without_translator(file_paths):
+    for index, file_path in enumerate(file_paths):
+        if index > 2:
+            os.remove(file_path)
+
     scrape()

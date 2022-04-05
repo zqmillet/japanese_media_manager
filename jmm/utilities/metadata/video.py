@@ -96,3 +96,6 @@ class Video:
             Video.image_to_ascii(self.fanart, max(console.width // 2, 80), line_indent=3),
             *(Video.image_to_ascii(star.avatar, max(console.width // 4, 40), line_indent=6) for star in self.stars)
         )
+
+    def __bool__(self) -> bool:
+        return any([self.title, self.outline, self.keywords, self.runtime, self.release_date, self.series, self.director, self.studio, self.stars, self.fanart, self.poster])

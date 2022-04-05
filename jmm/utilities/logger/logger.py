@@ -14,7 +14,7 @@ class StreamHandler(BaseStreamHandler):
             tqdm.write(message)
             self.flush()
         except Exception:  # pylint: disable=broad-except
-            self.handleError(record)
+            self.handleError(record)  # pragma: no cover
 
 class Logger(BaseLogger):
     """

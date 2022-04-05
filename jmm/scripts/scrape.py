@@ -68,9 +68,11 @@ def scrape(input_directories: Optional[List[str]] = None, destination_directory:
     for file_information in track(file_informations):
         logger.info('processing the media %s', file_information.file_path)
         number = file_information.number
+
         if not number:
             logger.warning('cannot find number from file name %s', file_information.file_path)
             continue
+
         video = router.get_metadata(number)
         if not video:
             logger.warning('cannot find metadata of the number %s', number)

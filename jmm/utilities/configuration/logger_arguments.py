@@ -11,5 +11,5 @@ class LoggerArguments(BaseModel):
     file_path: Optional[StrictStr]
     fmt: Optional[StrictStr]
 
-    def dict(self, *args: Any, **kwargs: Any) -> Dict[str, Any]:  # pylint: disable=unused-argument
+    def dict(self, *_: Any, **__: Any) -> Dict[str, Any]:
         return {key: value for key, value in self._iter() if value is not None}
