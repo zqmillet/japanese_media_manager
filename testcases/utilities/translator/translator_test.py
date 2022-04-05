@@ -30,10 +30,11 @@ def test_translator_with_wrong_app_id_and_app_key(text):
     assert str(information.value) == 'code: 52003, UNAUTHORIZED USER'
 
 @pytest.mark.skipif(sys.platform == 'linux', reason='in linux, the TranslationException will not be raised, i have no idea about it')
-def test_translator_with_hight_frequency(app_id, app_key):
+def test_translator_with_high_frequency(app_id, app_key):
     if not app_id or not app_key:
         pytest.skip()
 
+    time.sleep(2)
     translator = Translator(app_id, app_key)
     translator.translate('hello world')
 

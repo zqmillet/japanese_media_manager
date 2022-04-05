@@ -20,4 +20,4 @@ class FileInformation:
         return False
 
     def __repr__(self) -> str:
-        return f'<file {str(self.file_path)}, {self.number}, {"with" if self.has_chinese_subtitle else "without"} subtitle>'
+        return f'<file {str(self.file_path)}, {self.number}, {"with" if self.has_chinese_subtitle else "without"} subtitle>'  # pragma: no cover
