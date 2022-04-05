@@ -17,8 +17,8 @@ def test_translator(app_id, app_key, text, expected_text):
         pytest.skip()
 
     translator = Translator(app_id, app_key)
+    time.sleep(2)
     assert translator.translate(text) == expected_text
-    time.sleep(1)
 
 @pytest.mark.parametrize(
     'text', ['hello, world', 'gou li guo jia sheng si yi', 'qi yin huo fu bi qu zhi']
