@@ -8,7 +8,7 @@ from jmm.scripts.constants import custom_configuration_path
 
 @pytest.fixture(name='destination_directory', scope='function')
 def _output_directory():
-    destination_directory = '/Volumes/Public/downloads/test'
+    destination_directory = './test'
     os.makedirs(destination_directory, exist_ok=True)
     yield destination_directory
     shutil.rmtree(destination_directory)
