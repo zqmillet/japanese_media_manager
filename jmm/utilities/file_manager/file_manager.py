@@ -1,5 +1,12 @@
+from os import symlink
+from os import PathLike
+from shutil import copy
 from shutil import move
+from enum import Enum
 from typing import Optional
+from typing import Dict
+from typing import Callable
+from typing import Union
 from pathlib import Path
 from xml.etree.ElementTree import tostring
 from xml.etree.ElementTree import Element
@@ -11,11 +18,23 @@ from jmm.utilities.file_information import FileInformation
 from jmm.utilities.translator import Translator
 from jmm.utilities.translator import TranslationException
 
+class Mode(Enum):
+    COPY = 'copy'
+    MOVE = 'move'
+    LINK = 'link'
+
 class FileManager:
-    def __init__(self, file_path_pattern: str, mode: str, translator: Optional[Translator] = None):
+    actions: Dict[Mode, Callable[[Union[PathLike, str], Union[PathLike, str]], None]] = {
+        Mode.COPY: copy,
+        Mode.MOVE: move,
+        Mode.LINK: symlink
+    }
+
+    def __init__(self, file_path_pattern: str, mode: Mode = Mode.LINK, translator: Optional[Translator] = None):
         self.mode = mode
         self.file_path_pattern = file_path_pattern
         self.translator = translator
+        self.execute = FileManager.actions[mode]
 
     def manager(self, file_information: FileInformation, video: Video) -> Path:
         format_arguments = {
@@ -33,7 +52,7 @@ class FileManager:
         nfo_file_path = media_file_path.with_suffix('.nfo')
 
         media_file_path.parent.mkdir(exist_ok=True, parents=True)
-        move(file_information.file_path, media_file_path)
+        self.execute(file_information.file_path, media_file_path)
 
         with open(nfo_file_path, 'w', encoding='utf8') as file:
             file.write(self.get_xml_string(video))

@@ -51,7 +51,7 @@ def _configuration(proxies, directory, destination_directory, app_id, app_key):
         },
         'file_manager': {
             'file_path_pattern': destination_directory + '/{star}/{number}/{number}{subtitle}{suffix}',
-            'mode': 'infuse'
+            'mode': 'link'
         },
         'translator': {
             'app_id': app_id,

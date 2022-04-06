@@ -130,3 +130,5 @@ dmypy.json
 
 validations/*
 .DS_Store
+for_test/*
+test/*
