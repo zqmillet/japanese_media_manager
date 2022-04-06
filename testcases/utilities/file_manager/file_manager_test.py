@@ -26,5 +26,5 @@ def test_file_manager_translate(text, expected_output):
     ]
 )
 def test_file_manager_translate_with_translator(text, expected_output, translator):
-    file_manager = FileManager(file_path_pattern='{number}{suffix}', mode='infuse', translator=translator)
+    file_manager = FileManager(file_path_pattern='{number}{suffix}', mode='link', translator=translator)
     assert file_manager.translate(text) == expected_output

@@ -33,7 +33,7 @@ def test_configuration():
             'extensions': ['.mp4', '.mkv'],
         },
         'file_manager': {
-            'mode': 'infuse',
+            'mode': 'link',
             'file_path_pattern': 'output',
         },
         'logger': {

@@ -2,7 +2,6 @@ from typing import Optional
 from typing import Dict
 from typing import List
 from rich.progress import track
-from logging import Logger
 
 from jmm.utilities.crawler_group import Router
 from jmm.utilities.crawler_group import Rule
