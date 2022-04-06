@@ -12,7 +12,9 @@ from xml.etree.ElementTree import tostring
 from xml.etree.ElementTree import Element
 from xml.etree.ElementTree import SubElement
 from xml.dom import minidom
+from logging import Logger
 
+from jmm.utilities.logger import dumb
 from jmm.utilities.metadata import Video
 from jmm.utilities.file_information import FileInformation
 from jmm.utilities.translator import Translator
@@ -30,13 +32,14 @@ class FileManager:
         Mode.LINK: symlink
     }
 
-    def __init__(self, file_path_pattern: str, mode: Mode = Mode.LINK, translator: Optional[Translator] = None):
+    def __init__(self, file_path_pattern: str, mode: Mode = Mode.LINK, translator: Optional[Translator] = None, logger: Logger = dumb):
         self.mode = mode
         self.file_path_pattern = file_path_pattern
         self.translator = translator
         self.execute = FileManager.actions[mode]
+        self.logger = logger
 
-    def manager(self, file_information: FileInformation, video: Video) -> Path:
+    def manager(self, file_information: FileInformation, video: Video) -> Optional[Path]:
         format_arguments = {
             'suffix': file_information.file_path.suffix,
             'number': video.number.upper(),
@@ -52,7 +55,12 @@ class FileManager:
         nfo_file_path = media_file_path.with_suffix('.nfo')
 
         media_file_path.parent.mkdir(exist_ok=True, parents=True)
-        self.execute(file_information.file_path, media_file_path)
+
+        try:
+            self.execute(file_information.file_path, media_file_path)
+        except OSError as exception:
+            self.logger.warning(exception)
+            return None
 
         with open(nfo_file_path, 'w', encoding='utf8') as file:
             file.write(self.get_xml_string(video))
@@ -74,7 +82,8 @@ class FileManager:
 
         try:
             return self.translator.translate(text)
-        except TranslationException:
+        except TranslationException as exception:
+            self.logger.warning(exception)
             return text
 
     def get_xml_string(self, video: Video) -> str:

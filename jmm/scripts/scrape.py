@@ -2,6 +2,7 @@ from typing import Optional
 from typing import Dict
 from typing import List
 from rich.progress import track
+from logging import Logger
 
 from jmm.utilities.crawler_group import Router
 from jmm.utilities.crawler_group import Rule
@@ -47,10 +48,10 @@ def get_file_informations(configuration: Configuration, input_directories: Optio
     arguments['directories'] = input_directories or arguments['directories']
     return list(map(FileInformation, get_file_paths(**arguments)))
 
-def get_file_manager(configuration: Configuration, file_path_pattern: Optional[str], translator: Optional[Translator]) -> FileManager:
+def get_file_manager(configuration: Configuration, file_path_pattern: Optional[str], translator: Optional[Translator], logger: Logger) -> FileManager:
     file_path_pattern = file_path_pattern or configuration.file_manager.file_path_pattern
     mode = configuration.file_manager.mode
-    return FileManager(mode=mode, file_path_pattern=file_path_pattern, translator=translator)
+    return FileManager(mode=mode, file_path_pattern=file_path_pattern, translator=translator, logger=logger)
 
 def get_translator(configuration: Configuration) -> Optional[Translator]:
     if configuration.translator.app_id and configuration.translator.app_key:
@@ -62,7 +63,7 @@ def scrape(input_directories: Optional[List[str]] = None, destination_directory:
     router = get_router(configuration)
     logger = get_logger(configuration)
     translator = get_translator(configuration)
-    file_manager = get_file_manager(configuration, destination_directory, translator)
+    file_manager = get_file_manager(configuration, destination_directory, translator, logger)
     file_informations = get_file_informations(configuration, input_directories)
 
     for file_information in track(file_informations):
@@ -79,4 +80,5 @@ def scrape(input_directories: Optional[List[str]] = None, destination_directory:
             continue
 
         directory = file_manager.manager(file_information, video)
-        logger.info('media %s has been saved in %s', video.number, directory)
+        if directory:
+            logger.info('media %s has been saved in %s', video.number, directory)
