@@ -31,6 +31,11 @@ class FileManager:
         Mode.MOVE: move,
         Mode.LINK: symlink
     }
+    passive_verbs: Dict[Mode, str] = {
+        Mode.COPY: 'copied',
+        Mode.MOVE: 'moved',
+        Mode.LINK: 'linked'
+    }
 
     def __init__(self, file_path_pattern: str, mode: Mode = Mode.LINK, translator: Optional[Translator] = None, logger: Logger = dumb):
         self.mode = mode
@@ -61,15 +66,20 @@ class FileManager:
         except OSError as exception:
             self.logger.warning(exception)
             return None
+        else:
+            self.logger.info('media file %s has been %s to %s', file_information.file_path, FileManager.passive_verbs[self.mode], media_file_path)
 
         with open(nfo_file_path, 'w', encoding='utf8') as file:
             file.write(self.get_xml_string(video))
+            self.logger.info('media\'s nfo file has been saved in %s', nfo_file_path)
 
         if video.fanart:
             video.fanart.save(fanart_file_path)
+            self.logger.info('media\'s fanart has been saved in %s', fanart_file_path)
 
         if video.poster:
             video.poster.save(poster_file_path)
+            self.logger.info('media\'s poster has been saved in %s', poster_file_path)
 
         return media_file_path
 

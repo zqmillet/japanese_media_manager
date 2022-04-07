@@ -62,8 +62,12 @@ def scrape(input_directories: Optional[List[str]] = None, destination_directory:
     router = get_router(configuration)
     logger = get_logger(configuration)
     translator = get_translator(configuration)
+
     file_manager = get_file_manager(configuration, destination_directory, translator, logger)
+    logger.info('file manager, working in %s mode, %s translator is ready', file_manager.mode.value, 'with' if file_manager.translator else 'without')
+
     file_informations = get_file_informations(configuration, input_directories)
+    logger.info('there are %d media to be scraped', len(file_informations))
 
     for file_information in track(file_informations):
         logger.info('processing the media %s', file_information.file_path)
@@ -78,6 +82,4 @@ def scrape(input_directories: Optional[List[str]] = None, destination_directory:
             logger.warning('cannot find metadata of the number %s', number)
             continue
 
-        directory = file_manager.manager(file_information, video)
-        if directory:
-            logger.info('media %s has been saved in %s', video.number, directory)
+        file_manager.manager(file_information, video)
