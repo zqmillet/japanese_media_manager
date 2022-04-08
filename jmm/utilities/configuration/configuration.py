@@ -3,10 +3,6 @@ from pydantic import BaseModel
 from pydantic import validator
 from pydantic import Field
 
-from jmm.utilities.crawler_group import Router
-from jmm.utilities.crawler_group import Rule
-from jmm.utilities.crawler_group import CrawlerGroup
-
 from .crawler_configuration import CrawlerConfiguration
 from .routing_rule_configuration import RoutingRuleConfiguration
 from .media_finder_arguments import MediaFinderArguments
@@ -39,21 +35,3 @@ class Configuration(BaseModel):
         if not value:
             raise ValueError('routing_rules is empty')
         return value
-
-    @property
-    def router(self) -> Router:
-        crawler_map = {}
-        for crawler_configuration in self.crawlers:
-            crawler_map[crawler_configuration.name] = crawler_configuration.clazz(**crawler_configuration.arguments.dict())
-
-        rules = []
-        for routing_rule in self.routing_rules:
-            rules.append(
-                Rule(
-                    pattern=routing_rule.pattern,
-                    crawler_group=CrawlerGroup(
-                        crawlers=[crawler_map[crawler_name] for crawler_name in routing_rule.crawler_names]
-                    )
-                )
-            )
-        return Router(rules)

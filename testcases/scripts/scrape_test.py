@@ -20,19 +20,15 @@ def _configuration(proxies, directory, destination_directory, app_id, app_key):
             {
                 'name': 'javbooks',
                 'class': 'jmm.crawlers.JavBooksCrawler',
-                'with': {'proxies': proxies.dict()}
             },
             {
                 'name': 'javbus',
                 'class': 'jmm.crawlers.JavBusCrawler',
-                'with': {'proxies': proxies.dict()}
             },
             {
                 'name': 'airav',
                 'class': 'jmm.crawlers.AirAvCrawler',
-                'with': {'proxies': proxies.dict()}
             },
-
         ],
         'routing_rules': [
             {
@@ -56,7 +52,8 @@ def _configuration(proxies, directory, destination_directory, app_id, app_key):
         'translator': {
             'app_id': app_id,
             'app_key': app_key
-        }
+        },
+        'global_proxies': proxies.dict()
     }
 
 @pytest.fixture(name='configuration_without_translator', scope='function')

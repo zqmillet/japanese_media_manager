@@ -22,6 +22,8 @@ def get_crawlers(configuration: Configuration) -> Dict[str, Base]:
     for crawler_configuration in configuration.crawlers:
         arguments: CrawlerArguments = crawler_configuration.arguments
         name = crawler_configuration.name
+        if not arguments.proxies:
+            arguments.proxies = configuration.global_proxies
         crawlers[name] = crawler_configuration.clazz(**arguments.dict())
     return crawlers
 
