@@ -42,6 +42,10 @@ def test_configuration():
         'translator': {
             'app_id': None,
             'app_key': None
+        },
+        'global_proxies': {
+            'http': None,
+            'https': None,
         }
     }
 

@@ -13,6 +13,7 @@ from .media_finder_arguments import MediaFinderArguments
 from .logger_arguments import LoggerArguments
 from .file_manager_arguments import FileManagerArguments
 from .translator_arguments import TranslatorArguments
+from .proxies import Proxies
 
 class Configuration(BaseModel):
     """
@@ -25,6 +26,7 @@ class Configuration(BaseModel):
     logger: LoggerArguments
     file_manager: FileManagerArguments
     translator: TranslatorArguments
+    global_proxies: Proxies
 
     @validator('crawlers')
     def _crawlers(cls, value: List[CrawlerConfiguration]) -> List[CrawlerConfiguration]:
