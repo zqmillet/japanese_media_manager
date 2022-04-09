@@ -21,7 +21,7 @@ setup(
     install_requires=install_requires,
     entry_points={
         'console_scripts': [
-            'jmm=jmm.main:main',
+            'jmm=jmm.scripts.entry_point:main',
         ]
     }
 )

@@ -52,9 +52,11 @@ Japanese Media Manager (以下简称 jMM) 是一款用于刮削十一区多媒�
 pip install jmm
 ```
 
+安装好之后系统中增加 `jmm` 命令, 在控制台中输入 `jmm version`, 如果输出当前版本号, 则说明 jMM 安装成功.
+
 ### 使用方式
 
-本项目的用户手册托管于 [readthedocs](https://japanese-media-manager.readthedocs.io/zh_CN/latest/?badge=latest).
+本项目的用户手册托管于 [readthedocs.org](https://readthedocs.org/), 详细使用方式详见[此链接](https://japanese-media-manager.readthedocs.io/zh_CN/latest/?badge=latest).
 
 ## 如何贡献
 
@@ -63,7 +65,7 @@ pip install jmm
 - 报告 Bug;
 - 对代码进行 Review, 发现代码中的缺陷;
 - 对已有的 Bug 进行修复;
-- 为 jMM 添加新特性.
+- 为 jMM 添加新特性;
 - 维护 jMM 的代码.
 
 ## 版权说明
