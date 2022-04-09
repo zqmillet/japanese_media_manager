@@ -8,123 +8,76 @@
 [![codecov](https://codecov.io/gh/zqmillet/japanese_media_manager/branch/main/graph/badge.svg?token=XV3ZZ6JX15)](https://codecov.io/gh/zqmillet/japanese_media_manager)
 [![Documentation Status](https://readthedocs.org/projects/japanese-media-manager/badge/?version=latest)](https://japanese-media-manager.readthedocs.io/zh_CN/latest/?badge=latest)
 
-Japanese Media Manager (jMM) is a CLI tool for management of Japanese xxx media. The name of Japanese Media Manager pays tribute to tMM, which is short for tinyMediaManager.
+Japanese Media Manager (以下简称 jMM) 是一款用于刮削十一区多媒体的命令行工具.
 
-## Contents
+## 目录
 
 <!-- vim-markdown-toc GFM -->
 
-* [Supported Crawlers](#supported-crawlers)
-* [Getting Started](#getting-started)
-    * [Prerequisites](#prerequisites)
-    * [Installing](#installing)
-* [Running the tests](#running-the-tests)
-    * [unit tests](#unit-tests)
-    * [coding style tests](#coding-style-tests)
-* [Contributing](#contributing)
-* [License](#license)
-* [Acknowledgments](#acknowledgments)
+* [支持的在线数据库](#支持的在线数据库)
+* [快速开始](#快速开始)
+    * [环境需求](#环境需求)
+    * [安装](#安装)
+    * [使用方式](#使用方式)
+* [如何贡献](#如何贡献)
+* [版权说明](#版权说明)
+* [鸣谢](#鸣谢)
 * [ToDo](#todo)
 
 <!-- vim-markdown-toc -->
 
-## Supported Crawlers 
+## 支持的在线数据库
 
-| online database | crawler name | unit test |
+| 在线数据库 | 爬虫地址 | 单元测试 |
 | --- | --- | --- |
-| [JavBus](https://www.javbus.com/) | `JavBusCrawler` | ![javbus](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_javbus.yml/badge.svg) |
-| [JavBooks](https://jmvbt.com/) | `JavBooksCrawler` | ![javbooks](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_javbooks.yml/badge.svg) |
-| [JavDB](https://www.javdb36.com/) | `JavDBCrawler` | ![javdb](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_javdb.yml/badge.svg) |
-| [AirAV](https://cn.airav.wiki/) | `AirAVCrawler` | ![airav](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_airav.yml/badge.svg) |
-| [Arzon](https://www.arzon.jp/) | `ArzonCrawler` | ![arzon](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_arzon.yml/badge.svg) |
-| [Avsox](https://avsox.monster/) | `AvsoxCrawler` | ![avsox](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_avsox.yml/badge.svg) |
+| [JavBus](https://www.javbus.com/) | `jmm.crawlers.JavBusCrawler`   | ![javbus](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_javbus.yml/badge.svg)     |
+| [JavBooks](https://jmvbt.com/)    | `jmm.crawlers.JavBooksCrawler` | ![javbooks](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_javbooks.yml/badge.svg) |
+| [JavDB](https://www.javdb36.com/) | `jmm.crawlers.JavDBCrawler`    | ![javdb](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_javdb.yml/badge.svg)       |
+| [AirAV](https://cn.airav.wiki/)   | `jmm.crawlers.AirAVCrawler`    | ![airav](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_airav.yml/badge.svg)       |
+| [Arzon](https://www.arzon.jp/)    | `jmm.crawlers.ArzonCrawler`    | ![arzon](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_arzon.yml/badge.svg)       |
+| [Avsox](https://avsox.monster/)   | `jmm.crawlers.AvsoxCrawler`    | ![avsox](https://github.com/zqmillet/japanese_media_manager/actions/workflows/crawler_avsox.yml/badge.svg)       |
 
-## Getting Started
+## 快速开始
 
-### Prerequisites
+### 环境需求
 
-- System OS: Windows, Linux, MacOS[^1].
-- Python: 3.7+.
+- 操作系统: Windows, Linux, MacOS[^1].
+- Python: 3.7 以及 3.7 以上版本.
 
-### Installing
+### 安装
+
+在控制台中运行以下命令.
 
 ``` bash
 pip install jmm
 ```
 
-## Running the tests
+### 使用方式
 
-### unit tests
+本项目的用户手册托管于 [readthedocs](https://japanese-media-manager.readthedocs.io/zh_CN/latest/?badge=latest).
 
-If you want to run the tests, you need to install requirements first.
+## 如何贡献
 
-``` bash
-pip install -r testcases/requirements.txt
-```
+本项目是个人项目, 我非常欢迎大家对一起完善 jMM, 你可以通过以下方式为 jMM 添砖加瓦.
 
-Then run all tests by following command.
+- 报告 Bug;
+- 对代码进行 Review, 发现代码中的缺陷;
+- 对已有的 Bug 进行修复;
+- 为 jMM 添加新特性.
+- 维护 jMM 的代码.
 
-``` bash
-pytest --app-id <app_id> --app-key <app_key>
-```
+## 版权说明
 
-where:
+本项目签署了 MIT 授权许可, 详情请参阅 [LICENSE](LICENSE) 查看详细信息.
 
-- `<app_id>` is the APP ID of Baidu translation service[^2].
-- `<app_key>` is the APP Key of Baidu translation service.
+## 鸣谢
 
-If you does not specify the arguments `<app_id>` or `<app_key>`, the testcases about class `Translator` will be ignored.
-
-### coding style tests
-
-- pylint: you can check the quality of all code with [pylint](https://pylint.org/).
-
-  ``` bash
-  # pip install pylint
-  pylint japanese_media_manager testcases
-  ```
-
-- flake8: it is a wrapper around these tools:
-
-  - PyFlakes,
-  - pycodestyle,
-  - Ned Batchelder's McCabe script.
-
-  You can run [flake8](https://flake8.pycqa.org/en/latest/) check by following command.
-
-  ``` bash
-  # pip install flake8
-  flake8 japanese_media_manager testcases
-  ```
-
-- mypy: all code in directory `japanese_media_manager` observe [PEP 484](https://www.python.org/dev/peps/pep-0484/), you can use [mypy](http://mypy-lang.org/) to static type check.
-
-  ``` bash
-  # pip install mypy
-  python -m mypy japanese_media_manager
-  ```
-
-## Contributing
-
-I love your contribution! You can make contributing to this project as easy and transparent as possible, whether it's:
-
-- reporting a bug,
-- discussing the current state of the code,
-- submitting a fix,
-- proposing new features, or
-- becoming a maintainer.
-
-## License
-
-This project is licensed under the MIT License, see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-Thanks to [AVDC](https://github.com/moyy996/AVDC) and [Movie_Data_Capture](https://github.com/yoshiko2/Movie_Data_Capture). They are both excellent tools, and give a great inspiration to me. 
+本项目参考了 [AVDC](https://github.com/moyy996/AVDC) 以及 [Movie_Data_Capture](https://github.com/yoshiko2/Movie_Data_Capture). 它们是非常优秀的刮削工具, 给了我非常多的灵感.
 
 ## ToDo
 
 - [x] crawlers
+  - [x] base crawler
   - [x] javdb crawler
   - [x] javbus crawler
   - [x] javbooks crawler
@@ -151,5 +104,4 @@ Thanks to [AVDC](https://github.com/moyy996/AVDC) and [Movie_Data_Capture](https
   - [ ] framework
   - [x] source code
 
-[^1]: Theoretically, jMM can run on any OS, in which Python3 can be deployed. But, I just test jMM on these three OSs.
-[^2]: You need to regist Baidu account and request the service of translation, then you will get APP ID and APP Key.
+[^1]: 理论上, jMM 可以运行在任何可以执行 Python3 的才做系统, 我只在这 3 个系统中测试过 jMM, 其他系统不保证可以运行.
