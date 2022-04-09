@@ -1,8 +1,8 @@
 import os
 import shutil
+import pathlib
 import yaml
 import pytest
-import pathlib
 
 from jmm.scripts.scrape import scrape
 from jmm.scripts.constants import custom_configuration_path
