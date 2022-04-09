@@ -2,6 +2,7 @@ import os
 import shutil
 import yaml
 import pytest
+import pathlib
 
 from jmm.scripts.scrape import scrape
 from jmm.scripts.constants import custom_configuration_path
@@ -76,6 +77,10 @@ def _write_configuration_without_translator(configuration_without_translator):
 def test_scrape():
     scrape()
 
+    assert pathlib.Path('test/桃乃木かな/IPX-486/IPX-486-C.mp4').is_symlink()
+    assert not pathlib.Path('test/桃乃木かな/IPX-486/IPX-486-C-fanart.jpg').is_symlink()
+    assert not pathlib.Path('test/桃乃木かな/IPX-486/IPX-486-C-poster.jpg').is_symlink()
+
 @pytest.mark.usefixtures('write_configuration_without_translator')
 @pytest.mark.usefixtures('protect_custom_config_file')
 def test_scrape_without_translator(file_paths):
@@ -84,3 +89,6 @@ def test_scrape_without_translator(file_paths):
             os.remove(file_path)
 
     scrape()
+    assert pathlib.Path('test/桃乃木かな/IPX-486/IPX-486-C.mp4').is_symlink()
+    assert not pathlib.Path('test/桃乃木かな/IPX-486/IPX-486-C-fanart.jpg').is_symlink()
+    assert not pathlib.Path('test/桃乃木かな/IPX-486/IPX-486-C-poster.jpg').is_symlink()
