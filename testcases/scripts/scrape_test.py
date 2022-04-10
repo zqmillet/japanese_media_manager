@@ -14,6 +14,13 @@ def _output_directory():
     yield destination_directory
     shutil.rmtree(destination_directory)
 
+@pytest.fixture(name='other_destination_directory', scope='function')
+def _other_output_directory():
+    destination_directory = './other_test'
+    os.makedirs(destination_directory, exist_ok=True)
+    yield destination_directory
+    shutil.rmtree(destination_directory)
+
 @pytest.fixture(name='configuration_in_link_mode', scope='function')
 def _configuration_in_link_mode(proxies, directory, destination_directory, app_id, app_key):
     return {
@@ -102,7 +109,7 @@ def _write_configuration_in_move_mode(configuration_in_move_mode):
         file.write(yaml.safe_dump(configuration_in_move_mode))
 
 @pytest.mark.usefixtures('write_configuration_in_link_mode')
-@pytest.mark.usefixtures('file_paths')
+@pytest.mark.usefixtures('part_file_paths')
 @pytest.mark.usefixtures('protect_custom_config_file')
 def test_scrape_in_link_mode(directory):
     assert pathlib.Path(os.path.join(directory, 'IPX-486_C.mp4')).is_file()
@@ -115,7 +122,7 @@ def test_scrape_in_link_mode(directory):
     assert pathlib.Path(os.path.join(directory, 'IPX-486_C.mp4')).is_file()
 
 @pytest.mark.usefixtures('write_configuration_in_copy_mode')
-@pytest.mark.usefixtures('file_paths')
+@pytest.mark.usefixtures('part_file_paths')
 @pytest.mark.usefixtures('protect_custom_config_file')
 def test_scrape_in_copy_mode(directory):
     assert pathlib.Path(os.path.join(directory, 'IPX-486_C.mp4')).is_file()
@@ -129,7 +136,7 @@ def test_scrape_in_copy_mode(directory):
     assert pathlib.Path(os.path.join(directory, 'IPX-486_C.mp4')).is_file()
 
 @pytest.mark.usefixtures('write_configuration_in_move_mode')
-@pytest.mark.usefixtures('file_paths')
+@pytest.mark.usefixtures('part_file_paths')
 @pytest.mark.usefixtures('protect_custom_config_file')
 def test_scrape_in_move_mode(directory):
     assert pathlib.Path(os.path.join(directory, 'IPX-486_C.mp4')).is_file()
@@ -142,10 +149,29 @@ def test_scrape_in_move_mode(directory):
     assert not pathlib.Path('test/桃乃木かな/IPX-486/IPX-486-C-poster.jpg').is_symlink()
     assert not pathlib.Path(os.path.join(directory, 'IPX-486_C.mp4')).is_file()
 
+@pytest.mark.usefixtures('write_configuration_in_move_mode')
+@pytest.mark.usefixtures('part_file_paths')
+@pytest.mark.usefixtures('protect_custom_config_file')
+def test_scrape_with_input_arguments(capsys):
+    scrape(input_directories=['./non_existent'])
+    output, _ = capsys.readouterr()
+    assert 'there are 0 media to be scraped' in output
+
+@pytest.mark.usefixtures('write_configuration_in_move_mode')
+@pytest.mark.usefixtures('part_file_paths')
+@pytest.mark.usefixtures('protect_custom_config_file')
+def test_scrape_with_output_arguments(other_destination_directory, directory):
+    scrape(output_file_path_pattern=other_destination_directory + '/{star}/{number}/{number}{subtitle}{suffix}')
+    assert not pathlib.Path('other_test/桃乃木かな/IPX-486/IPX-486-C.mp4').is_symlink()
+    assert pathlib.Path('other_test/桃乃木かな/IPX-486/IPX-486-C.mp4').is_file()
+    assert not pathlib.Path('other_test/桃乃木かな/IPX-486/IPX-486-C-fanart.jpg').is_symlink()
+    assert not pathlib.Path('other_test/桃乃木かな/IPX-486/IPX-486-C-poster.jpg').is_symlink()
+    assert not pathlib.Path(os.path.join(directory, 'IPX-486_C.mp4')).is_file()
+
 @pytest.mark.usefixtures('write_configuration_without_translator')
 @pytest.mark.usefixtures('protect_custom_config_file')
-def test_scrape_without_translator(file_paths):
-    for index, file_path in enumerate(file_paths):
+def test_scrape_without_translator(all_file_paths):
+    for index, file_path in enumerate(all_file_paths):
         if index > 2:
             os.remove(file_path)
 

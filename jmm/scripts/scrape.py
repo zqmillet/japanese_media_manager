@@ -59,13 +59,13 @@ def get_translator(configuration: Configuration) -> Optional[Translator]:
         return Translator(**configuration.translator.dict())
     return None
 
-def scrape(input_directories: Optional[List[str]] = None, destination_directory: Optional[str] = None) -> None:
+def scrape(input_directories: Optional[List[str]] = None, output_file_path_pattern: Optional[str] = None) -> None:
     configuration = get_configuration()
     router = get_router(configuration)
     logger = get_logger(configuration)
     translator = get_translator(configuration)
 
-    file_manager = get_file_manager(configuration, destination_directory, translator, logger)
+    file_manager = get_file_manager(configuration, output_file_path_pattern, translator, logger)
     logger.info('file manager, working in %s mode, %s translator is ready', file_manager.mode.value, 'with' if file_manager.translator else 'without')
 
     file_informations = get_file_informations(configuration, input_directories)

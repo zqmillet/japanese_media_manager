@@ -2,8 +2,8 @@ import os
 import pathlib
 import pytest
 
-@pytest.fixture(name='file_paths', scope='function')
-def _file_paths(directory):
+@pytest.fixture(name='all_file_paths', scope='function')
+def _all_file_paths(directory):
     data = [
         ['IPX.mp4'],
         ['gouliguojiashengsiyi-1926.mp4'],
@@ -61,6 +61,23 @@ def _file_paths(directory):
         ['PRTD-002', 'prtd00002pl.jpg'],
     ]
 
+    file_paths = []
+    for item in data:
+        file_path = os.path.join(directory, *item)
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        pathlib.Path(file_path).touch()
+        file_paths.append(file_path)
+
+    yield file_paths
+
+@pytest.fixture(name='part_file_paths', scope='function')
+def _part_file_paths(directory):
+    data = [
+        ['IPX.mp4'],
+        ['gouliguojiashengsiyi-1926.mp4'],
+        ['IPX-486_C.mp4'],
+        ['IPX-643_C.mp4'],
+    ]
     file_paths = []
     for item in data:
         file_path = os.path.join(directory, *item)

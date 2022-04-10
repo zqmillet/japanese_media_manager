@@ -46,10 +46,10 @@ def main() -> None:
         help='specify directories which contain media, if this argument is not specified, scraper will read it from config file.'
     )
     scrape_parser.add_argument(
-        '-o', '--destination-directory',
+        '-o', '--output-file-path_pattern',
         action='store',
         type=str,
-        help='specify the destination directory',
+        help='specify the output file path pattern',
         default=None
     )
 
@@ -65,7 +65,7 @@ def main() -> None:
     if arguments.command == COMMAND.GENERATE_CONFIG:
         generate_configuration(force=arguments.force)  # pragma: no cover
     elif arguments.command == COMMAND.SCRAPE:
-        scrape(input_directories=arguments.input_directories, destination_directory=arguments.destination_directory)  # pragma: no cover
+        scrape(input_directories=arguments.input_directories, output_file_path_pattern=arguments.output_file_path_pattern)  # pragma: no cover
     elif arguments.command == COMMAND.VALID_CONFIG:
         valid_configuration(numbers=arguments.numbers)  # pragma: no cover
     elif arguments.command == COMMAND.SHOW_VERSION:
