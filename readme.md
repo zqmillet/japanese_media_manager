@@ -78,7 +78,7 @@ pip install jmm
 
 ## ToDo
 
-- [x] crawlers
+- [x] `crawlers`
   - [x] `Base`
   - [x] `JavDBCrawler`
   - [x] `JavBusCrawler`
@@ -103,11 +103,11 @@ pip install jmm
   - [x] `valid-config`
   - [ ] `scrape`
   - [x] `version`
-- [ ] manual
-  - [x] autodoc
-  - [x] introduction
-  - [ ] usage
-  - [ ] framework
-  - [x] source code
+- [ ] `manual`
+  - [x] `autodoc`
+  - [x] `introduction`
+  - [x] `framework`
+  - [ ] `usage`
+  - [x] `source_code
 
 [^1]: 理论上, jMM 可以运行在任何可以执行 Python3 的才做系统, 我只在这 3 个系统中测试过 jMM, 其他系统不保证可以运行.
