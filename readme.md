@@ -79,26 +79,30 @@ pip install jmm
 ## ToDo
 
 - [x] crawlers
-  - [x] base crawler
-  - [x] javdb crawler
-  - [x] javbus crawler
-  - [x] javbooks crawler
-  - [x] airav crawler
-  - [x] arzon crawler
-  - [x] avsox crawler
-- [ ] utilities
-  - [x] translator
-  - [x] metadata
-  - [x] cache
-  - [x] router
-  - [x] crawler_group
-  - [x] logger
-  - [x] configuration
-  - [x] session
-  - [x] timer
-- [ ] scripts
-  - [x] generate configuration
-  - [ ] scrape video
+  - [x] `Base`
+  - [x] `JavDBCrawler`
+  - [x] `JavBusCrawler`
+  - [x] `JavBooksCrawler`
+  - [x] `AirAVCrawler`
+  - [x] `ArzonCrawler`
+  - [x] `AvsoxCrawler`
+- [x] `utilities`
+  - [x] `configuration`
+  - [x] `crawler_group`
+  - [x] `file_information`
+  - [x] `file_manager`
+  - [x] `function`
+  - [x] `logger`
+  - [x] `metadata`
+  - [x] `models`
+  - [x] `session`
+  - [x] `timer`
+  - [x] `translator`
+- [ ] `scripts`
+  - [x] `generate-config`
+  - [x] `valid-config`
+  - [ ] `scrape`
+  - [x] `version`
 - [ ] manual
   - [x] autodoc
   - [x] introduction
