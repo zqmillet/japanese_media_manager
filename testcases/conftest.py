@@ -146,6 +146,9 @@ def _file_paths(directory):
         os.path.join(directory, '松本菜奈実', 'SSNI-306', 'ssni-306.jpg'),
         os.path.join(directory, '松本菜奈実', 'SSNI-306', 'ssni-306.nfo'),
         os.path.join(directory, '松本菜奈実', 'SSNI-306', 'ssni-306.srt'),
+        os.path.join(directory, 'xxx', 'star-326-cd1.mp4'),
+        os.path.join(directory, 'xxx', 'star-326-cd2.mp4'),
+        os.path.join(directory, 'xxx', 'star-326-cd3.mp4'),
     ]
 
     for file_path in file_paths:

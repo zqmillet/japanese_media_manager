@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from re import match
 from typing import Optional
 from pathlib import Path
 
@@ -10,6 +13,18 @@ class FileInformation:
     @property
     def number(self) -> Optional[str]:
         return get_number(self.file_path.name)
+
+    @property
+    def next(self) -> Optional[FileInformation]:
+        result = match(pattern=r'(?P<prefix>.*[-_][cC][dD])(?P<index>\d+)(?P<suffix>.*)', string=self.file_path.name)
+        if not result:
+            return None
+
+        group = result.groupdict()
+        next_file_path = self.file_path.with_name(f'{group["prefix"]}{int(group["index"]) + 1}{group["suffix"]}')
+        if not next_file_path.is_file():
+            return None
+        return FileInformation(next_file_path)
 
     @property
     def has_chinese_subtitle(self) -> bool:
