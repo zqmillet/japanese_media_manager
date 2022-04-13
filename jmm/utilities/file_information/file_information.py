@@ -7,6 +7,14 @@ from pathlib import Path
 from jmm.utilities.functions import get_number
 
 class FileInformation:
+    _instances = {}
+
+    def __new__(cls, file_path: Path):
+        absolute_path = file_path.absolute()
+        if absolute_path not in cls._instances:
+            cls._instances[absolute_path] = super().__new__(cls)
+        return cls._instances[absolute_path]
+
     def __init__(self, file_path: Path):
         self.file_path = file_path
 

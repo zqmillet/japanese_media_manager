@@ -14,3 +14,11 @@ def test_get_file_paths(file_paths):
     assert file_informations[5].next is not None
     assert file_informations[5].next.next is not None
     assert file_informations[5].next.next.next is None
+
+def test_singleton():
+    file_information_1 = FileInformation(Path('./test'))
+    file_information_2 = FileInformation(Path('test'))
+    file_information_3 = FileInformation(Path('test').absolute())
+
+    assert file_information_1 is file_information_2
+    assert file_information_1 is file_information_3
