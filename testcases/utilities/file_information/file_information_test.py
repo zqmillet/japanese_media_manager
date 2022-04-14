@@ -22,3 +22,18 @@ def test_singleton():
 
     assert file_information_1 is file_information_2
     assert file_information_1 is file_information_3
+
+def test_series(file_paths):
+    file_informations = list(map(FileInformation, map(Path, file_paths)))
+
+    for index in range(5):
+        assert file_informations[index].next is None
+        assert file_informations[index].previous is None
+
+    assert file_informations[5].next is file_informations[6]
+    assert file_informations[6].next is file_informations[7]
+    assert file_informations[7].next is None
+
+    assert file_informations[5].previous is None
+    assert file_informations[6].previous is file_informations[5]
+    assert file_informations[7].previous is file_informations[6]
