@@ -26,15 +26,30 @@ class FileInformation:
 
     @property
     def previous(self) -> Optional[FileInformation]:
+        """
+        向前查找该文件的邻居.
+        """
         return self._get_neighbor(direction=Direction.BACKWARD)
 
     @property
     def next(self) -> Optional[FileInformation]:
+        """
+        向后查找该文件的邻居.
+        """
         return self._get_neighbor(direction=Direction.FORWARD)
 
     @property
     def number(self) -> Optional[str]:
         return get_number(self.file_path.name)
+
+    @property
+    def index(self) -> Optional[int]:
+        _index = 0
+        point = self.previous
+        while point:
+            _index += 1
+            point = point.previous
+        return _index
 
     def _get_neighbor(self, direction: Direction) -> Optional[FileInformation]:
         result = match(pattern=r'(?P<prefix>.*[-_][cC][dD])(?P<index>\d+)(?P<suffix>.*)', string=self.file_path.name)

@@ -29,6 +29,7 @@ def test_series(file_paths):
     for index in range(5):
         assert file_informations[index].next is None
         assert file_informations[index].previous is None
+        assert file_informations[index].index == 0
 
     assert file_informations[5].next is file_informations[6]
     assert file_informations[6].next is file_informations[7]
@@ -37,3 +38,7 @@ def test_series(file_paths):
     assert file_informations[5].previous is None
     assert file_informations[6].previous is file_informations[5]
     assert file_informations[7].previous is file_informations[6]
+
+    assert file_informations[5].index == 0
+    assert file_informations[6].index == 1
+    assert file_informations[7].index == 2
