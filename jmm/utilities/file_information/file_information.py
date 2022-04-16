@@ -14,14 +14,18 @@ class Direction(Enum):
     BACKWARD = -1
 
 class SubtitleType(Enum):
-    EMBEDDING = 0
-    EXTERNEL = 1
-    MIXING = 2
+    NONE = 0
+    EMBEDDING = 1
+    EXTERNEL = 2
+    MIXING = 3
 
 class Subtitle:
     def __init__(self, subtitle_type: SubtitleType, file_paths: List[Path] = None):
         self.subtitle_type = subtitle_type
         self.file_path = file_paths or []
+
+    def __bool__(self) -> bool:
+        return not self.subtitle_type == SubtitleType.NONE
 
 class FileInformation:
     _instances: Dict[Path, FileInformation] = {}
@@ -102,18 +106,26 @@ class FileInformation:
         return FileInformation(next_file_path)
 
     @property
-    def chinese_subtitle(self) -> Optional[Subtitle]:
+    def subtitle(self) -> Optional[Subtitle]:
         """
         获取文件对应的字幕.
         """
-        if self.file_path.stem.lower().endswith('-c'):
-            return True
-        if self.file_path.stem.lower().endswith('_c'):
-            return True
-        return False
+        has_embedding_subtitle = self.file_path.stem.lower().endswith('-c') or self.file_path.stem.lower().endswith('_c')
+        subtitle_paths = [file_path for file_path in map(self.file_path.with_suffix, ['.ass', '.srt']) if file_path.is_file()]
+
+        if subtitle_paths and has_embedding_subtitle:
+            return Subtitle(SubtitleType.MIXING, subtitle_paths)
+
+        if subtitle_paths and (not has_embedding_subtitle):
+            return Subtitle(SubtitleType.EXTERNEL, subtitle_paths)
+
+        if (not subtitle_paths) and has_embedding_subtitle:
+            return Subtitle(SubtitleType.EMBEDDING, subtitle_paths)
+
+        return Subtitle(SubtitleType.NONE, subtitle_paths)
 
     def __repr__(self) -> str:
-        return f'<file {str(self.file_path)}, {self.number}, {"with" if self.chinese_subtitle else "without"} subtitle>'  # pragma: no cover
+        return f'<file {str(self.file_path)}, {self.number}, {"with" if self.subtitle else "without"} subtitle>'  # pragma: no cover
 
     def __hash__(self) -> int:
         return id(self)

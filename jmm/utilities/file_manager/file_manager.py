@@ -49,7 +49,7 @@ class FileManager:
             'suffix': file_information.file_path.suffix,
             'number': video.number.upper(),
             'star': video.stars[0].name if video.stars else 'unknown',
-            'subtitle': '-C' if file_information.has_chinese_subtitle else '',
+            'subtitle': '-C' if file_information.subtitle else '',
             'series': video.series or 'unknown',
             'studio': video.studio or 'unknown'
         }
