@@ -6,7 +6,7 @@ def test_get_file_paths(file_paths):
     file_informations = list(map(FileInformation, map(Path, file_paths)))
 
     assert not file_informations[0].subtitle
-    assert not file_informations[1].subtitle
+    assert file_informations[1].subtitle
     assert file_informations[0].number == 'STAR-325'
     assert file_informations[1].number == 'SSNI-306'
 
