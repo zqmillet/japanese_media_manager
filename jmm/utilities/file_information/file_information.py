@@ -106,7 +106,7 @@ class FileInformation:
         return FileInformation(next_file_path)
 
     @property
-    def subtitle(self) -> Optional[Subtitle]:
+    def subtitle(self) -> Subtitle:
         """
         获取文件对应的字幕.
         """
