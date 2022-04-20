@@ -42,3 +42,11 @@ def test_series(file_paths):
     assert file_informations[5].index == 0
     assert file_informations[6].index == 1
     assert file_informations[7].index == 2
+
+    assert file_informations[5].root is file_informations[5]
+    assert file_informations[6].root is file_informations[5]
+    assert file_informations[7].root is file_informations[5]
+
+    assert len(set(file_informations)) == 6
+    assert file_informations[5] == file_informations[6] == file_informations[7]
+    assert file_informations[5] != file_informations[0]

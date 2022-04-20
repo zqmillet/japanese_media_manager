@@ -28,7 +28,7 @@ from jmm.crawlers import ArzonCrawler
                 'release_date': datetime.date(2016, 11, 19),
                 'series': 'ATTACKERS',
                 'studio': 'アタッカーズ',
-                'title': 'ATTACKERS 凌辱アナル480分総集編3'
+                'title': '【ＧＷ大感謝祭】ATTACKERS 凌辱アナル480分総集編3'
             },
         ),
         (

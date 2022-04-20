@@ -61,6 +61,18 @@ class FileInformation:
         return get_number(self.file_path.name)
 
     @property
+    def root(self) -> FileInformation:
+        """
+        获取文件列表的根结点.
+        """
+        point = self
+        while point:
+            if not point.previous:
+                break
+            point = point.previous
+        return point
+
+    @property
     def index(self) -> Optional[int]:
         """
         查找该文件在所有邻居中的绝对位置.
@@ -73,9 +85,9 @@ class FileInformation:
 
         那么:
 
-        - ``FileInformation(xxx-250-cd1.mp4).index`` 的值为 ``0``,
-        - ``FileInformation(xxx-250-cd2.mp4).index`` 的值为 ``0``,
-        - ``FileInformation(xxx-250-cd3.mp4).index`` 的值为 ``0``.
+        - ``FileInformation('xxx-250-cd1.mp4').index`` 的值为 ``0``,
+        - ``FileInformation('xxx-250-cd2.mp4').index`` 的值为 ``1``,
+        - ``FileInformation('xxx-250-cd3.mp4').index`` 的值为 ``2``.
         """
         _index = 0
         point = self.previous
@@ -128,4 +140,16 @@ class FileInformation:
         return f'<file {str(self.file_path)}, {self.number}, {"with" if self.subtitle else "without"} subtitle>'  # pragma: no cover
 
     def __hash__(self) -> int:
-        return id(self)
+        return id(self.root)
+
+    def __eq__(self, other: object) -> bool:
+        """
+        判断两个对象是否相等.
+        """
+        if not isinstance(other, FileInformation):
+            return NotImplemented
+
+        if self.root or other.root:
+            return self.root is other.root
+
+        return self.file_path == other.file_path
