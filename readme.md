@@ -78,36 +78,6 @@ pip install jmm
 
 ## ToDo
 
-- [x] `crawlers`
-  - [x] `Base`
-  - [x] `JavDBCrawler`
-  - [x] `JavBusCrawler`
-  - [x] `JavBooksCrawler`
-  - [x] `AirAVCrawler`
-  - [x] `ArzonCrawler`
-  - [x] `AvsoxCrawler`
-- [x] `utilities`
-  - [x] `configuration`
-  - [x] `crawler_group`
-  - [x] `file_information`
-  - [x] `file_manager`
-  - [x] `function`
-  - [x] `logger`
-  - [x] `metadata`
-  - [x] `models`
-  - [x] `session`
-  - [x] `timer`
-  - [x] `translator`
-- [ ] `scripts`
-  - [x] `generate-config`
-  - [x] `valid-config`
-  - [ ] `scrape`
-  - [x] `version`
-- [ ] `manual`
-  - [x] `autodoc`
-  - [x] `introduction`
-  - [x] `framework`
-  - [ ] `usage`
-  - [x] `source_code`
+- [ ] 支持 ``-cdx`` 格式的媒体.
 
 [^1]: 理论上, jMM 可以运行在任何可以执行 Python3 的才做系统, 我只在这 3 个系统中测试过 jMM, 其他系统不保证可以运行.
