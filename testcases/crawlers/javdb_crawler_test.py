@@ -17,9 +17,9 @@ from jmm.crawlers import JavdbCrawler
             '美人潜入捜査官',
             'SOD Create',
             [
-                {'name': '羽田あい', 'avatar_url': 'https://jdbimgs.com/avatars/rx/rxbJ.jpg'},
-                {'name': '佐川銀次', 'avatar_url': 'https://jdbimgs.com/avatars/6j/6JRE.jpg'},
-                {'name': 'トニー大木', 'avatar_url': 'https://jdbimgs.com/avatars/yp/YPKz.jpg'}
+                {'name': '羽田あい', 'avatar_url': 'https://c1.jdbstatic.com/avatars/rx/rxbJ.jpg'},
+                {'name': '佐川銀次', 'avatar_url': 'https://c1.jdbstatic.com/avatars/6j/6JRE.jpg'},
+                {'name': 'トニー大木', 'avatar_url': 'https://c1.jdbstatic.com/avatars/yp/YPKz.jpg'}
             ]
         ),
         (
@@ -32,9 +32,9 @@ from jmm.crawlers import JavdbCrawler
             '緊縛マゾ女',
             'IDEA POCKET',
             [
-                {'name': '桃乃木香奈, 桃乃木かな', 'avatar_url': 'https://jdbimgs.com/avatars/0d/0dKX.jpg'},
-                {'name': '沢木和也', 'avatar_url': 'https://jdbimgs.com/avatars/ak/ak4Or.jpg'},
-                {'name': '小田切ジュン', 'avatar_url': 'https://jdbimgs.com/avatars/g9/G955.jpg'}
+                {'name': '桃乃木香奈, 桃乃木かな', 'avatar_url': 'https://c1.jdbstatic.com/avatars/0d/0dKX.jpg'},
+                {'name': '沢木和也', 'avatar_url': 'https://c1.jdbstatic.com/avatars/ak/ak4Or.jpg'},
+                {'name': '小田切ジュン', 'avatar_url': 'https://c1.jdbstatic.com/avatars/g9/G955.jpg'}
             ]
         ),
         (
@@ -47,8 +47,8 @@ from jmm.crawlers import JavdbCrawler
             'ヲタサーの姫',
             'S1 NO.1 STYLE',
             [
-                {'name': '小島南, 小島みなみ', 'avatar_url': 'https://jdbimgs.com/avatars/a2/A2Q0.jpg'},
-                {'name': '今井勇太', 'avatar_url': 'https://jdbimgs.com/avatars/1b/1BeOY.jpg'}
+                {'name': '小島南, 小島みなみ', 'avatar_url': 'https://c1.jdbstatic.com/avatars/a2/A2Q0.jpg'},
+                {'name': '今井勇太', 'avatar_url': 'https://c1.jdbstatic.com/avatars/1b/1BeOY.jpg'}
             ]
         ),
         (
@@ -61,11 +61,11 @@ from jmm.crawlers import JavdbCrawler
             None,
             'SOD Create',
             [
-                {'name': '七海蒂娜, 七海ティナ', 'avatar_url': 'https://jdbimgs.com/avatars/gb/gbbZ.jpg'},
-                {'name': '藍井優太', 'avatar_url': 'https://jdbimgs.com/avatars/dd/Ddd8.jpg'},
-                {'name': '井口', 'avatar_url': 'https://jdbimgs.com/avatars/p3/p3NEk.jpg'},
-                {'name': '向理来', 'avatar_url': 'https://jdbimgs.com/avatars/eg/egPR.jpg'},
-                {'name': '今井勇太', 'avatar_url': 'https://jdbimgs.com/avatars/1b/1BeOY.jpg'}
+                {'name': '七海蒂娜, 七海ティナ', 'avatar_url': 'https://c1.jdbstatic.com/avatars/gb/gbbZ.jpg'},
+                {'name': '藍井優太', 'avatar_url': 'https://c1.jdbstatic.com/avatars/dd/Ddd8.jpg'},
+                {'name': '井口', 'avatar_url': 'https://c1.jdbstatic.com/avatars/p3/p3NEk.jpg'},
+                {'name': '向理来', 'avatar_url': 'https://c1.jdbstatic.com/avatars/eg/egPR.jpg'},
+                {'name': '今井勇太', 'avatar_url': 'https://c1.jdbstatic.com/avatars/1b/1BeOY.jpg'}
             ]
         ),
         (
@@ -78,8 +78,8 @@ from jmm.crawlers import JavdbCrawler
             '女教師 レイプ 輪姦',
             'MOODYZ',
             [
-                {'name': '八木奈々', 'avatar_url': 'https://jdbimgs.com/avatars/ge/gEkm.jpg'},
-                {'name': '吉野篤史', 'avatar_url': 'https://jdbimgs.com/avatars/2a/2aV7m.jpg'}
+                {'name': '八木奈々', 'avatar_url': 'https://c1.jdbstatic.com/avatars/ge/gEkm.jpg'},
+                {'name': '吉野篤史', 'avatar_url': 'https://c1.jdbstatic.com/avatars/2a/2aV7m.jpg'}
             ]
         )
     ]

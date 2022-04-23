@@ -14,7 +14,8 @@ def format_string(string: Optional[str]) -> Optional[str]:
 
     - 如果字符串是 ``None``, 返回 ``None``.
     - 删除字符串中不可以被打印的字符.
+    - 去掉两端的空白字符.
     """
     if string is None:
         return None
-    return ''.join(map(lambda char: char if is_printable(char) else '', string))
+    return ''.join(map(lambda char: char if is_printable(char) else '', string)).strip()
