@@ -149,7 +149,4 @@ class FileInformation:
         if not isinstance(other, FileInformation):
             return NotImplemented
 
-        if self.root or other.root:
-            return self.root is other.root
-
-        return self.file_path == other.file_path
+        return self.root is other.root

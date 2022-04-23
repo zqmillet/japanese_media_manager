@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from jmm.utilities.file_information import FileInformation
+from jmm.utilities.file_information import SubtitleType
 
 def test_get_file_paths(file_paths):
     file_informations = list(map(FileInformation, map(Path, file_paths)))
@@ -30,6 +31,8 @@ def test_series(file_paths):
         assert file_informations[index].next is None
         assert file_informations[index].previous is None
         assert file_informations[index].index == 0
+        assert not file_informations[index] == None
+        assert not file_informations[index] == 0
 
     assert file_informations[5].next is file_informations[6]
     assert file_informations[6].next is file_informations[7]
@@ -47,6 +50,11 @@ def test_series(file_paths):
     assert file_informations[6].root is file_informations[5]
     assert file_informations[7].root is file_informations[5]
 
-    assert len(set(file_informations)) == 6
+    assert len(set(file_informations)) == 9
     assert file_informations[5] == file_informations[6] == file_informations[7]
     assert file_informations[5] != file_informations[0]
+
+    assert file_informations[0].subtitle.subtitle_type == SubtitleType.NONE
+    assert file_informations[1].subtitle.subtitle_type == SubtitleType.EXTERNEL
+    assert file_informations[8].subtitle.subtitle_type == SubtitleType.MIXING
+    assert file_informations[12].subtitle.subtitle_type == SubtitleType.EMBEDDING

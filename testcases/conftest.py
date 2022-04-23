@@ -149,6 +149,11 @@ def _file_paths(directory):
         os.path.join(directory, 'xxx', 'star-326-cd1.mp4'),
         os.path.join(directory, 'xxx', 'star-326-cd2.mp4'),
         os.path.join(directory, 'xxx', 'star-326-cd3.mp4'),
+        os.path.join(directory, '松本菜奈実', 'dsb-250', 'dsb-250-cd1-c.srt'),
+        os.path.join(directory, '松本菜奈実', 'dsb-250', 'dsb-250-cd1-c.mp4'),
+        os.path.join(directory, '松本菜奈実', 'dsb-250', 'dsb-250-cd2-c.srt'),
+        os.path.join(directory, '松本菜奈実', 'dsb-250', 'dsb-250-cd2-c.mp4'),
+        os.path.join(directory, '松本菜奈実', 'dsb-250-c.mp4'),
     ]
 
     for file_path in file_paths:
