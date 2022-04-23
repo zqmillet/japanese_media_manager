@@ -31,7 +31,6 @@ def test_series(file_paths):
         assert file_informations[index].next is None
         assert file_informations[index].previous is None
         assert file_informations[index].index == 0
-        assert not file_informations[index] == None
         assert not file_informations[index] == 0
 
     assert file_informations[5].next is file_informations[6]
