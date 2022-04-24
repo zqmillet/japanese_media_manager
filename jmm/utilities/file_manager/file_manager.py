@@ -44,7 +44,7 @@ class FileManager:
         self.execute = FileManager.actions[mode]
         self.logger = logger
 
-    def manager(self, file_information: FileInformation, video: Video) -> Optional[Path]:
+    def manage(self, file_information: FileInformation, video: Video) -> Optional[Path]:
         format_arguments = {
             'suffix': file_information.file_path.suffix,
             'number': video.number.upper(),
@@ -80,6 +80,11 @@ class FileManager:
         if video.poster:
             video.poster.save(poster_file_path)
             self.logger.info('media\'s poster has been saved in %s', poster_file_path)
+
+        for subtitle_file_path in file_information.subtitle.file_paths:
+            destination_subtitlle_file_path = media_file_path.with_suffix(subtitle_file_path.suffix)
+            copy(subtitle_file_path, destination_subtitlle_file_path)
+            self.logger.info('media\'s subtitle has been saved in %s', destination_subtitlle_file_path)
 
         return media_file_path
 

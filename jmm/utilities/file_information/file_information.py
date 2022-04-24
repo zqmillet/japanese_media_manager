@@ -22,7 +22,7 @@ class SubtitleType(Enum):
 class Subtitle:
     def __init__(self, subtitle_type: SubtitleType, file_paths: List[Path] = None):
         self.subtitle_type = subtitle_type
-        self.file_path = file_paths or []
+        self.file_paths = file_paths or []
 
     def __bool__(self) -> bool:
         return not self.subtitle_type == SubtitleType.NONE

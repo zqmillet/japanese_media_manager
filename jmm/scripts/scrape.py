@@ -71,7 +71,7 @@ def scrape(input_directories: Optional[List[str]] = None, output_file_path_patte
     file_informations = get_file_informations(configuration, input_directories)
     logger.info('there are %d media to be scraped', len(file_informations))
 
-    for file_information in track(file_informations):
+    for file_information in (file_informations):
         logger.info('processing the media %s', file_information.file_path)
         number = file_information.number
 
@@ -84,4 +84,4 @@ def scrape(input_directories: Optional[List[str]] = None, output_file_path_patte
             logger.warning('cannot find metadata of the number %s', number)
             continue
 
-        file_manager.manager(file_information, video)
+        file_manager.manage(file_information, video)

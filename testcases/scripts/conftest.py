@@ -77,6 +77,7 @@ def _part_file_paths(directory):
         ['gouliguojiashengsiyi-1926.mp4'],
         ['IPX-486_C.mp4'],
         ['IPX-643_C.mp4'],
+        ['IPX-643_C.srt'],
     ]
     file_paths = []
     for item in data:
